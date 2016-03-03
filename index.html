@@ -1,0 +1,159 @@
+<!--
+
+    AUTHOR: Peter van der Walt
+    With:
+    Serial, DRO, Webcam: Andrew Hodel
+    Jog Widget:  Arthur Wolf and Kliment
+    3D Viewer:  John Lauer and Joe Walnes
+
+    LaserWeb Version 2  - A Web Based Lasercutter CAM
+
+    Copyright (C) 2016 Peter van der Walt
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+    WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+    ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+    WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+    ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LaserWeb</title>
+
+    <!-- Bootstrap and FuelUX -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="lib/fuelux/js/fuelux.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
+
+    <link rel="stylesheet" href="css/font-awesome.css" />
+
+    <!-- ThreeJS -->
+    <script src="lib/threejs/three.min.js"></script>
+    <script src="lib/threejs/GridRect.js"></script>
+    <script src="lib/threejs/OrbitControls.js"></script>
+        <script src="js/viewer.js"></script>
+
+    <script src="js/main.js"></script>
+
+
+
+  </head>
+  <body>
+
+    <div id="renderArea"></div> <!-- Note - background div - see CSS -->
+
+    <nav id="navbar-top" class="navbar navbar-default navbar-static" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-example-js-navbar-collapse"> <span class="sr-only">Menu</span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+
+               </button> <a class="navbar-brand" href="#">LaserWeb 2.0</a>
+
+            </div>
+            <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">File <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Open</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"> <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">View <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">About <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.nav-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- /navbar-example -->
+
+
+
+  <input type="file" class="filestyle" data-input="false" data-badge="false" data-size="sm" id="file" data-buttonName="btn-default btn-sm" data-buttonText="&nbsp;Open">
+
+  </body>
+
+
+</html>

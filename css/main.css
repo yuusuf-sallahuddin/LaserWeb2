@@ -1,0 +1,11 @@
+#renderArea {
+   background-color: #ffffff;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 00;
+   border: 1px #000;
+   float: left;
+   margin-right: 1%;
+}
