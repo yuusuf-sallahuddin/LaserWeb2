@@ -1,0 +1,382 @@
+<!--
+
+    AUTHOR: Peter van der Walt
+    With:
+    Serial, DRO, Webcam: Andrew Hodel
+    Jog Widget:  Arthur Wolf and Kliment
+    3D Viewer:  John Lauer and Joe Walnes
+
+    LaserWeb Version 2  - A Web Based Lasercutter CAM
+
+    Copyright (C) 2016 Peter van der Walt
+
+    THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+    WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+    MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+    ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+    WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+    ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+    OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>LaserWeb</title>
+
+    <!-- Bootstrap and FuelUX -->
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/dropdowns-enhancement.min.css" rel="stylesheet">
+    <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+    <script src="lib/fuelux/js/fuelux.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
+    <script src="lib/bootstrap/js/dropdowns-enhancement.js"></script>
+
+    <link rel="stylesheet" href="css/font-awesome.css" />
+
+    <!-- ThreeJS -->
+    <script src="lib/threejs/three.min.js"></script>
+    <script src="lib/threejs/GridRect.js"></script>
+    <script src="lib/threejs/OrbitControls.js"></script>
+    <script src="js/viewer.js"></script>
+
+    <!-- User Interface -->
+    <script src="js/main.js"></script>
+
+    <!-- Serial Port JSON -->
+    <script src="js/spjs.js"></script>
+
+
+
+  </head>
+  <body>
+
+    <div id="renderArea"></div> <!-- Note - background div - see CSS -->
+
+    <nav id="navbar-top" class="navbar navbar-default navbar-static" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-example-js-navbar-collapse"> <span class="sr-only">Menu</span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+                 <span class="icon-bar"></span>
+
+               </button> <a class="navbar-brand" href="#">LaserWeb 2.0</a>
+
+            </div>
+            <div class="collapse navbar-collapse bs-js-navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>File</b> <span class="caret"></span></a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" class="btn-file">
+                                <i class="fa fa-folder-open fa-fw"></i>Open
+                                <input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf" />
+                            </a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" id="save" href="#"><i class="fa fa-floppy-o fa-fw"></i>Save</a>
+                            </li>
+                            <!-- li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Print</a>
+                            </li -->
+                        </ul>
+                    </li>
+                    <!-- <li class="dropdown"> <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li> -->
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="controls.reset();">Reset</a>
+                            </li>
+                            <!--li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li-->
+                        </ul>
+                    </li>
+                </ul>
+                <!-- <ul class="nav navbar-nav">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop4" role="button" class="dropdown-toggle" data-toggle="dropdown">Connect <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+
+
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span id="spjs-version"></span></a>
+                              </li>
+                              <li role="presentation" class="divider"></li>
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Port</a>
+                                <ul class="dropdown-menu" id="portMenu">
+                                  <li><a href="#" tabindex="-1">Random</a></li>
+
+                                </ul>
+                              </li>
+
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Baud</a>
+                                <ul class="dropdown-menu" id="baudMenu">
+                                  <li><a href="#" tabindex="-1">9600</a></li>
+                                  <li><a href="#" tabindex="-1">115200</a></li>
+                                </ul>
+                              </li>
+
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Protocl</a>
+                                <ul class="dropdown-menu" id="protoMenu">
+                                  <li><a href="#" tabindex="-1">TinyG</a></li>
+                                  <li><a href="#" tabindex="-1">Grbl</a></li>
+                                  <li><a href="#" tabindex="-1">Reprap</a></li>
+                                </ul>
+                              </li>
+
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Machine Settings</a>
+                              </li>
+                        </ul>
+                    </li>
+                </ul> -->
+
+                <form class="navbar-form navbar-left" role="form">
+                 <div class="form-group">
+                   <label for="port"><i class="fa fa-usb"></i></label>
+                   <!--input type="select" class="form-control" id="port" -->
+                   <select id="port" class="form-control" disabled>
+                     <option val="no">Select port</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <label for="buffer"><i class="fa fa-database"></i></label>
+                   <!--input type="select" class="form-control" id="baud"-->
+                   <select id="buffer" class="form-control" disabled>
+                     <option val="no">Select buffer</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <label for="baud"><i class="fa fa-tasks"></i></label>
+                   <!--input type="select" class="form-control" id="baud"-->
+                   <select id="baud" class="form-control" disabled>
+                     <option val="230400">230400</option>
+                     <option val="115200" selected="selected">115200</option>
+                     <option val="57600">57600</option>
+                     <option val="38400">38400</option>
+                     <option val="19200">19200</option>
+                     <option val="9600">9600</option>
+                   </select>
+                 </div>
+                 <!-- <div class="checkbox">
+                   <label><input type="checkbox">Connect</label>
+                 </div> -->
+                 <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
+                 <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
+                 <a class="btn btn-default" id="settings" href="#" data-toggle="modal" data-target="#modal-settings"><i class="fa fa-cog"></i></a>
+               </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop5" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>About</b> <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop5">
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            </li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
+                            </li>
+                            <li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+
+            <!-- /.nav-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <!-- /navbar-example -->
+
+  <!-- Main Body -->
+
+
+
+  <!-- End Main Body -->
+
+<!-- Nodals -->
+
+<!-- Software Settings Modal -->
+<div class="modal modal-fullscreen fade" id="modal-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">LaserWeb Settings</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#home">Downloads</a></li>
+          <li><a data-toggle="tab" href="#menu1">Machine</a></li>
+          <li><a data-toggle="tab" href="#menu2">G-Code</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="home" class="tab-pane fade in active">
+            <br>
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Download</h4>
+                <p class="list-group-item-text">
+                  Download and run the SPJS Server to connect LaserWeb to your Machine:<br>
+                  V1.88 Build date: Feb 6, 2015
+                </p>
+              </a>
+            </div>
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="laserXMax" class="control-label col-xs-3">IP Address</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="spjsip" placeholder="127.0.0.1">
+                    </div>
+                </div>
+            </form>
+
+            <div class="list-group">
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_386.zip">Windows x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_amd64.zip">Windows x64</a>
+              <!--<a class="list-group-item" target="_blank" href="http://chilipeppr.com/downloads/v1.86/serial-port-json-server-1.86_darwin_amd64.zip">Mac OS X x64</a>-->
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_386.tar.gz">Linux x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Linux x64</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Raspberry Pi (Linux ARM)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Beagle Bone Black (Linux ARMv7)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Intel Edison (Linux x64)</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server/releases">Github Release Page</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server">Compile from source (Github)</a>
+            </div>
+          </div>
+          <div id="menu1" class="tab-pane fade">
+            <br>
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Machine Settings</h4>
+                <p class="list-group-item-text">
+                  Configure LaserWeb to your machine specifics:<br>
+                  <i>(NB: Page needs a refresh for these settings to take effect!)</i>
+                </p>
+              </a>
+            </div>
+            <form class="form-horizontal">
+              <br>
+                <div class="form-group">
+                    <label for="laserXMax" class="control-label col-xs-3">X-Length</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="laserXMax" placeholder="600">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="laserYMax" class="control-label col-xs-3">Y-Length</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="laserYMax" placeholder="400">
+                    </div>
+                </div>
+
+            </form>
+          </div>
+          <div id="menu2" class="tab-pane fade">
+            <br>
+            <form class="form-horizontal">
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">G-Code Settings</h4>
+                <p class="list-group-item-text">
+                  Configure pre/post/control GCode commands:
+                </p>
+              </a>
+            </div>
+            <div class="form-group">
+                <label for="startgcode" class="control-label col-xs-3">Start G-Code</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" id="startgcode" placeholder="G28\nG90\nM80"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseron" class="control-label col-xs-3">Laser ON Command</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="laseron" placeholder="M3 / blank for firmwares that support G1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseroff" class="control-label col-xs-3">Laser OFF Command</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="laseroff" placeholder="M5 / blank for firmwares that support G1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseroff" class="control-label col-xs-3">PWM Max S</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="lasermultiply" placeholder="255">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="homingseq" class="control-label col-xs-3">Homing Sequence</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="homingseq" placeholder="G28">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endgcode" class="control-label col-xs-3">End G-Code</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" id="endgcode" placeholder="M81\nG28\n"></textarea>
+                </div>
+            </div>
+          </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="savesettings">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+
+
+</html>

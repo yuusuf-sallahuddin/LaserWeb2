@@ -1,0 +1,42 @@
+#renderArea {
+   background-color: #ffffff;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 00;
+   border: 1px #000;
+   float: left;
+   margin-right: 1%;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: pointer;
+    display: block;
+}
+
+/* tab color */
+.nav-tabs>li>a {
+  color:#222;
+}
+
+/* active tab color */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #000;
+}
