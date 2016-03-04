@@ -44,6 +44,7 @@
 
     <!-- Bootstrap and FuelUX -->
     <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/bootstrap/css/dropdowns-enhancement.min.css" rel="stylesheet">
     <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet">
     <link href="css/main.css" rel="stylesheet">
 
@@ -51,6 +52,7 @@
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="lib/fuelux/js/fuelux.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
+    <script src="lib/bootstrap/js/dropdowns-enhancement.js"></script>
 
     <link rel="stylesheet" href="css/font-awesome.css" />
 
@@ -58,9 +60,13 @@
     <script src="lib/threejs/three.min.js"></script>
     <script src="lib/threejs/GridRect.js"></script>
     <script src="lib/threejs/OrbitControls.js"></script>
-        <script src="js/viewer.js"></script>
+    <script src="js/viewer.js"></script>
 
+    <!-- User Interface -->
     <script src="js/main.js"></script>
+
+    <!-- Serial Port JSON -->
+    <script src="js/spjs.js"></script>
 
 
 
@@ -80,22 +86,23 @@
                </button> <a class="navbar-brand" href="#">LaserWeb 2.0</a>
 
             </div>
-            <div class="collapse navbar-collapse bs-example-js-navbar-collapse">
+            <div class="collapse navbar-collapse bs-js-navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">File <span class="caret"></span></a>
+                    <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>File</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Open</a>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" class="btn-file">
+                                <i class="fa fa-folder-open fa-fw"></i>Open
+                                <input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf" />
+                            </a>
                             </li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" id="save" href="#"><i class="fa fa-floppy-o fa-fw"></i>Save</a>
                             </li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
-                            </li>
-                            <li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
-                            </li>
+                            <!-- li role="presentation" class="divider"></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Print</a>
+                            </li -->
                         </ul>
                     </li>
-                    <li class="dropdown"> <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
+                    <!-- <li class="dropdown"> <a href="#" id="drop2" role="button" class="dropdown-toggle" data-toggle="dropdown">Edit <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop2">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
@@ -108,28 +115,100 @@
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
                             </li>
                         </ul>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="nav navbar-nav">
-                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">View <span class="caret"></span></a>
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="controls.reset();">Reset</a>
                             </li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
+                            <!--li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
                             </li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a>
                             </li>
                             <li role="presentation" class="divider"></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a>
-                            </li>
+                            </li-->
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown">About <span class="caret"></span></a>
+                <!-- <ul class="nav navbar-nav">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop4" role="button" class="dropdown-toggle" data-toggle="dropdown">Connect <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
+
+
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><span id="spjs-version"></span></a>
+                              </li>
+                              <li role="presentation" class="divider"></li>
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Port</a>
+                                <ul class="dropdown-menu" id="portMenu">
+                                  <li><a href="#" tabindex="-1">Random</a></li>
+
+                                </ul>
+                              </li>
+
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Baud</a>
+                                <ul class="dropdown-menu" id="baudMenu">
+                                  <li><a href="#" tabindex="-1">9600</a></li>
+                                  <li><a href="#" tabindex="-1">115200</a></li>
+                                </ul>
+                              </li>
+
+                              <li class="dropdown-submenu"><a href="#" tabindex="-1" data-toggle="dropdown">Protocl</a>
+                                <ul class="dropdown-menu" id="protoMenu">
+                                  <li><a href="#" tabindex="-1">TinyG</a></li>
+                                  <li><a href="#" tabindex="-1">Grbl</a></li>
+                                  <li><a href="#" tabindex="-1">Reprap</a></li>
+                                </ul>
+                              </li>
+
+                              <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Machine Settings</a>
+                              </li>
+                        </ul>
+                    </li>
+                </ul> -->
+
+                <form class="navbar-form navbar-left" role="form">
+                 <div class="form-group">
+                   <label for="port">Port:</label>
+                   <!--input type="select" class="form-control" id="port" -->
+                   <select id="port" class="form-control" disabled>
+                     <option val="no">Select port</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <label for="buffer">Buffer:</label>
+                   <!--input type="select" class="form-control" id="baud"-->
+                   <select id="buffer" class="form-control" disabled>
+                     <option val="no">Select buffer</option>
+                   </select>
+                 </div>
+                 <div class="form-group">
+                   <label for="baud">Baud:</label>
+                   <!--input type="select" class="form-control" id="baud"-->
+                   <select id="baud" class="form-control input-sm" disabled>
+                     <option val="230400">230400</option>
+                     <option val="115200" selected="selected">115200</option>
+                     <option val="57600">57600</option>
+                     <option val="38400">38400</option>
+                     <option val="19200">19200</option>
+                     <option val="9600">9600</option>
+                   </select>
+                 </div>
+                 <!-- <div class="checkbox">
+                   <label><input type="checkbox">Connect</label>
+                 </div> -->
+                 <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
+                 <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
+                 <a class="btn btn-default" id="connect" href="#"><i class="fa fa-cog"></i></a>
+               </form>
+
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop5" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>About</b> <span class="caret"></span></a>
+
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop5">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a>
                             </li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a>
@@ -143,6 +222,8 @@
                     </li>
                 </ul>
             </div>
+
+
             <!-- /.nav-collapse -->
         </div>
         <!-- /.container-fluid -->
@@ -151,7 +232,7 @@
 
 
 
-  <input type="file" class="filestyle" data-input="false" data-badge="false" data-size="sm" id="file" data-buttonName="btn-default btn-sm" data-buttonText="&nbsp;Open">
+  <!-- <input type="file" class="filestyle" data-input="false" data-badge="false" data-size="sm" id="file" data-buttonName="btn-default btn-sm" data-buttonText="&nbsp;Open"> -->
 
   </body>
 
