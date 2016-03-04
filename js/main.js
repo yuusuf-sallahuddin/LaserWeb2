@@ -3,10 +3,10 @@
 $(document).ready(function() {
 
   // Intialise
+  loadSettingsLocal();
+  getPortList();
   init3D();
   animate();
-  getPortList();
-  loadSettingsLocal();
 
   // Top toolbar Menu
 

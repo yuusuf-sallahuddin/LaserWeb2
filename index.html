@@ -172,23 +172,23 @@
 
                 <form class="navbar-form navbar-left" role="form">
                  <div class="form-group">
-                   <label for="port">Port:</label>
+                   <label for="port"><i class="fa fa-usb"></i></label>
                    <!--input type="select" class="form-control" id="port" -->
                    <select id="port" class="form-control" disabled>
                      <option val="no">Select port</option>
                    </select>
                  </div>
                  <div class="form-group">
-                   <label for="buffer">Buffer:</label>
+                   <label for="buffer"><i class="fa fa-database"></i></label>
                    <!--input type="select" class="form-control" id="baud"-->
                    <select id="buffer" class="form-control" disabled>
                      <option val="no">Select buffer</option>
                    </select>
                  </div>
                  <div class="form-group">
-                   <label for="baud">Baud:</label>
+                   <label for="baud"><i class="fa fa-tasks"></i></label>
                    <!--input type="select" class="form-control" id="baud"-->
-                   <select id="baud" class="form-control input-sm" disabled>
+                   <select id="baud" class="form-control" disabled>
                      <option val="230400">230400</option>
                      <option val="115200" selected="selected">115200</option>
                      <option val="57600">57600</option>
@@ -294,7 +294,8 @@
               <a href="#" class="list-group-item">
                 <h4 class="list-group-item-heading">Machine Settings</h4>
                 <p class="list-group-item-text">
-                  Configure LaserWeb to your machine specifics:
+                  Configure LaserWeb to your machine specifics:<br>
+                  <i>(NB: Page needs a refresh for these settings to take effect!)</i>
                 </p>
               </a>
             </div>
@@ -303,13 +304,13 @@
                 <div class="form-group">
                     <label for="laserXMax" class="control-label col-xs-3">X-Length</label>
                     <div class="col-xs-9">
-                        <input type="text" class="form-control" id="laserXMax" placeholder="400">
+                        <input type="text" class="form-control" id="laserXMax" placeholder="600">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="laserYMax" class="control-label col-xs-3">Y-Length</label>
                     <div class="col-xs-9">
-                        <input type="text" class="form-control" id="laserYMax" placeholder="600">
+                        <input type="text" class="form-control" id="laserYMax" placeholder="400">
                     </div>
                 </div>
 
