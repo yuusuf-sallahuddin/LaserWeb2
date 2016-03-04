@@ -90,7 +90,13 @@ getPortList = function () {
         getPortListCount = 0;
         wsSend("list");
     } else {
-        wsConnect('127.0.0.1');
+        var host = $('#spjsip').val();
+        if (host) {
+        console.log('Connecting SPJS at ', host);
+        wsConnect(host);
+        } else {
+          wsConnect('127.0.0.1');
+        }
         wsSend("list");
     }
 
