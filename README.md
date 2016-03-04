@@ -14,3 +14,7 @@ Eventually then LaserWeb can become a dev version to test out the craziness and 
 Let the Dev begin!
 
 (Note readme / wiki here will stay very quiet!   If you are a user, head over to https://github.com/openhardwarecoza/LaserWeb  - if you are a developer, talk to @openhardwarecoza or view the commit log!)
+
+#Testing
+
+You can test drive it live from [http://openhardwarecoza.github.io/LaserWeb2/](http://openhardwarecoza.github.io/LaserWeb2/)
