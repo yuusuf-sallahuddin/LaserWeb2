@@ -30,3 +30,13 @@
     cursor: pointer;
     display: block;
 }
+
+/* tab color */
+.nav-tabs>li>a {
+  color:#222;
+}
+
+/* active tab color */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #000;
+}

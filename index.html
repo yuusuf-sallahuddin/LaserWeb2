@@ -202,7 +202,7 @@
                  </div> -->
                  <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
                  <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
-                 <a class="btn btn-default" id="connect" href="#"><i class="fa fa-cog"></i></a>
+                 <a class="btn btn-default" id="settings" href="#" data-toggle="modal" data-target="#modal-settings"><i class="fa fa-cog"></i></a>
                </form>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -230,9 +230,150 @@
     </nav>
     <!-- /navbar-example -->
 
+  <!-- Main Body -->
 
 
-  <!-- <input type="file" class="filestyle" data-input="false" data-badge="false" data-size="sm" id="file" data-buttonName="btn-default btn-sm" data-buttonText="&nbsp;Open"> -->
+
+  <!-- End Main Body -->
+
+<!-- Nodals -->
+
+<!-- Software Settings Modal -->
+<div class="modal modal-fullscreen fade" id="modal-settings" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title" id="myModalLabel">LaserWeb Settings</h4>
+      </div>
+      <div class="modal-body">
+        <ul class="nav nav-tabs">
+          <li class="active"><a data-toggle="tab" href="#home">Downloads</a></li>
+          <li><a data-toggle="tab" href="#menu1">Machine</a></li>
+          <li><a data-toggle="tab" href="#menu2">G-Code</a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div id="home" class="tab-pane fade in active">
+            <br>
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Download</h4>
+                <p class="list-group-item-text">
+                  Download and run the SPJS Server to connect LaserWeb to your Machine:<br>
+                  V1.88 Build date: Feb 6, 2015
+                </p>
+              </a>
+            </div>
+
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="laserXMax" class="control-label col-xs-3">IP Address</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="spjsip" placeholder="127.0.0.1">
+                    </div>
+                </div>
+            </form>
+
+            <div class="list-group">
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_386.zip">Windows x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_amd64.zip">Windows x64</a>
+              <!--<a class="list-group-item" target="_blank" href="http://chilipeppr.com/downloads/v1.86/serial-port-json-server-1.86_darwin_amd64.zip">Mac OS X x64</a>-->
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_386.tar.gz">Linux x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Linux x64</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Raspberry Pi (Linux ARM)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Beagle Bone Black (Linux ARMv7)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Intel Edison (Linux x64)</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server/releases">Github Release Page</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server">Compile from source (Github)</a>
+            </div>
+          </div>
+          <div id="menu1" class="tab-pane fade">
+            <br>
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">Machine Settings</h4>
+                <p class="list-group-item-text">
+                  Configure LaserWeb to your machine specifics:
+                </p>
+              </a>
+            </div>
+            <form class="form-horizontal">
+              <br>
+                <div class="form-group">
+                    <label for="laserXMax" class="control-label col-xs-3">X-Length</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="laserXMax" placeholder="400">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="laserYMax" class="control-label col-xs-3">Y-Length</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="laserYMax" placeholder="600">
+                    </div>
+                </div>
+
+            </form>
+          </div>
+          <div id="menu2" class="tab-pane fade">
+            <br>
+            <form class="form-horizontal">
+            <div class="list-group">
+              <a href="#" class="list-group-item">
+                <h4 class="list-group-item-heading">G-Code Settings</h4>
+                <p class="list-group-item-text">
+                  Configure pre/post/control GCode commands:
+                </p>
+              </a>
+            </div>
+            <div class="form-group">
+                <label for="startgcode" class="control-label col-xs-3">Start G-Code</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" id="startgcode" placeholder="G28\nG90\nM80"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseron" class="control-label col-xs-3">Laser ON Command</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="laseron" placeholder="M3 / blank for firmwares that support G1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseroff" class="control-label col-xs-3">Laser OFF Command</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="laseroff" placeholder="M5 / blank for firmwares that support G1">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="laseroff" class="control-label col-xs-3">PWM Max S</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="lasermultiply" placeholder="255">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="homingseq" class="control-label col-xs-3">Homing Sequence</label>
+                <div class="col-xs-9">
+                    <input type="text" class="form-control" id="homingseq" placeholder="G28">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endgcode" class="control-label col-xs-3">End G-Code</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" id="endgcode" placeholder="M81\nG28\n"></textarea>
+                </div>
+            </div>
+          </form>
+
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" id="savesettings">Save</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 
   </body>
 

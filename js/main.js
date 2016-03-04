@@ -6,6 +6,7 @@ $(document).ready(function() {
   init3D();
   animate();
   getPortList();
+  loadSettingsLocal();
 
   // Top toolbar Menu
 
@@ -28,6 +29,10 @@ $(document).ready(function() {
     $('#port').find('option').remove().end()
     $('#buffer').find('option').remove().end()
     getPortList();
+	});
+
+  $('#savesettings').on('click', function() {
+		saveSettingsLocal();
 	});
 
 
@@ -83,3 +88,31 @@ function saveFile() {
     document.body.appendChild(downloadLink);
   };
 };
+
+localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode'];
+
+function saveSettingsLocal() {
+  for (i in localParams) {
+    var val = $('#'+localParams[i]).val(); // Read the value from form
+    console.log('Saving: ', localParams[i], ' : ', val);
+    localStorage.setItem(localParams[i], val);
+  };
+};
+
+function loadSettingsLocal() {
+  for (i in localParams) {
+    var val = localStorage.getItem(localParams[i]);
+    if (val) {
+      console.log('Loading: ', localParams[i], ' : ', val);
+      $('#'+localParams[i]).val(val) // Set the value to Form from Storage
+    };
+  };
+};
+
+function logSettingsLocal() {
+  for (var key in localStorage) {
+  console.log(key + ':' + localStorage[key]);
+}
+
+
+}
