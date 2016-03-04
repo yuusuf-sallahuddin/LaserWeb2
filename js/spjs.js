@@ -75,6 +75,9 @@ serialConnect = function (portname, baud, buf) {
       //$('#connect').html('Disconnect'); // Letting onPortOpen do this instead
       console.log('Connecting ', portname, ' at ', baud, ' using ', buf)
       wsSend("open /dev/" + portname + " " + baud + " " + buf);
+      localStorage.setItem("lastUsedPort", portname);
+      localStorage.setItem("lastUsedBuffer", buf);
+      localStorage.setItem("lastUsedBaud", baud);
   } else {
     console.log('Closing ', portname)
     wsSend("close /dev/" + portname);
@@ -291,7 +294,7 @@ onPortList = function (portlist) {
             //      availArgsHtml += "</select>" +
             //          //"</td>" +
             //          "";
-              }
+            }
            });
 
      } else {
@@ -308,6 +311,16 @@ onPortList = function (portlist) {
       console.log("algorithm:", availBuffers[i]);
       $("#buffer").append($("<option />").val(availBuffers[i]).text(availBuffers[i]));
      }
+
+
+
+     // Might as well pre-select the last-used port and buffer
+     var lastBuffer = localStorage.getItem("lastUsedBuffer")
+     var lastUsed = localStorage.getItem("lastUsedPort");
+     var lastBaud = localStorage.getItem("lastUsedBaud");
+     $("#port option:contains(" + lastUsed + ")").attr('selected', 'selected');
+     $("#buffer option:contains(" + lastBuffer + ")").attr('selected', 'selected');
+     $("#baud option:contains(" + lastBaud + ")").attr('selected', 'selected');
 
 
      // Now that we have a Portlist we can enable the relevant UI elements
