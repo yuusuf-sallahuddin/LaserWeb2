@@ -1,6 +1,26 @@
 var scene, camera, renderer;
 var geometry, material, mesh, helper;
 
+// Global Vars
+var container, stats;
+var camera, controls, scene, renderer;
+var clock = new THREE.Clock();
+var raycaster = new THREE.Raycaster();
+ raycaster.linePrecision = 0.2;
+var projector = new THREE.Projector();
+var directionVector = new THREE.Vector3();
+var SCREEN_HEIGHT = window.innerHeight;
+var SCREEN_WIDTH = window.innerWidth;
+var clickInfo = {
+  x: 0,
+  y: 0,
+  userHasClicked: false
+};
+//var statsNode = document.getElementById('stats');
+var marker;
+var laserxmax;
+var laserymax;
+
 function init3D() {
 
   scene = new THREE.Scene();
@@ -12,15 +32,15 @@ function init3D() {
         scene.remove(helper);
   }
 
-  var laserxmax = $('#laserXMax').val();
-  var laserymax = $('#laserYMax').val();
+  laserxmax = $('#laserXMax').val();
+  laserymax = $('#laserYMax').val();
 
   if (!laserxmax) {
-    var laserxmax = 200;
+    laserxmax = 200;
   };
 
   if (!laserymax) {
-    var laserymax = 200;
+    laserymax = 200;
   };
 
 console.log('Creating Gridhelper with X: ',laserxmax, ' and Y: ', laserymax )
@@ -52,16 +72,42 @@ console.log('Creating Gridhelper with X: ',laserxmax, ' and Y: ', laserymax )
   controls.enableRotate = false;
   controls.enableZoom = true; // optional
   controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
-
-  var geometry = new THREE.BoxGeometry( 200, 200, 200 );
-  var material = new THREE.MeshBasicMaterial({
-                    color: 0xaa0000,
-                });
 }
 
 function animate() {
 
       requestAnimationFrame( animate );
+
+      if (clickInfo.userHasClicked) {
+        console.log('Had a click');
+  clickInfo.userHasClicked = false;
+  //statsNode.innerHTML = '';
+  // The following will translate the mouse coordinates into a number
+  // ranging from -1 to 1, where
+  //      x == -1 && y == -1 means top-left, and
+  //      x ==  1 && y ==  1 means bottom right
+  var x = ( clickInfo.x / SCREEN_WIDTH ) * 2 - 1;
+  var y = -( clickInfo.y / SCREEN_HEIGHT ) * 2 + 1;
+  // Now we set our direction vector to those initial values
+  //directionVector.set(x, y, 1);
+  // Unproject the vector
+  projector.unprojectVector(directionVector, camera);
+  // Substract the vector representing the camera position
+  directionVector.sub(camera.position);
+  // Normalize the vector, to avoid large numbers from the
+  // projection and substraction
+  directionVector.normalize();
+  // Now our direction vector holds the right numbers!
+  raycaster.set(camera.position, directionVector);
+  // Ask the raycaster for intersects with all objects in the scene:
+  // (The second arguments means "recursive")
+  var intersects = raycaster.intersectObjects(scene.children, true);
+  if (intersects.length) {
+    var target = intersects[0].object;
+    console.log('Name: ' + target.name + '<br>' + 'ID: ' + target.id);
+  }
+}
+
       // mesh.rotation.x += 0.01;
       // mesh.rotation.y += 0.02;
       renderer.render( scene, camera );
@@ -179,3 +225,14 @@ viewExtents = function (objecttosee) {
   //this.controls.noRoll = true;
   //this.controls.noRotate = true;
 };
+
+function colorobj(name) {
+  var object = scene.getObjectByName( name, true );
+  console.log(object)
+  // for (i=0; i<dxfObject.children.length; i++) {
+  //     dxfObject.children[i].material.color.setHex(0x000000);
+  //     dxfObject.children[i].material.opacity = 0.3;
+  // }
+  object.material.color.setHex(0xFF0000);
+  object.material.needsUpdate = true;
+}
