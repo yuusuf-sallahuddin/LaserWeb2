@@ -56,7 +56,7 @@ $(document).ready(function() {
     //viewer.addEventListener('mousedown', stopEvent, false);
     //viewer.addEventListener('mouseup', stopEvent, false);
 
-
+    $('.combobox').combobox();
 
 });
 // End of document.reader
