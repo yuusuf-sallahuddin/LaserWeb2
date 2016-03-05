@@ -1,6 +1,4 @@
 
-(https://raw.githubusercontent.com/openhardwarecoza/LaserWeb2/laserweb2.jpg)
-
 # LaserWeb2
 Yip its time to start working on its successor already!
 
