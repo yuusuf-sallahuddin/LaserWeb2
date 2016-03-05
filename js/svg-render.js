@@ -2,6 +2,9 @@ var options = {};
 
 drawSvg = function(file) {
 
+    if (typeof(fileObject) !== 'undefined') {
+      scene.remove(fileObject);
+    };
     // see if file is valid
     if (file.length == 0) return;
 
@@ -10,10 +13,11 @@ drawSvg = function(file) {
         // do nothing
         console.warn("there was an error with svg file");
     } else {
-        this.mySceneGroup = this.svgParentGroup;
+        fileObject = this.svgParentGroup;
         //this.sceneReAddMySceneGroup();
-
-        scene.add(this.mySceneGroup)
+        fileObject.translateX((laserxmax / 2) * -1);
+        fileObject.translateY((laserymax / 2) * -1);
+        scene.add(fileObject)
 
         console.log('sceneGroup', this.mySceneGroup);
 
@@ -214,9 +218,9 @@ extractSvgPathsFromSVGFile = function(file) {
 // since svg has top left as 0,0 we need to flip
 // the whole thing on the x axis to get 0,0
 // on the lower left like gcode uses
-svgGroup.scale.y = -0.2;
-svgGroup.scale.x = 0.2;
-svgGroup.scale.z = 0.2;
+svgGroup.scale.y = -1;
+// svgGroup.scale.x = 0.2;
+// svgGroup.scale.z = 0.2;
 
 // shift whole thing so it sits at 0,0
 

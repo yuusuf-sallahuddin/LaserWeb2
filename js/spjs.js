@@ -1,5 +1,5 @@
-
 var isWsConnected = null;
+var isConnected;
 
 wsConnect=  function (host) {
   //host = '127.0.0.1';
@@ -106,10 +106,10 @@ getPortList = function () {
 
 
 onWsMessage = function (msg) {
-  console.log("inside onWsMessage. msg: " + msg);
+  //console.log("inside onWsMessage. msg: " + msg);
   if (msg.match(/^\{/)) {
      // it's json
-     console.log("it is json");
+     //console.log("it is json");
      var data = null;
      //try {
          data = $.parseJSON(msg);
@@ -232,14 +232,14 @@ onWsMessage = function (msg) {
 
 
 onVersion = function(version) {
-  console.log("got version cmd. version:", version);
+  //console.log("got version cmd. version:", version);
   version = version;
   versionFloat = parseFloat(version);
   $('#spjs-version').text("SPJS v" + version + " ");
 };
 
 onPortList = function (portlist) {
-     console.group("serial port widget onPortList");
+     //console.group("serial port widget onPortList");
      //console.log("inside onPortList");
      var html = "";
      var htmlFirst = ""; // show the connected ports first in the HTML
@@ -258,21 +258,21 @@ onPortList = function (portlist) {
 
      if (portlist.length > 0) {
          $.each(portlist, function (portlistIndex, item) {
-             console.log("looping thru ports. item:", item);
+             //console.log("looping thru ports. item:", item);
 
              // see if this is deleted
              if (item.isDeleted) {
-                 console.log("this port is deleted so skipping");
+                 //console.log("this port is deleted so skipping");
                  return;
              }
 
              // create friendly version of port name
              item.DisplayPort = item.Name.replace("/dev/", "");
 
-             console.log('Name: ', item.DisplayPort)
+             //console.log('Name: ', item.DisplayPort)
              options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
              if ('IsOpen' in item && item.IsOpen == true) {
-               console.log('Port ', item.DisplayPort, ' is already open');
+               //console.log('Port ', item.DisplayPort, ' is already open');
              };
 
 
@@ -312,9 +312,9 @@ onPortList = function (portlist) {
          return $.inArray(v ,availBuffers) === k;
      });
 
-     console.log('Buffer List', availBuffers);
+    // console.log('Buffer List', availBuffers);
      for (i = 0; i < availBuffers.length; i++) {
-      console.log("algorithm:", availBuffers[i]);
+  //    console.log("algorithm:", availBuffers[i]);
       $("#buffer").append($("<option />").val(availBuffers[i]).text(availBuffers[i]));
      }
 
@@ -330,10 +330,17 @@ onPortList = function (portlist) {
 
 
      // Now that we have a Portlist we can enable the relevant UI elements
-	   $('#connect').removeClass('disabled')
-     $("#port").prop("disabled", false);
-     $("#baud").prop("disabled", false);
-     $("#buffer").prop("disabled", false);
+
+     if ( isConnected ) {
+       console.log('Ignoring Portlist since we are already connected on this Endpoint');
+     } else {
+       console.log('Processing Portlist');
+       $('#connect').removeClass('disabled')
+       $("#port").prop("disabled", false);
+       $("#baud").prop("disabled", false);
+       $("#buffer").prop("disabled", false);
+     }
+
      //          availArgsHtml += "<option value=\"" + alg + "\">" + alg + "</option>";
     //  });
     //  html = htmlFirst + html;
@@ -477,6 +484,7 @@ onPortOpen = function(data) {
     $("#port").prop("disabled", true);
     $("#baud").prop("disabled", true);
     $("#buffer").prop("disabled", true);
+    isConnected = true;
     console.group("onPortOpen");
     console.log("Open a port: ", data, data.Port);
     var portname = data.Port;
@@ -528,6 +536,7 @@ onPortClose = function(data) {
     $("#port").prop("disabled", false);
     $("#baud").prop("disabled", false);
     $("#buffer").prop("disabled", false);
+    isConnected = false;
     // $('#' + portname + "Cb").prop('checked', false);
     // $('#' + portname + "Row .glyphicon-exclamation-sign").addClass("hidden");
     //
@@ -539,7 +548,8 @@ onPortOpenFail = function(data) {
     var portname = data.Port;
     portname = toSafePortName(portname);
     $('#connect').html('Connect');
-    // $('#' + portname + "Cb").prop('checked', false);
+    isConnected = false;
+    // $('#' + portname + "Cb").prop('checked', false);7
     // //$('#' + portname + "Row .glyphicon-exclamation-sign").prop("title", data.Desc);
     // $('#' + portname + "Row .glyphicon-exclamation-sign").removeClass("hidden");
     // $('#' + portname + "Row .glyphicon-exclamation-sign").tooltip({

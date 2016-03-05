@@ -1,16 +1,18 @@
 var scene, camera, renderer;
-var geometry, material, mesh, helper;
+var geometry, material, mesh, helper, axes, axesgrp;
+
 
 // Global Vars
 var container, stats;
 var camera, controls, scene, renderer;
 var clock = new THREE.Clock();
 var raycaster = new THREE.Raycaster();
- raycaster.linePrecision = 0.2;
+ raycaster.linePrecision = 0.1;
 var projector = new THREE.Projector();
 var directionVector = new THREE.Vector3();
 var SCREEN_HEIGHT = window.innerHeight;
 var SCREEN_WIDTH = window.innerWidth;
+ var INTERSECTED;
 var clickInfo = {
   x: 0,
   y: 0,
@@ -20,33 +22,62 @@ var clickInfo = {
 var marker;
 var laserxmax;
 var laserymax;
+var lineincrement = 50
 
 function init3D() {
 
-  scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-  camera.position.z = 395;
+// ThreeJS Render/Control/Camera
+scene = new THREE.Scene();
+camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+camera.position.z = 295;
+
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
+{
+      console.log('Running on iOS');
+      renderer = new THREE.WebGLRenderer();
+}
+    else if( userAgent.match( /Android/i ) )
+{
+    console.log('Running on Android');
+    renderer = new THREE.CanvasRenderer();
+}
+  else
+{
+    console.log('Running on unknown/Desktop');
+    renderer = new THREE.WebGLRenderer();
+}
+renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
+renderer.clear();
+$('#renderArea').append(renderer.domElement);
+
+controls = new THREE.OrbitControls( camera, renderer.domElement );
+controls.target.set( 0, 0, 0 ); // view direction perpendicular to XY-plane
+controls.enableRotate = false;
+controls.enableZoom = true; // optional
+controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
+// /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
 
 
-  if (helper) {
+// LaserWEB UI Grids
+if (helper) {
         scene.remove(helper);
-  }
+}
 
-  laserxmax = $('#laserXMax').val();
-  laserymax = $('#laserYMax').val();
+laserxmax = $('#laserXMax').val();
+laserymax = $('#laserYMax').val();
 
-  if (!laserxmax) {
+if (!laserxmax) {
     laserxmax = 200;
-  };
+};
 
-  if (!laserymax) {
+if (!laserymax) {
     laserymax = 200;
-  };
+};
 
-console.log('Creating Gridhelper with X: ',laserxmax, ' and Y: ', laserymax )
-
-
-  helper = new THREE.GridHelper(laserxmax, laserymax, 10);
+helper = new THREE.GridHelper(laserxmax, laserymax, 10);
               helper.setColors(0x0000ff, 0x707070);
               helper.position.y = 0;
               helper.position.x = 0;
@@ -59,67 +90,141 @@ console.log('Creating Gridhelper with X: ',laserxmax, ' and Y: ', laserymax )
               this.grid = helper;
               //this.sceneAdd(this.grid);
   //console.log('[VIEWER] - added Helpert');
-  scene.add(helper);
+scene.add(helper);
 
-  renderer = new THREE.WebGLRenderer();
-  renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  renderer.clear();
-  $('#renderArea').append(renderer.domElement);
+if (axesgrp) {
+    scene.remove(axesgrp);
+}
+axesgrp = new THREE.Object3D();
 
-  controls = new THREE.OrbitControls( camera, renderer.domElement );
-  controls.target.set( 0, 0, 0 ); // view direction perpendicular to XY-plane
-  controls.enableRotate = false;
-  controls.enableZoom = true; // optional
-  controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
+var x = [];
+var y = [];
+for (var i = 0; i <= laserxmax ; i+=lineincrement) {
+     x[i] = this.makeSprite(this.scene, "webgl", {
+       x: i,
+       y: -14,
+       z: 0,
+       text: i,
+       color: "#ff0000"
+     });
+     axesgrp.add(x[i]);
+}
+
+for (var i = 0; i <= laserymax ; i+=lineincrement) {
+
+   y[i] = this.makeSprite(this.scene, "webgl", {
+     x: -14,
+     y: i,
+     z: 0,
+     text: i,
+     color: "#006600"
+   });
+   axesgrp.add(y[i]);
+}
+   // add axes labels
+var xlbl = this.makeSprite(this.scene, "webgl", {
+     x: laserxmax,
+     y: 0,
+     z: 0,
+     text: "X",
+     color: "#ff0000"
+});
+var ylbl = this.makeSprite(this.scene, "webgl", {
+     x: 0,
+     y: laserymax,
+     z: 0,
+     text: "Y",
+     color: "#006600"
+});
+var zlbl = this.makeSprite(this.scene, "webgl", {
+     x: 0,
+     y: 0,
+     z: 125,
+     text: "Z",
+     color: "#0000ff"
+});
+
+
+axesgrp.add(xlbl);
+axesgrp.add(ylbl);
+//axesgrp.add(zlbl); Laser don't have Z - but CNCs do
+
+var materialX = new THREE.LineBasicMaterial({
+	color: 0xcc0000
+});
+
+var materialY = new THREE.LineBasicMaterial({
+  color: 0x00cc00
+});
+
+var geometryX = new THREE.Geometry();
+geometryX.vertices.push(
+	   new THREE.Vector3( 0, 0, 0 ),
+	   new THREE.Vector3( 0, (laserymax - 5), 0 )
+);
+
+var geometryY = new THREE.Geometry();
+geometryY.vertices.push(
+	   new THREE.Vector3( 0, 0, 0 ),
+	   new THREE.Vector3( (laserxmax -5), 0, 0 )
+);
+
+var line1 = new THREE.Line( geometryX, materialY );
+var line2 = new THREE.Line( geometryY, materialX );
+axesgrp.add( line1 );
+axesgrp.add( line2 );
+
+axesgrp.translateX(laserxmax /2 * -1);
+axesgrp.translateY(laserymax /2 * -1);
+//console.log('[VIEWER] - added Axesgrp');
+scene.add(axesgrp);
+
 }
 
 function animate() {
 
-      requestAnimationFrame( animate );
+  requestAnimationFrame( animate );
 
-      if (clickInfo.userHasClicked) {
-        console.log('Had a click');
-  clickInfo.userHasClicked = false;
-  //statsNode.innerHTML = '';
-  // The following will translate the mouse coordinates into a number
-  // ranging from -1 to 1, where
-  //      x == -1 && y == -1 means top-left, and
-  //      x ==  1 && y ==  1 means bottom right
-  var x = ( clickInfo.x / SCREEN_WIDTH ) * 2 - 1;
-  var y = -( clickInfo.y / SCREEN_HEIGHT ) * 2 + 1;
-  // Now we set our direction vector to those initial values
-  //directionVector.set(x, y, 1);
-  // Unproject the vector
-  projector.unprojectVector(directionVector, camera);
-  // Substract the vector representing the camera position
-  directionVector.sub(camera.position);
-  // Normalize the vector, to avoid large numbers from the
-  // projection and substraction
-  directionVector.normalize();
-  // Now our direction vector holds the right numbers!
-  raycaster.set(camera.position, directionVector);
-  // Ask the raycaster for intersects with all objects in the scene:
-  // (The second arguments means "recursive")
-  var intersects = raycaster.intersectObjects(scene.children, true);
-  if (intersects.length) {
-    var target = intersects[0].object;
-    console.log('Name: ' + target.name + '<br>' + 'ID: ' + target.id);
-  }
-}
+  checkIntersects();
 
       // mesh.rotation.x += 0.01;
       // mesh.rotation.y += 0.02;
       renderer.render( scene, camera );
 }
 
-$(window).on('resize', function() {
-  //renderer.setSize(element.width(), element.height());
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  controls.reset();
-});
+checkIntersects = function () {
+  if (clickInfo.userHasClicked) {
+    // /console.log('Had a click');
+    clickInfo.userHasClicked = false;
+    //statsNode.innerHTML = '';
+    // The following will translate the mouse coordinates into a number
+    // ranging from -1 to 1, where
+    //      x == -1 && y == -1 means top-left, and
+    //      x ==  1 && y ==  1 means bottom right
+    var x = ( clickInfo.x / SCREEN_WIDTH ) * 2 - 1;
+    var y = -( clickInfo.y / SCREEN_HEIGHT ) * 2 + 1;
+    console.log('clicked on ',x, ' ', y)
+    // Now we set our direction vector to those initial values
+    //directionVector.set(x, y, 1);
+    // Unproject the vector
+    projector.unprojectVector(directionVector, camera);
+    // Substract the vector representing the camera position
+    directionVector.sub(camera.position);
+    // Normalize the vector, to avoid large numbers from the
+    // projection and substraction
+    directionVector.normalize();
+    // Now our direction vector holds the right numbers!
+    raycaster.set(camera.position, directionVector);
+    // Ask the raycaster for intersects with all objects in the scene:
+    // (The second arguments means "recursive")
+    var intersects = raycaster.intersectObjects(scene.children, true);
+    if (intersects.length) {
+       var target = intersects[0].object;
+       console.log('Name: ' + target.name + '<br>' + 'ID: ' + target.id);
+    };
+  };
+};
+
 
 viewExtents = function (objecttosee) {
   //console.log("viewExtents. object.userData:", this.object.userData);
@@ -236,3 +341,69 @@ function colorobj(name) {
   object.material.color.setHex(0xFF0000);
   object.material.needsUpdate = true;
 }
+
+
+function makeSprite(scene, rendererType, vals) {
+  var canvas = document.createElement('canvas'),
+      context = canvas.getContext('2d'),
+      metrics = null,
+      textHeight = 100,
+      textWidth = 0,
+      actualFontSize = 10;
+  var txt = vals.text;
+  if (vals.size) actualFontSize = vals.size;
+
+  context.font = "normal " + textHeight + "px Arial";
+  metrics = context.measureText(txt);
+  var textWidth = metrics.width;
+
+  canvas.width = textWidth;
+  canvas.height = textHeight;
+  context.font = "normal " + textHeight + "px Arial";
+  context.textAlign = "center";
+  context.textBaseline = "middle";
+  //context.fillStyle = "#ff0000";
+  context.fillStyle = vals.color;
+
+  context.fillText(txt, textWidth / 2, textHeight / 2);
+
+  var texture = new THREE.Texture(canvas);
+  texture.needsUpdate = true;
+	texture.minFilter = THREE.LinearFilter;
+
+  var material = new THREE.SpriteMaterial({
+      map: texture,
+      useScreenCoordinates: false,
+      transparent: true,
+      opacity: 0.6
+  });
+  material.transparent = true;
+  //var textObject = new THREE.Sprite(material);
+  var textObject = new THREE.Object3D();
+  textObject.position.x = vals.x;
+  textObject.position.y = vals.y;
+  textObject.position.z = vals.z;
+  var sprite = new THREE.Sprite(material);
+  textObject.textHeight = actualFontSize;
+  textObject.textWidth = (textWidth / textHeight) * textObject.textHeight;
+  if (rendererType == "2d") {
+      sprite.scale.set(textObject.textWidth / textWidth, textObject.textHeight / textHeight, 1);
+  } else {
+      sprite.scale.set(textWidth / textHeight * actualFontSize, actualFontSize, 1);
+  }
+
+  textObject.add(sprite);
+
+  //scene.add(textObject);
+  return textObject;
+}
+
+
+// Global Function to keep three fullscreen
+$(window).on('resize', function() {
+  //renderer.setSize(element.width(), element.height());
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  controls.reset();
+});
