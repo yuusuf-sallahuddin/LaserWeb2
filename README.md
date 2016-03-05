@@ -1,4 +1,4 @@
-https://github.com/openhardwarecoza/LaserWeb2/blob/gh-pages/laserweb2.jpg
+!alt tag (https://github.com/openhardwarecoza/LaserWeb2/blob/gh-pages/laserweb2.jpg)
 
 
 # LaserWeb2
