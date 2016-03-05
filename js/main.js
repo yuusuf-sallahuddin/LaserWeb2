@@ -3,10 +3,12 @@ $(document).ready(function() {
 
   // Intialise
   loadSettingsLocal();
+  spjsInit();
   getPortList();
   init3D();
   animate();
   filePrepInit();
+  initJog();
 
   // Top toolbar Menu
 
@@ -79,6 +81,7 @@ function readFile(evt) {
               getSettings();
               drawDXF(dxf);
               currentWorld();
+              printLog('DXF Opened', '#000000');
             };
 
       } else if (f.name.match(/.svg$/i)) {
@@ -91,6 +94,7 @@ function readFile(evt) {
               getSettings();
               drawSvg(svg);
               currentWorld();
+              printLog('SVG Opened', '#000000');
             };
 
       } else if (f.name.match(/.gcode$/i)) {
@@ -150,8 +154,11 @@ function loadSettingsLocal() {
 
 function logSettingsLocal() {
   for (var key in localStorage) {
-  console.log(key + ':' + localStorage[key]);
-}
+    console.log(key + ':' + localStorage[key]);
+  };
+};
 
-
-}
+function printLog(text, color) {
+  $('#console').append('<p class="pf" style="color: '+ color +';">' +text);
+  $('#console').scrollTop($("#console")[0].scrollHeight - $("#console").height());
+};

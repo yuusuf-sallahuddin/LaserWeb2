@@ -1,6 +1,19 @@
 var isWsConnected = null;
 var isConnected;
 
+function spjsInit() {
+    $('#sendCommand').on('click', function() {
+      wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+      $('#command').val('');
+    });
+};
+
+function sendGcode(gcode) {
+  if (isConnected) {
+      wsSend('send /dev/' + $('#port').val() + ' ' + gcode );
+  };
+};
+
 wsConnect=  function (host) {
   //host = '127.0.0.1';
   fullurl = "ws://" + host + ":8989/ws";
@@ -63,6 +76,7 @@ wsConnect=  function (host) {
 wsSend = function (msg) {
   if (isWsConnected) {
     conn.send(msg);
+    console.log('Sending: ', msg);
   } else {
     console.log("Tried to send message, but we are not connected to serial port ajax server.");
   }
@@ -173,6 +187,32 @@ onWsMessage = function (msg) {
      } else if (data && data.Hostname) {
          onSpjsName(data.Hostname);
      } else if (data && data.P && data.D) {
+
+
+          var activePort = $('#port').val();
+          // Now we only pay attention to data from the port we are connected to
+          if (data.P.indexOf(activePort) != -1 && isConnected) {
+            printLog('Port '+ data.P + ' data: ' + data.D, '#000000');
+            var data = data.D;
+            if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
+
+              console.log('posData: ', data);
+              data = data.replace(/:/g,' ');
+              data = data.replace(/X/g,' ');
+              data = data.replace(/Y/g,' ');
+              data = data.replace(/Z/g,' ');
+              data = data.replace(/E/g,' ');
+              var posArray = data.split(/(\s+)/);
+              $('#mX').html('X: '+posArray[4]);
+              $('#mY').html('Y: '+posArray[6]);
+              $('#mZ').html('Z: '+posArray[8]);
+              // cylinder.position.x = (parseInt(posArray[4],10) - (laserxmax /2));
+              // cylinder.position.y = (parseInt(posArray[6],10) - (laserymax /2));
+              // cylinder.position.z = (parseInt(posArray[8],10) + 20);
+            };
+          };
+
+
 
          // we got actual raw serial port data
          // we need to parse into newlines and buffer
@@ -480,6 +520,7 @@ onSpjsName = function(spjsName) {
 
 onPortOpen = function(data) {
     $('#refreshPort').addClass('disabled');
+    $('#sendCommand').removeClass('disabled');
     $('#connect').html('Disconnect'); // Update Button Text
     $("#port").prop("disabled", true);
     $("#baud").prop("disabled", true);
@@ -529,6 +570,7 @@ onPortOpen = function(data) {
 };
 onPortClose = function(data) {
     $('#refreshPort').removeClass('disabled');
+    $('#sendCommand').addClass('disabled');
     console.log("onPortClose Close a port: ", data, data.Port);
     var portname = data.Port;
     portname = toSafePortName(portname);

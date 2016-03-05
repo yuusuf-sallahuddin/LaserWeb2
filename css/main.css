@@ -40,3 +40,17 @@
 .nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
   color: #000;
 }
+
+#console {
+	height: 200px;
+	width: auto;
+	overflow-y: auto;
+	text-align: left;
+	background-color: #fff;
+	padding: 10px;
+	font-size: 10px;
+}
+
+.pf {
+	white-space: pre;
+}
