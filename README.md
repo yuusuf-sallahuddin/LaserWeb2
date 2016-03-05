@@ -1,5 +1,5 @@
-!alt tag (https://github.com/openhardwarecoza/LaserWeb2/blob/gh-pages/laserweb2.jpg)
 
+(https://raw.githubusercontent.com/openhardwarecoza/LaserWeb2/master/laserweb.PNG)
 
 # LaserWeb2
 Yip its time to start working on its successor already!
