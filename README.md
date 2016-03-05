@@ -1,5 +1,5 @@
 
-![alt tag](https://raw.githubusercontent.com/openhardwarecoza/LaserWeb2/laserweb2.jpg)
+https://github.com/openhardwarecoza/LaserWeb2/laserweb2.jpg
 
 
 # LaserWeb2
