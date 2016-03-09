@@ -1,10 +1,19 @@
 var options = {};
+var shape = null;
 
 drawSvg = function(file) {
 
     if (typeof(fileObject) !== 'undefined') {
       scene.remove(fileObject);
     };
+
+    if ( typeof(inflateGrp) != 'undefined' ) {
+      scene.remove(inflateGrp);
+    }
+
+    if ( typeof(object) != 'undefined' ) {
+      scene.remove(object);
+    }
     // see if file is valid
     if (file.length == 0) return;
 
@@ -21,7 +30,8 @@ drawSvg = function(file) {
 
         console.log('sceneGroup', this.mySceneGroup);
 
-        viewExtents(this.mySceneGroup)
+        viewExtents(fileObject)
+        $('#layers > tbody:last-child').append('<tr><td>SVG</td><td>  <div class="input-group" style="margin-bottom:5px; width: 100%;"><input class="form-control" name=sp0 id=sp0 value=3200><span class="input-group-addon"  style="width: 30px;">mm/m</span><input class="form-control" name=pwr0 id=pwr0 value=100><span class="input-group-addon"  style="width: 30px;">%</span></div></td></tr>');
 
         //scene.add(  this.mySceneGroup)
         // get the new 3d viewer object centered on camera
@@ -149,12 +159,13 @@ extractSvgPathsFromSVGFile = function(file) {
         //debugger;
         var paths = that.transformSVGPath(path.realPath);
         // var paths = that.transformSVGPath(path.attr('d'));
-        for (var pathindex in paths) {
+        //for (var pathindex in paths) {
+        for (pathindex = 0; pathindex < paths.length; pathindex++ ) {
 
             var shape = paths[pathindex];
 
             shape.autoClose = true;
-            console.log("shape:", shape);
+            console.log("shape: Number", pathindex , "Value: ", shape);
 
             if (opts.cut == "dashed") {
 
@@ -229,6 +240,8 @@ var bbox = new THREE.Box3().setFromObject(svgGroup);
 console.log("bbox for shift:", bbox);
 svgGroup.position.x += -1 * bbox.min.x;
 svgGroup.position.y += -1 * bbox.min.y;
+svgxpos = bbox.min.x;
+svgypos = bbox.min.y;
 //textGroup.position.z = 0;
 
 // now that we have an svg that we have flipped and shifted to a zero position

@@ -82,9 +82,18 @@
 
     <!-- Three CAM -->
     <script type="text/javascript" src="js/fileprep.js"></script>
+    <script type="text/javascript" src="js/threegcode.js"></script>
+    <script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
 
     <!-- Jog Widget -->
     <script type="text/javascript" src="js/jog.js"></script>
+
+    <!-- Smoothie Ethernet -->
+    <script type="text/javascript" src="js/smoothie.js"></script>
+
+    <!-- Gcode Viewer -->
+    <script src="lib/gcode-viewer/gcode-parser.js"></script>
+    <script src="lib/gcode-viewer/ui.js"></script>
 
 
 
@@ -124,7 +133,7 @@
                     <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" onclick="controls.reset();"><i class="fa fa-search fa-fw"></i>Reset</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="viewReset"><i class="fa fa-search fa-fw"></i>Reset</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -259,32 +268,79 @@
        <!-- End Module DRO -->
 
        <!-- Module CAM -->
-       <div class="list-group" id="cammodule" style="display: none;">
+       <div class="list-group" id="cammodule" >
          <span class="list-group-item">
            <h4 class="list-group-item-heading">Prepare Job<a data-toggle="collapse" href="#camBody" aria-expanded="false" aria-controls="camBody"><span class="pull-right"><i class="fa fa-bars" style="color: #aaa;"></i></span></a></h4>
            <div class="collapse in" id="camBody">
            <p class="list-group-item-text">
-             <div class="btn-group" role="group" aria-label="cam">
-               <!-- Row 2 -->
-              <div class="input-group" style="width: 100%;">
-                <span class="input-group-addon"  >Scale:</span>
-                <div class="input-group">
-                  <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
-                  <span class="input-group-addon"  >%</span>
-                </div>
-              </div>
-              <p>
-              <div class="input-group" style="width: 100%;">
-                <span class="input-group-addon"  >Position:</span>
-                <div class="input-group">
-                  <input type="number" class="form-control  input-sm" value="0" id="xpos" style="text-align:right;">
-                  <span class="input-group-addon"  >X</span>
-                  <input type="number" class="form-control  input-sm" value="0" id="ypos" style="text-align:right;">
-                  <span class="input-group-addon"  >Y</span>
-                </div>
-              </div>
-               </div>
-             </p>
+
+             <!-- Nav tabs -->
+             <ul class="nav nav-tabs" role="tablist">
+                 <li class="active"><a href="#preptab" role="tab" data-toggle="tab">Prepare</a>
+                 </li>
+                 <li><a href="#convtab" role="tab" data-toggle="tab">Convert</a></li>
+                 <li><a href="#gcodetab" role="tab" data-toggle="tab">Gcode</a></li>
+             </ul>
+             <!-- Tab panes -->
+
+             <!-- Tab 1 -->
+             <div class="tab-content">
+                 <div class="tab-pane active" id="preptab">
+                   <div class="btn-group" role="group" aria-label="cam">
+                     <!-- Row 2 -->
+                    <div class="input-group" style="width: 100%;">
+                      <span class="input-group-addon"  >Tool Offset:</span>
+                      <div class="input-group">
+                        <input type="number" class="form-control  input-sm" value="1" id="inflateVal" style="text-align:right;">
+                        <span class="input-group-addon"  >mm</span>
+                      </div>
+                    </div>
+                    <p>
+                    <div class="input-group" style="width: 100%;">
+                      <span class="input-group-addon"  >Scale:</span>
+                      <div class="input-group">
+                        <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
+                        <span class="input-group-addon"  >%</span>
+                      </div>
+                    </div>
+                    <p>
+                    <div class="input-group" style="width: 100%;">
+                      <span class="input-group-addon"  >Position:</span>
+                      <div class="input-group">
+                        <input type="number" class="form-control  input-sm" value="0" id="xpos" style="text-align:right;">
+                        <span class="input-group-addon"  >X</span>
+                        <input type="number" class="form-control  input-sm" value="0" id="ypos" style="text-align:right;">
+                        <span class="input-group-addon"  >Y</span>
+                      </div>
+                    </div>
+                   </div>
+                  </div>
+
+                 <!-- Tab 2 -->
+                 <div class="tab-pane" id="convtab">
+                   <table class="table table-hover table-striped" id="layers">
+                     <caption>Configure parameters per layer</caption>
+                     <div class="btn-group btn-group-justified" role="group" aria-label="gengcode">
+                       <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="generategcode">Generate G-Code</button></div>
+                     </div>
+
+                     <thead>
+                         <tr>
+                           <th>Layer</th>
+                           <th>Settings</th>
+                         </tr>
+                     </thead>
+                     <tbody id="layersbody">
+                     </tbody>
+                   </table>
+                 </div>
+
+                 <!-- Tab 3 -->
+                 <div class="tab-pane" id="gcodetab">
+                     <textarea id="gcodepreview" style="width: 100%; height: 100px ;"></textarea>
+                 </div>
+
+             </div>
            </div>
          </span>
        </div>
@@ -422,31 +478,37 @@
             <div class="form-group">
                 <label for="laseron" class="control-label col-xs-3">Laser ON Command</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="laseron" placeholder="M3 / blank for firmwares that support G1">
+                    <input type="text" class="form-control" id="laseron" placeholder="M3 / blank for firmwares that support G1"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="laseroff" class="control-label col-xs-3">Laser OFF Command</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="laseroff" placeholder="M5 / blank for firmwares that support G1">
+                    <input type="text" class="form-control" id="laseroff" placeholder="M5 / blank for firmwares that support G1"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="laseroff" class="control-label col-xs-3">PWM Max S</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="lasermultiply" placeholder="255">
+                    <input type="text" class="form-control" id="lasermultiply" placeholder="255"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="homingseq" class="control-label col-xs-3">Homing Sequence</label>
                 <div class="col-xs-9">
-                    <input type="text" class="form-control" id="homingseq" placeholder="G28">
+                    <input type="text" class="form-control" id="homingseq" placeholder="G28"></input>
                 </div>
             </div>
             <div class="form-group">
                 <label for="endgcode" class="control-label col-xs-3">End G-Code</label>
                 <div class="col-xs-9">
                     <textarea class="form-control" id="endgcode" placeholder="M81\nG28\n"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="endgcode" class="control-label col-xs-3">Travel Moves (mm/min)</label>
+                <div class="col-xs-9">
+                    <textarea class="form-control" id="rapidspeed" placeholder="2000"></textarea>
                 </div>
             </div>
           </form>

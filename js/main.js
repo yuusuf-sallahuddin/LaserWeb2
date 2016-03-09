@@ -10,6 +10,8 @@ $(document).ready(function() {
   filePrepInit();
   initJog();
 
+   $('#inflateVal').change(onInflateChange.bind(this));
+
   // Top toolbar Menu
 
   //File -> Open
@@ -20,6 +22,20 @@ $(document).ready(function() {
   $('#save').on('click', function() {
 	  saveFile();
 	});
+
+   // View -> reset
+   $('#viewReset').on('click', function() {
+ 		  if ( typeof(object) != 'undefined' ) {
+        viewExtents(object);
+      } else if ( typeof(inflateGrp) != 'undefined' ) {
+        viewExtents(inflateGrp);
+      } else if ( typeof(fileObject) != 'undefined' ) {
+        viewExtents(fileObject);
+      } else {
+        viewExtents(helper);
+      };
+
+ 	 });
 
   // Connection Toolbar
   $('#connect').on('click', function() {
@@ -82,6 +98,7 @@ function readFile(evt) {
               drawDXF(dxf);
               currentWorld();
               printLog('DXF Opened', '#000000');
+              $('#cammodule').show();
             };
 
       } else if (f.name.match(/.svg$/i)) {
@@ -95,10 +112,17 @@ function readFile(evt) {
               drawSvg(svg);
               currentWorld();
               printLog('SVG Opened', '#000000');
+              $('#cammodule').show();
             };
 
       } else if (f.name.match(/.gcode$/i)) {
-            console.log(f.name + " is a GCODE filee");
+             r.readAsText(evt.target.files[0]);
+             r.onload = function(event) {
+               document.getElementById('gcodepreview').value = this.result;
+               openGCodeFromText();
+               printLog('GCODE Opened', '#000000');
+               $('#cammodule').hide();
+             };
       } else {
             console.log(f.name + " is probably a Raster");
       }
@@ -108,9 +132,7 @@ function readFile(evt) {
 function saveFile() {
   var textToWrite = document.getElementById("gcodepreview").value;
   var textFileAsBlob = new Blob([textToWrite], {type:'text/plain'});
-  var fileNameToSaveAsExt = document.getElementById("fileName").value;
-  var fileNameToSaveAs = fileNameToSaveAsExt.replace(/\.[^/.]+$/, "")
-  var fileNameToSaveAs = fileNameToSaveAs + '-LaserWeb.gcode';
+  var fileNameToSaveAs = 'LaserWeb.gcode';
 
   var downloadLink = document.createElement("a");
   downloadLink.download = fileNameToSaveAs;
@@ -131,6 +153,11 @@ function saveFile() {
     document.body.appendChild(downloadLink);
   };
 };
+
+function destroyClickedElement(event)
+{
+	document.body.removeChild(event.target);
+}
 
 localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode'];
 

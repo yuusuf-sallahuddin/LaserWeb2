@@ -24,6 +24,8 @@ function filePrepInit() {
 
 }
 
+//' Sets the input boxes to the current real-world sizes.  But why, well maybe we arent only going to scale/position via the input boxes?
+// in which case we want to update the textboxes to match what we did from some other function'
 function currentWorld() {
   $('#xpos').val(parseInt(fileObject.position.x) + (laserxmax / 2) );
   $('#ypos').val(parseInt(fileObject.position.y) + (laserymax / 2) );
