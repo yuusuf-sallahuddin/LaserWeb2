@@ -56,6 +56,14 @@ $(document).ready(function() {
           g += generateGcode(window["dxfEntity" + c], cutSpeed[c], pwr[c], rapidSpeed)
 
         };
+
+      } else if (typeof(inflateGrp) != 'undefined') {
+          console.log('looks like we are generating gcode for a Offset Path');
+          pwr0 = $('#pwr0').val();
+          cutSpeed0 = $('#sp0').val();
+          rapidSpeed = $('#rapidSpeed').val()
+          g += generateGcode(inflateGrp, cutSpeed0, pwr0, rapidSpeed)
+
       } else {
           console.log('looks like we are generating gcode for a SVG');
           pwr0 = $('#pwr0').val();
@@ -151,15 +159,6 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
    subj_path2 = [];
    console.log(txtGrp);
    txtGrp.traverse( function(child) {
-       if (child.name == "inflatedGroup") {
-           console.log("this is the inflated path from a previous run. ignore.");
-           return;
-       }
-
-       if (child.name == "inflatedGroup") {
-           console.log("this is the inflated path from a previous run. ignore.");
-           return;
-       }
 
        if (child.type == "Line") {
            // let's create gcode for all points in line
@@ -335,7 +334,7 @@ onInflateChange = function(evt) {
 
      if (options.inflate != 0) {
          console.log("user wants to inflate. val:", options.inflate);
-
+        fileObject.updateMatrix();
         //  // save the original path and make a new one so we can go back to the original
         //  if (!('svgGroupOriginal' in this)) {
         //      console.log("creating original store");
@@ -402,8 +401,24 @@ onInflateChange = function(evt) {
 
          //this.svgParentGroup.remove(this.svgGroup);
          //this.svgParentGroup.add(threeObj);
-         inflateGrp.translateX((laserxmax /2) * -1);
-         inflateGrp.translateY((laserymax /2) * -1);
+
+         inflateGrp.scale.y = -1;
+
+         // shift whole thing so it sits at 0,0
+
+
+         if (svgxpos) {
+           inflateGrp.translateX( -(parseFloat(laserxmax) / 2 ) - svgxpos);
+         } else {
+           inflateGrp.translateX((laserxmax /2) * -1);
+
+         }
+
+         if (svgypos) {
+           inflateGrp.translateY( -(parseFloat(laserymax) / 2 ) - svgypos);
+         } else {
+           inflateGrp.translateY((laserymax /2) * -1);
+         }
          scene.add(inflateGrp);
 
          //grp.add(threeObj);
