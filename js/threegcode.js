@@ -419,13 +419,10 @@ onInflateChange = function(evt) {
 
 
          // shift whole thing so it sits at 0,0
-
-
          if (svgxpos) {
            inflateGrp.translateX( -(parseFloat(laserxmax) / 2 ) - svgxpos);
          } else {
            inflateGrp.translateX((laserxmax /2) * -1);
-
          }
 
          if (svgypos) {

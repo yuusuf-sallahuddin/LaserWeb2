@@ -5,8 +5,19 @@ function filePrepInit() {
     console.log('Scaling to ', hScale);
     fileObject.scale.x = hScale;
     fileObject.scale.y = hScale;
+    // Scaling the vertices instead to allow offset to work
+    // fileObject.traverse( function(child) {
+    //   if (child.type == "Line") {
+    //       child.geometry.vertices.scale(hScale, hScale, 1)
+    //   };
+    // });
+    // fileObject.updateMatrix();
+    fileObject.updateMatrix();
+    fileObject.updateMatrixWorld();
     currentWorld();
   });
+
+
 
   $( "#xpos" ).change(function() {
     var hPosX = $(this).val();
