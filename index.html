@@ -289,6 +289,7 @@
                  <div class="tab-pane active" id="preptab">
                    <div class="btn-group" role="group" aria-label="cam">
                      <!-- Row 2 -->
+                    <p>
                     <div class="input-group" style="width: 100%;">
                       <span class="input-group-addon"  >Tool Offset:</span>
                       <div class="input-group">
@@ -328,12 +329,12 @@
 
                  <!-- Tab 2 -->
                  <div class="tab-pane" id="convtab">
+                   <p>
+                   <div class="btn-group btn-group-justified" role="group" aria-label="gengcode">
+                     <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="generategcode">Generate G-Code</button></div>
+                   </div>
                    <table class="table table-hover table-striped" id="layers">
                      <caption>Configure parameters per layer</caption>
-                     <div class="btn-group btn-group-justified" role="group" aria-label="gengcode">
-                       <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="generategcode">Generate G-Code</button></div>
-                     </div>
-
                      <thead>
                          <tr>
                            <th>Layer</th>
@@ -346,13 +347,14 @@
                  </div>
 
                  <!-- Tab 3 -->
+                 <p>
                  <div class="tab-pane" id="gcodetab">
                      <textarea id="gcodepreview" style="width: 100%; height: 100px ;"></textarea>
                  </div>
 
              </div>
-           </div>
          </span>
+       </div>
        </div>
        <!-- End Module CAM -->
 

@@ -30,6 +30,9 @@ drawSvg = function(file) {
 
         console.log('sceneGroup', this.mySceneGroup);
 
+        // Empty File Prep table
+        $("#layersbody").empty();
+
         viewExtents(fileObject)
         $('#layers > tbody:last-child').append('<tr><td>SVG</td><td>  <div class="input-group" style="margin-bottom:5px; width: 100%;"><input class="form-control" name=sp0 id=sp0 value=3200><span class="input-group-addon"  style="width: 30px;">mm/m</span><input class="form-control" name=pwr0 id=pwr0 value=100><span class="input-group-addon"  style="width: 30px;">%</span></div></td></tr>');
 

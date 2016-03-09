@@ -6,6 +6,8 @@
 
 */
 
+var inflateGrp;
+
 $(document).ready(function() {
   $('#generategcode').on('click', function() {  // DXF job Params to MC
 
@@ -42,7 +44,15 @@ $(document).ready(function() {
       pwr = [];
       cutSpeed = [];
 
-      if (typeof(dxf2) != 'undefined') {
+
+      if (typeof(inflateGrp) != 'undefined') {
+         console.log('looks like we are generating gcode for a Offset Path');
+         pwr0 = $('#pwr0').val();
+         cutSpeed0 = $('#sp0').val();
+         rapidSpeed = $('#rapidSpeed').val()
+         g += generateGcode(inflateGrp, cutSpeed0, pwr0, rapidSpeed)
+
+     } else if (typeof(dxf2) != 'undefined') {
         console.log('looks like we are generating gcode for a DXF');
         for (var c=0; c<dxf2.entities.length; c++) {
           var lay = layers.indexOf(dxf2.entities[c].layer);
@@ -56,21 +66,13 @@ $(document).ready(function() {
           g += generateGcode(window["dxfEntity" + c], cutSpeed[c], pwr[c], rapidSpeed)
 
         };
-
-      } else if (typeof(inflateGrp) != 'undefined') {
-          console.log('looks like we are generating gcode for a Offset Path');
-          pwr0 = $('#pwr0').val();
-          cutSpeed0 = $('#sp0').val();
-          rapidSpeed = $('#rapidSpeed').val()
-          g += generateGcode(inflateGrp, cutSpeed0, pwr0, rapidSpeed)
-
       } else {
           console.log('looks like we are generating gcode for a SVG');
           pwr0 = $('#pwr0').val();
           cutSpeed0 = $('#sp0').val();
           rapidSpeed = $('#rapidSpeed').val()
           g += generateGcode(fileObject, cutSpeed0, pwr0, rapidSpeed)
-      }
+      };
       //document.getElementById('fileName').value = fileName;
       //$('#mainStatus').html('Status: <b>'+fileName+' </b> loaded ...');
 
@@ -94,6 +96,7 @@ $(document).ready(function() {
       document.getElementById("gcodepreview").value = g;
 
       openGCodeFromText();
+      scene.remove(inflateGrp);
       //$('#sendToLaser').removeClass('disabled');
       //document.getElementById('fileInputGcode').value = '';
       //document.getElementById('fileInputDXF').value = '';
@@ -169,16 +172,24 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
 
 
                if (svgxpos) {
-                  var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) - svgxpos ).toFixed(3);
+                  if (!inflateGrp) {
+                    var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) - svgxpos ).toFixed(3);
+                  } else {
+                    var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
+                  };
                } else {
                   var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
-               }
+               };
 
                if (svgypos) {
+                 if (!inflateGrp) {
                   var ypos = ( -1 * parseFloat(worldPt.y.toFixed(3)) - ( parseFloat(laserymax) / 2 ) - svgypos ).toFixed(3);
+                 } else {
+                  var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
+                };
                } else {
                   var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
-               }
+               };
 
                if (i == 0) {
 
@@ -402,7 +413,10 @@ onInflateChange = function(evt) {
          //this.svgParentGroup.remove(this.svgGroup);
          //this.svgParentGroup.add(threeObj);
 
-         inflateGrp.scale.y = -1;
+         if (svgxpos) {
+            inflateGrp.scale.y = -1;
+         }
+
 
          // shift whole thing so it sits at 0,0
 

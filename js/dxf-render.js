@@ -1,3 +1,5 @@
+var inflateGrp;
+
 function drawDXF(file) {
 
   Array.prototype.unique = function()
@@ -28,6 +30,9 @@ function drawDXF(file) {
   if ( typeof(object) != 'undefined' ) {
     scene.remove(object);
   }
+
+  // Empty File Prep Table
+  $("#layersbody").empty();
   // if (typeof(showDxf) !== 'undefined') {
   //   scene.remove(showDxf);
   // };
