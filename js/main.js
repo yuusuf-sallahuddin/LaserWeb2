@@ -9,6 +9,7 @@ $(document).ready(function() {
   animate();
   filePrepInit();
   initJog();
+  //initRaster();
 
    $('#inflateVal').change(onInflateChange.bind(this));
 
