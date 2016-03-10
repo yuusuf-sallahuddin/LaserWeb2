@@ -72,7 +72,9 @@ $(document).ready(function() {
     //viewer.addEventListener('mousedown', stopEvent, false);
     //viewer.addEventListener('mouseup', stopEvent, false);
 
-    $('.combobox').combobox();
+    // Progressbar
+    //NProgress.configure({ parent: '#consolemodule' });
+    NProgress.configure({ showSpinner: false });
 
 });
 // End of document.reader

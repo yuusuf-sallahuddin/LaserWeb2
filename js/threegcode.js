@@ -408,10 +408,9 @@ onInflateChange = function(evt) {
          // we now have a huge array of clipper paths
          console.log("newClipperPaths:", newClipperPaths);
          inflateGrp = drawClipperPaths(inflatedPaths, 0x0000ff, 0.99, 0.01, 0, true, false, "inflatedGroup");
-         //threeObj.name = "inflatedGroup";
 
-         //this.svgParentGroup.remove(this.svgGroup);
-         //this.svgParentGroup.add(threeObj);
+         inflateGrp.position.x = fileObject.position.x
+         inflateGrp.position.y = fileObject.position.y
 
          if (svgxpos) {
             inflateGrp.scale.y = -1;
@@ -420,16 +419,17 @@ onInflateChange = function(evt) {
 
          // shift whole thing so it sits at 0,0
          if (svgxpos) {
-           inflateGrp.translateX( -(parseFloat(laserxmax) / 2 ) - svgxpos);
+           inflateGrp.translateX(  - svgxpos);
          } else {
-           inflateGrp.translateX((laserxmax /2) * -1);
+           //inflateGrp.translateX((laserxmax /2) * -1);
          }
 
          if (svgypos) {
-           inflateGrp.translateY( -(parseFloat(laserymax) / 2 ) - svgypos);
+           inflateGrp.translateY( - svgypos);
          } else {
-           inflateGrp.translateY((laserymax /2) * -1);
+           //inflateGrp.translateY((laserymax /2) * -1);
          }
+         inflateGrp.name = 'inflateGrp';
          scene.add(inflateGrp);
 
          //grp.add(threeObj);

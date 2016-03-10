@@ -73,6 +73,7 @@ function drawDXF(file) {
   // Sadly removing it from the scene makes gcode circles end up at 0,0 since localToWorld needs it in the scene
   fileObject.translateX((laserxmax / 2) * -1);
   fileObject.translateY((laserymax / 2) * -1);
+  fileObject.name = 'fileObject';
   scene.add(fileObject);
 
   // // Make a copy to show, because we need the original copy, untranslated, for the gcodewriter parsing

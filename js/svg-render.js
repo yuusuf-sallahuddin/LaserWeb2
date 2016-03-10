@@ -26,6 +26,7 @@ drawSvg = function(file) {
         //this.sceneReAddMySceneGroup();
         fileObject.translateX((laserxmax / 2) * -1);
         fileObject.translateY((laserymax / 2) * -1);
+        fileObject.name = 'fileObject';
         scene.add(fileObject)
 
         console.log('sceneGroup', this.mySceneGroup);

@@ -17,20 +17,22 @@ function filePrepInit() {
     currentWorld();
   });
 
-
-
   $( "#xpos" ).change(function() {
     var hPosX = $(this).val();
-    console.log('Moving X to ', hPosX);
+    console.log('Moving X from ', fileObject.position.x   ,   ' to ',  (hPosX - (laserxmax / 2)) );
     fileObject.position.x = (hPosX - (laserxmax / 2));
     currentWorld();
   });
 
   $( "#ypos" ).change(function() {
     var hPosY = $(this).val();
-    console.log('Moving Y to ', hPosY);
+    console.log('Moving X from ', fileObject.position.y   ,   ' to ',  (hPosY - (laserymax / 2)) );
     fileObject.position.y = (hPosY - (laserymax / 2));
     currentWorld();
+  });
+
+  $('#removeInflateGrp').on('click', function() {
+    scene.remove(inflateGrp);
   });
 
 }
