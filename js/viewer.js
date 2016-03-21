@@ -31,23 +31,40 @@ scene = new THREE.Scene();
 camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
 camera.position.z = 295;
 
-var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+// var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+//
+// if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
+// {
+//       console.log('Running on iOS');
+//       renderer = new THREE.WebGLRenderer();
+// }
+//     else if( userAgent.match( /Android/i ) )
+// {
+//     console.log('Running on Android');
+//     renderer = new THREE.CanvasRenderer();
+// }
+//   else
+// {
+//     console.log('Running on unknown/Desktop');
+//     renderer = new THREE.WebGLRenderer();
+// }
 
-if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
-{
-      console.log('Running on iOS');
-      renderer = new THREE.WebGLRenderer();
-}
-    else if( userAgent.match( /Android/i ) )
-{
-    console.log('Running on Android');
+var canvas = !! window.CanvasRenderingContext2D;
+var webgl = ( function () { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } } )();
+
+if (webgl) {
+    //printLog('WebGL detected!</b><br> rendering with the best experience', '#cc0000');
+    printLog('<h1>No WebGL Support found!</h1></div><b>WARNING:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
+    renderer = new THREE.WebGLRenderer({
+        autoClearColor: true
+    });
+
+} else if (canvas) {
+    printLog('<h1>No WebGL Support found!</h1></div><b>CRITICAL ERROR:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
     renderer = new THREE.CanvasRenderer();
-}
-  else
-{
-    console.log('Running on unknown/Desktop');
-    renderer = new THREE.WebGLRenderer();
-}
+};
+
+
 renderer.setClearColor(0xffffff, 1);  // Background color of viewer
 renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
 renderer.clear();

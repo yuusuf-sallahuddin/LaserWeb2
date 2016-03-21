@@ -162,7 +162,7 @@ function destroyClickedElement(event)
 	document.body.removeChild(event.target);
 }
 
-localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode'];
+localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset'];
 
 function saveSettingsLocal() {
   for (i in localParams) {

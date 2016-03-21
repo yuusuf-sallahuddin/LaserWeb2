@@ -1,5 +1,13 @@
 function filePrepInit() {
 
+
+  useOffset = $('#useOffset').val()
+  if ( useOffset.indexOf('Disable') == 0 ) {
+      $('#inflateFeature').hide();
+  }
+
+
+
   $( "#scaleFactor" ).change(function() {
     var hScale = ($(this).val() / 100);
     console.log('Scaling to ', hScale);
