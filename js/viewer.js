@@ -53,8 +53,7 @@ var canvas = !! window.CanvasRenderingContext2D;
 var webgl = ( function () { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } } )();
 
 if (webgl) {
-    //printLog('WebGL detected!</b><br> rendering with the best experience', '#cc0000');
-    printLog('<h1>No WebGL Support found!</h1></div><b>WARNING:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
+    printLog('<h1>WebGL Support found!</h1></div><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
     renderer = new THREE.WebGLRenderer({
         autoClearColor: true
     });
