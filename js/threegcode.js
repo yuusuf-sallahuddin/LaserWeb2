@@ -7,6 +7,24 @@
 */
 
 var inflateGrp;
+var fileParentGroup;
+var fileParentGroupOriginal;
+var fileObjectOriginal;
+
+/**
+* Contains the actual rendered SVG file. This is where the action is.
+*/
+var fileGroup;
+/**
+* Contains the original path from SVG file. This is like layer 1 of the rendering.
+*/
+var svgPath;
+/**
+* Contains the inflated/deflated path. This is like layer 2 of the rendering. If no
+* inflate/deflate was asked for by user, this path is still generated but at 0 inflate.
+*/
+var fileInflatePath;
+
 
 $(document).ready(function() {
   $('#generategcode').on('click', function() {  // DXF job Params to MC
@@ -345,20 +363,22 @@ onInflateChange = function(evt) {
 
      if (options.inflate != 0) {
          console.log("user wants to inflate. val:", options.inflate);
-        fileObject.updateMatrix();
-        //  // save the original path and make a new one so we can go back to the original
-        //  if (!('svgGroupOriginal' in this)) {
-        //      console.log("creating original store");
-        //      // no original stored yet
-        //      this.svgParentGroupOriginal = this.svgParentGroup;
-        //      this.svgGroupOriginal = this.svgGroup;
-        //  } else {
-        //      console.log("restoring original");
-        //      // restore original
-        //      this.svgParentGroup = this.svgParentGroupOriginal;
-        //      this.svgGroup = this.svgGroupOriginal;
-        //  }
+        //fileObject.updateMatrix();
+        fileParentGroup.updateMatrix();
+         // save the original path and make a new one so we can go back to the original
+         if (!fileObjectOriginal) {
+             console.log("creating original store");
+             // no original stored yet
+            fileParentGroupOriginal = fileParentGroup;
+            fileObjectOriginal = fileObject;
+         } else {
+             console.log("restoring original");
+             // restore original
+            fileParentGroup = fileParentGroupOriginal;
+            fileObject = fileObjectOriginal;
+         }
 
+         //var grp = fileObject;
          var grp = fileObject;
 
          var clipperPaths = [];
@@ -380,9 +400,11 @@ onInflateChange = function(evt) {
 
                  // hide for now. we can unhide later if we reset.
                  //child.visible = false;
-                 child.material.color = 0x000000;
-                 child.material.transparent = true;
-                 child.material.opacity = 0.2;
+
+                 // Commented out - makes original dim
+                //  child.material.color = 0x000000;
+                //  child.material.transparent = true;
+                //  child.material.opacity = 0.2;
 
                  // for now add to existing object
                  // eventually replace it
@@ -409,27 +431,46 @@ onInflateChange = function(evt) {
          console.log("newClipperPaths:", newClipperPaths);
          inflateGrp = drawClipperPaths(inflatedPaths, 0x0000ff, 0.99, 0.01, 0, true, false, "inflatedGroup");
 
-         inflateGrp.position.x = fileObject.position.x
-         inflateGrp.position.y = fileObject.position.y
+        //  inflateGrp.position.x = fileParentGroup.position.x
+        //  inflateGrp.position.y = fileParentGroup.position.y
 
-         if (svgxpos) {
-            inflateGrp.scale.y = -1;
-         }
+        //  var hScale = ( $( "#scaleFactor" ).val() / 100);
+        //  console.log('Scaling to ', hScale);
+        //  inflateGrp.scale.x = hScale;
+        //  inflateGrp.scale.y = - hScale;
 
 
-         // shift whole thing so it sits at 0,0
-         if (svgxpos) {
-           inflateGrp.translateX(  - svgxpos);
-         } else {
-           //inflateGrp.translateX((laserxmax /2) * -1);
-         }
-
-         if (svgypos) {
-           inflateGrp.translateY( - svgypos);
-         } else {
-           //inflateGrp.translateY((laserymax /2) * -1);
-         }
          inflateGrp.name = 'inflateGrp';
+
+          var hScale = ($( "#scaleFactor" ).val() / 100);
+          console.log('Scaling to ', hScale);
+          inflateGrp.scale.x = hScale;
+
+          if (svgxpos > 0) {
+             inflateGrp.scale.y = -hScale ;
+             inflateGrp.position.x = fileParentGroup.position.x
+             inflateGrp.position.y = fileParentGroup.position.y
+             var bbox3 = new THREE.Box3().setFromObject(fileParentGroup);
+             console.log("bbox for fileParentGroup:", bbox);
+             var svgxpos2 = bbox3.min.x;
+             var svgypos2 = bbox3.min.y;
+             var svgywidth = bbox3.max.y;
+             inflateGrp.translateX(svgxpos2 + (laserxmax / 2));
+             inflateGrp.translateY(svgypos2 + (laserymax / 2));
+             inflateGrp.translateY(- svgywidth);
+          } else {
+             inflateGrp.scale.y = hScale;
+             inflateGrp.position.x = fileParentGroup.position.x
+             inflateGrp.position.y = fileParentGroup.position.y
+          }
+
+
+          var bbox = new THREE.Box3().setFromObject(fileParentGroup);
+          console.log("bbox for fileParentGroup:", bbox);
+
+          var bbox2 = new THREE.Box3().setFromObject(inflateGrp);
+          console.log("bbox for inflateGrp:", bbox2);
+
          scene.add(inflateGrp);
 
          //grp.add(threeObj);
@@ -438,9 +479,11 @@ onInflateChange = function(evt) {
      }
   };
 
+
 threeJsVectorArrayToClipperArray = function(threeJsVectorArray) {
     var clipperArr = [];
-    for (var i in threeJsVectorArray) {
+    //for (var i in threeJsVectorArray) {
+    for (i = 0; i < threeJsVectorArray.length; i++) {
         var pt = threeJsVectorArray[i];
         clipperArr.push({X: pt.x, Y: pt.y});
     }

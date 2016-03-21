@@ -1,4 +1,5 @@
 var inflateGrp;
+var fileParentGroup;
 
 function drawDXF(file) {
 
@@ -29,6 +30,10 @@ function drawDXF(file) {
 
   if ( typeof(object) != 'undefined' ) {
     scene.remove(object);
+  }
+
+  if ( typeof(fileParentGroup) != 'undefined' ) {
+    scene.remove(fileParentGroup);
   }
 
   // Empty File Prep Table
@@ -71,10 +76,16 @@ function drawDXF(file) {
   // }
 
   // Sadly removing it from the scene makes gcode circles end up at 0,0 since localToWorld needs it in the scene
-  fileObject.translateX((laserxmax / 2) * -1);
-  fileObject.translateY((laserymax / 2) * -1);
+  // fileObject.translateX((laserxmax / 2) * -1);
+  // fileObject.translateY((laserymax / 2) * -1);
   fileObject.name = 'fileObject';
-  scene.add(fileObject);
+  //scene.add(fileObject);
+  fileParentGroup = new THREE.Group();
+  fileParentGroup.name = "fileParentGroup";
+  fileParentGroup.add(fileObject);
+  fileParentGroup.translateX((laserxmax / 2) * -1);
+  fileParentGroup.translateY((laserymax / 2) * -1);
+  scene.add(fileParentGroup);
 
   // // Make a copy to show, because we need the original copy, untranslated, for the gcodewriter parsing
   // showDxf = fileObject.clone();
@@ -98,7 +109,7 @@ function drawDXF(file) {
   // $('#svgparamstomc').hide();
   // $('#cutParams').modal('toggle');
   // document.getElementById('fileName').value = fileName;
-  viewExtents(fileObject);
+  viewExtents(fileParentGroup);
 
   // clear SVG Invert + Move values if present
   svgxpos = 0;

@@ -53,13 +53,13 @@ var canvas = !! window.CanvasRenderingContext2D;
 var webgl = ( function () { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } } )();
 
 if (webgl) {
-    printLog('<h1>WebGL Support found!</h1></div><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
+    printLog('<h5>WebGL Support found!</h5><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
     renderer = new THREE.WebGLRenderer({
         autoClearColor: true
     });
 
 } else if (canvas) {
-    printLog('<h1>No WebGL Support found!</h1></div><b>CRITICAL ERROR:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
+    printLog('<h5>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
     renderer = new THREE.CanvasRenderer();
 };
 

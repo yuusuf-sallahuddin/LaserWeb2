@@ -1,5 +1,6 @@
 var options = {};
 var shape = null;
+var fileParentGroup;
 
 drawSvg = function(file) {
 
@@ -14,6 +15,10 @@ drawSvg = function(file) {
     if ( typeof(object) != 'undefined' ) {
       scene.remove(object);
     }
+
+    if ( typeof(fileParentGroup) != 'undefined' ) {
+      scene.remove(fileParentGroup);
+    }
     // see if file is valid
     if (file.length == 0) return;
 
@@ -24,17 +29,23 @@ drawSvg = function(file) {
     } else {
         fileObject = this.svgParentGroup;
         //this.sceneReAddMySceneGroup();
-        fileObject.translateX((laserxmax / 2) * -1);
-        fileObject.translateY((laserymax / 2) * -1);
+        //fileObject.translateX((laserxmax / 2) * -1);
+        //fileObject.translateY((laserymax / 2) * -1);
         fileObject.name = 'fileObject';
-        scene.add(fileObject)
+        //scene.add(fileObject)
+        fileParentGroup = new THREE.Group();
+        fileParentGroup.name = "fileParentGroup";
+        fileParentGroup.add(fileObject);
+        fileParentGroup.translateX((laserxmax / 2) * -1);
+        fileParentGroup.translateY((laserymax / 2) * -1);
+        scene.add(fileParentGroup);
 
         console.log('sceneGroup', this.mySceneGroup);
 
         // Empty File Prep table
         $("#layersbody").empty();
 
-        viewExtents(fileObject)
+        viewExtents(fileParentGroup)
         $('#layers > tbody:last-child').append('<tr><td>SVG</td><td>  <div class="input-group" style="margin-bottom:5px; width: 100%;"><input class="form-control" name=sp0 id=sp0 value=3200><span class="input-group-addon"  style="width: 30px;">mm/m</span><input class="form-control" name=pwr0 id=pwr0 value=100><span class="input-group-addon"  style="width: 30px;">%</span></div></td></tr>');
 
         //scene.add(  this.mySceneGroup)

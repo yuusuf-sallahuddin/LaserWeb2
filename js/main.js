@@ -30,8 +30,8 @@ $(document).ready(function() {
         viewExtents(object);
       } else if ( typeof(inflateGrp) != 'undefined' ) {
         viewExtents(inflateGrp);
-      } else if ( typeof(fileObject) != 'undefined' ) {
-        viewExtents(fileObject);
+      } else if ( typeof(fileParentGroup) != 'undefined' ) {
+        viewExtents(fileParentGroup);
       } else {
         viewExtents(helper);
       };
