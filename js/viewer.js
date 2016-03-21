@@ -64,10 +64,45 @@ if (webgl) {
 };
 
 
-renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
-renderer.clear();
-$('#renderArea').append(renderer.domElement);
+
+var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
+{
+      console.log('Running on iOS');
+      $('#viewermodule').show();
+      $('#mobileRenderArea').append(renderer.domElement);
+      renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+      renderer.setSize( $("#mobileRenderArea").parent().width() -10, $("#mobileRenderArea").parent().height() -10 );
+      renderer.clear();
+      camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+      camera.updateProjectionMatrix();
+
+}
+    else if( userAgent.match( /Android/i ) )
+{
+    console.log('Running on Android');
+    $('#viewermodule').show();
+    $('#mobileRenderArea').append(renderer.domElement);
+    renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+    renderer.setSize( $("#mobileRenderArea").parent().width() -10, $("#mobileRenderArea").parent().height() -10 );
+    renderer.clear();
+    camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+    camera.updateProjectionMatrix();
+
+}
+  else
+{
+    console.log('Running on unknown/Desktop');
+    $('#viewermodule').hide();
+    $('#renderArea').append(renderer.domElement);
+    renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+    renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
+    renderer.clear();
+
+}
+
+
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.target.set( 0, 0, 0 ); // view direction perpendicular to XY-plane

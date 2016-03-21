@@ -26,17 +26,21 @@ $(document).ready(function() {
 
    // View -> reset
    $('#viewReset').on('click', function() {
- 		  if ( typeof(object) != 'undefined' ) {
-        viewExtents(object);
-      } else if ( typeof(inflateGrp) != 'undefined' ) {
-        viewExtents(inflateGrp);
-      } else if ( typeof(fileParentGroup) != 'undefined' ) {
-        viewExtents(fileParentGroup);
-      } else {
-        viewExtents(helper);
-      };
-
+     resetView();
  	 });
+
+   function resetView() {
+     if ( typeof(object) != 'undefined' ) {
+       viewExtents(object);
+     } else if ( typeof(inflateGrp) != 'undefined' ) {
+       viewExtents(inflateGrp);
+     } else if ( typeof(fileParentGroup) != 'undefined' ) {
+       viewExtents(fileParentGroup);
+     } else {
+       viewExtents(helper);
+     };
+   }
+
 
   // Connection Toolbar
   $('#connect').on('click', function() {
