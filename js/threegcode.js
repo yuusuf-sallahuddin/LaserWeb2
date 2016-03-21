@@ -176,8 +176,8 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
    var isLaserOn = false;
    var isAtClearanceHeight = false;
    var isFeedrateSpecifiedAlready = false;
-   subj_paths = [];
-   subj_path2 = [];
+   var subj_paths = [];
+   var subj_path2 = [];
    console.log(txtGrp);
    txtGrp.traverse( function(child) {
 
@@ -359,24 +359,25 @@ onInflateChange = function(evt) {
 
      if ( typeof(inflateGrp) != 'undefined' ) {
        scene.remove(inflateGrp);
+       inflateGrp = null;
      }
 
      if (options.inflate != 0) {
          console.log("user wants to inflate. val:", options.inflate);
         //fileObject.updateMatrix();
         fileParentGroup.updateMatrix();
-         // save the original path and make a new one so we can go back to the original
-         if (!fileObjectOriginal) {
-             console.log("creating original store");
-             // no original stored yet
-            fileParentGroupOriginal = fileParentGroup;
-            fileObjectOriginal = fileObject;
-         } else {
-             console.log("restoring original");
-             // restore original
-            fileParentGroup = fileParentGroupOriginal;
-            fileObject = fileObjectOriginal;
-         }
+        //  // save the original path and make a new one so we can go back to the original
+        //  if (!fileObjectOriginal) {
+        //      console.log("creating original store");
+        //      // no original stored yet
+        //     fileParentGroupOriginal = fileParentGroup;
+        //     fileObjectOriginal = fileObject;
+        //  } else {
+        //      console.log("restoring original");
+        //      // restore original
+        //     fileParentGroup = fileParentGroupOriginal;
+        //     fileObject = fileObjectOriginal;
+        //  }
 
          //var grp = fileObject;
          var grp = fileObject;
@@ -447,29 +448,16 @@ onInflateChange = function(evt) {
           inflateGrp.scale.x = hScale;
 
           if (svgxpos > 0) {
-             inflateGrp.scale.y = -hScale ;
-             inflateGrp.position.x = fileParentGroup.position.x
-             inflateGrp.position.y = fileParentGroup.position.y
-             var bbox3 = new THREE.Box3().setFromObject(fileParentGroup);
-             console.log("bbox for fileParentGroup:", bbox);
-             var svgxpos2 = bbox3.min.x;
-             var svgypos2 = bbox3.min.y;
-             var svgywidth = bbox3.max.y;
-             inflateGrp.translateX(svgxpos2 + (laserxmax / 2));
-             inflateGrp.translateY(svgypos2 + (laserymax / 2));
-             inflateGrp.translateY(- svgywidth);
+            inflateGrp.scale.y = - hScale;
+             putInflateGrpAtZero()
+
+
           } else {
              inflateGrp.scale.y = hScale;
-             inflateGrp.position.x = fileParentGroup.position.x
-             inflateGrp.position.y = fileParentGroup.position.y
+            //  inflateGrp.position.x = fileParentGroup.position.x
+            //  inflateGrp.position.y = fileParentGroup.position.y
+             putInflateGrpAtZero();
           }
-
-
-          var bbox = new THREE.Box3().setFromObject(fileParentGroup);
-          console.log("bbox for fileParentGroup:", bbox);
-
-          var bbox2 = new THREE.Box3().setFromObject(inflateGrp);
-          console.log("bbox for inflateGrp:", bbox2);
 
          scene.add(inflateGrp);
 

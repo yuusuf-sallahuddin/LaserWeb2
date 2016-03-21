@@ -6,19 +6,24 @@ drawSvg = function(file) {
 
     if (typeof(fileObject) !== 'undefined') {
       scene.remove(fileObject);
+      fileObject = null;
     };
 
     if ( typeof(inflateGrp) != 'undefined' ) {
       scene.remove(inflateGrp);
+      inflateGrp = null;
     }
 
     if ( typeof(object) != 'undefined' ) {
       scene.remove(object);
+      object = null;
     }
 
     if ( typeof(fileParentGroup) != 'undefined' ) {
       scene.remove(fileParentGroup);
+      fileParentGroup = null;
     }
+
     // see if file is valid
     if (file.length == 0) return;
 
@@ -36,11 +41,9 @@ drawSvg = function(file) {
         fileParentGroup = new THREE.Group();
         fileParentGroup.name = "fileParentGroup";
         fileParentGroup.add(fileObject);
-        fileParentGroup.translateX((laserxmax / 2) * -1);
-        fileParentGroup.translateY((laserymax / 2) * -1);
+        //fileParentGroup.translateX((laserxmax / 2) * -1);
+        //fileParentGroup.translateY((laserymax / 2) * -1);
         scene.add(fileParentGroup);
-
-        console.log('sceneGroup', this.mySceneGroup);
 
         // Empty File Prep table
         $("#layersbody").empty();
@@ -130,42 +133,9 @@ extractSvgPathsFromSVGFile = function(file) {
             console.log("there is a parent. see if transform. path.parent().transform()", path.parent().transform());
             //path = path.transform(path.parent().transform().global);
         }
-        //path = path.parent().path();
-        //console.log("svg path:", path, "len:", path.getTotalLength());
-
-        /* This was an area where we used snap.svg to render using
-        spaced points, but it did not create good resolution. So
-        using alternate approach that is more direct. */
-        /*
-        var len = path.getTotalLength();
-        var lenPerPt = len / that.options.pointsperpath;
-        console.log("len:", len, "lenPerPt:", lenPerPt, "pointsperpath:", that.options.pointsperpath);
-
-        var spacedPoints = new THREE.Geometry();
-
-        for (var i = 0; i < that.options.pointsperpath; i++ ) {
-            var pt = path.getPointAtLength(lenPerPt * i);
-            //console.log("pt:", pt);
-            spacedPoints.vertices.push(new THREE.Vector3(pt.x, pt.y, 0));
-        }
 
         var material = new THREE.LineBasicMaterial({
-            	color: 0x0000ff
-            });
-
-
-        var particles = new THREE.Points( spacedPoints, new THREE.PointsMaterial( { color: 0xff0000, size: 1 } ) );
-    particles.position.z = 1;
-    //svgGroup.add(particles);
-
-        // solid line
-	var line = new THREE.Line( spacedPoints, material );
-	line.position.x = 0.5;
-	//svgGroup.add( line );
-        */
-
-        var material = new THREE.LineBasicMaterial({
-            	color: 0x0000ff
+            	color: 0x333333
             });
 
 
@@ -222,8 +192,8 @@ extractSvgPathsFromSVGFile = function(file) {
 
 		} else {
 				// solid line
-              var geometry = new THREE.ShapeGeometry( shape );
-                var lineSvg = new THREE.Line( geometry, material );
+          var geometry = new THREE.ShapeGeometry( shape );
+          var lineSvg = new THREE.Line( geometry, material );
     			svgGroup.add(lineSvg);
 
     			var particles = new THREE.Points( geometry, new THREE.PointsMaterial( {
@@ -253,11 +223,10 @@ svgGroup.scale.y = -1;
 var bbox = new THREE.Box3().setFromObject(svgGroup);
 
 console.log("bbox for shift:", bbox);
-svgGroup.position.x += -1 * bbox.min.x;
-svgGroup.position.y += -1 * bbox.min.y;
+svgGroup.translateX( - (bbox.min.x + (laserxmax / 2))  );
+svgGroup.translateY( - (bbox.min.y + (laserymax / 2))  );
 svgxpos = bbox.min.x;
 svgypos = bbox.min.y;
-//textGroup.position.z = 0;
 
 // now that we have an svg that we have flipped and shifted to a zero position
 // create a parent group so we can attach some point positions for width/height
@@ -266,68 +235,12 @@ var svgParentGroup = new THREE.Group();
 svgParentGroup.name = "SvgParentGroup";
 svgParentGroup.add(svgGroup);
 
-// Add marquee bounding box
-var bbox = new THREE.BoundingBoxHelper( svgParentGroup, 0xff0000 );
-bbox.update();
-var boxHelper = new THREE.BoxHelper( bbox );
-boxHelper.position.z = 0.05;
-boxHelper.material = dashMat;
-
-var dashMat = new THREE.LineDashedMaterial( {
-color: 0x666666,
-dashSize: 1,
-gapSize: 1,
-linewidth: 2 } )
-var geometry  = new THREE.Geometry().fromBufferGeometry( boxHelper.geometry );
-geometry.computeLineDistances();
-//var object = new THREE.LineSegments(geometry , new THREE.LineDashedMaterial( { color: 0xffaa00, dashSize: 3, gapSize: 1, linewidth: 2 } ) );
-var object = new THREE.Line( geometry, dashMat );
-object.position.z = 0.05;
-
-// Bounding Box
-// /svgParentGroup.add(object);
-console.log("boxHelper:", boxHelper);
-//boxHelper.geometry.computeLineDistances();
-//svgGroup.add( boxHelper );
-
-// create width / height textbox 3d objects so we can
-// project 3d coords to 2d screen coords
-console.log("bbox to figure out height/width locations:", bbox.box);
-
-var widthPt = new THREE.Vector3(bbox.box.max.x / 2, bbox.box.min.y, 0);
-var widthGeo = new THREE.Geometry();
-//widthGeo.vertices.push(widthPt);
-widthGeo.vertices.push(new THREE.Vector3(0,0,0));
-var widthParticle = new THREE.Points( widthGeo, new THREE.PointsMaterial( { color: 0x0000ff, size: 5 } ) );
-widthParticle.position.x = widthPt.x;
-widthParticle.position.y = widthPt.y;
-//svgParentGroup.add(widthParticle);
-
-var heightPt = new THREE.Vector3(bbox.box.min.x, bbox.box.max.y / 2, 0);
-var heightGeo = new THREE.Geometry();
-heightGeo.vertices.push(new THREE.Vector3(0,0,0));
-var heightParticle = new THREE.Points( heightGeo, new THREE.PointsMaterial( { color: 0x00ff00, size: 5 } ) );
-heightParticle.position.x = heightPt.x;
-heightParticle.position.y = heightPt.y;
-//svgParentGroup.add(heightParticle);
-
-var alignBoxPt = new THREE.Vector3(bbox.box.min.x, bbox.box.min.y, 0);
-var alignBoxGeo = new THREE.Geometry();
-alignBoxGeo.vertices.push(new THREE.Vector3(0,0,0));
-var alignBoxParticle = new THREE.Points( alignBoxGeo, new THREE.PointsMaterial( { color: 0xffff00, size: 5 } ) );
-alignBoxParticle.position.x = alignBoxPt.x;
-alignBoxParticle.position.y = alignBoxPt.y;
-//svgParentGroup.add(alignBoxParticle);
-
-this.widthParticle = widthParticle;
-this.heightParticle = heightParticle;
-this.alignBoxParticle = alignBoxParticle;
 
 this.svgParentGroup = svgParentGroup;
 this.svgGroup = svgGroup;
 
 // now create our floating menus
-this.createFloatItems();
+//this.createFloatItems();
 
 return false;
 
@@ -620,78 +533,7 @@ transformSVGPath = function(pathStr) {
           //}
         };
 
-        createFloatItems = function() {
-           console.log("createFloatItems. this.obj3dmeta:", this.obj3dmeta);
 
-           // move width/height textboxes to top of DOM
-           // because their absolute positioning requires that
-           if (this.isFloatItemsSetup == false) {
-
-               // we need to attach to the controls onchange event so
-               // if the user moves the 3d viewer around we re-render where
-               // we place the textboxes
-               this.obj3dmeta.widget.controls.addEventListener(
-                   'change', this.onCameraChange.bind(this)
-               );
-
-               $('.test-info').text("did detach");
-               // move them and
-               // setup the onchange events
-               $('#' + this.id + "-widthbox")
-                   .detach().appendTo( "body" )
-                   .change(this.onWidthChange.bind(this))
-                   .removeClass("hidden");
-               $('#' + this.id + "-heightbox")
-                   .detach().appendTo( "body" )
-                   .change(this.onHeightChange.bind(this))
-                   .removeClass("hidden");
-                   // TODO add onchange
-               $('#' + this.id + "-alignbox")
-                   .detach().appendTo( "body" )
-                   .removeClass("hidden");
-               this.isFloatItemsSetup = true;
-
-               // if window resizes, reset the camera and textboxes
-               $(window).resize(this.onCameraChange.bind(this));
-
-               // setup aspect locked button
-               $('#' + this.id + "-widthbox .btn-aspect").click(this.onAspectLockedBtnClick.bind(this));
-               $('#' + this.id + "-heightbox .btn-aspect").click(this.onAspectLockedBtnClick.bind(this));
-
-               // setup align buttons
-               $('#' + this.id + "-alignbox button").click(this.onAlignButtonClicked.bind(this));
-
-               // setup xy value changes
-               $('#' + this.id + "-alignbox .input-x").on("change", this.onXYChange.bind(this));
-               $('#' + this.id + "-alignbox .input-y").on("change", this.onXYChange.bind(this));
-
-           } else {
-               console.warn("divs already positioned");
-               this.showFloatItems();
-           }
-
-           // setup width and height values in the textboxes
-           var bbox = new THREE.Box3().setFromObject(this.svgParentGroup);
-           console.log("creating textboxes. bbox:", bbox);
-           bbox["width"] = bbox.max.x - bbox.min.x;
-           bbox["height"] = bbox.max.y - bbox.min.y;
-           this.originalBbox = bbox;
-           $('#' + this.id + "-widthbox .input-widthbox").val(bbox.width.toFixed(3));
-           $('#' + this.id + "-heightbox .input-heightbox").val(bbox.height.toFixed(3));
-           $('#' + this.id + "-alignbox .input-x").val("0");
-           $('#' + this.id + "-alignbox .input-y").val("0");
-
-           // we now need to reposition our textboxes as if the camera was moved
-           //setTimeout(this.onCameraChange.bind(this), 50);
-           //this.onCameraChange(); //.bind(this);
-
-       };
-
-       showFloatItems = function() {
-          //  $('#' + this.id + "-widthbox").removeClass("hidden");
-          //  $('#' + this.id + "-heightbox").removeClass("hidden");
-          //  $('#' + this.id + "-alignbox").removeClass("hidden");
-       };
 
         getSettings = function() {
            // get text

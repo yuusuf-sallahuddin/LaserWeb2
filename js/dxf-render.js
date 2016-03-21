@@ -22,18 +22,22 @@ function drawDXF(file) {
   // Remove the UI elements from last run
   if (typeof(fileObject) !== 'undefined') {
     scene.remove(fileObject);
+    fileObject = null;
   };
 
   if ( typeof(inflateGrp) != 'undefined' ) {
     scene.remove(inflateGrp);
+    inflateGrp = null;
   }
 
   if ( typeof(object) != 'undefined' ) {
     scene.remove(object);
+    object = null;
   }
 
   if ( typeof(fileParentGroup) != 'undefined' ) {
     scene.remove(fileParentGroup);
+    fileParentGroup = null;
   }
 
   // Empty File Prep Table
