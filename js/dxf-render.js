@@ -2,7 +2,7 @@ var inflateGrp;
 var fileParentGroup;
 
 function drawDXF(file) {
-
+  yflip = false;
   Array.prototype.unique = function()
     {
       var n = {},r=[];
@@ -39,6 +39,11 @@ function drawDXF(file) {
     scene.remove(fileParentGroup);
     fileParentGroup = null;
   }
+
+  if (boundingBox) {
+     scene.remove( boundingBox );
+  }
+
 
   // Empty File Prep Table
   $("#layersbody").empty();

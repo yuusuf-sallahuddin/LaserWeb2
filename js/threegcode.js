@@ -11,6 +11,7 @@ var fileParentGroup;
 var fileParentGroupOriginal;
 var fileObjectOriginal;
 
+
 /**
 * Contains the actual rendered SVG file. This is where the action is.
 */
@@ -53,9 +54,6 @@ $(document).ready(function() {
         g += 'G90\n';
       };
 
-      //dxfObject.translateX(laserxmax /2);
-      //dxfObject.translateY(laserymax /2);
-
       fileObject.updateMatrix();
       scene.updateMatrixWorld();
 
@@ -91,14 +89,6 @@ $(document).ready(function() {
           rapidSpeed = $('#rapidSpeed').val()
           g += generateGcode(fileObject, cutSpeed0, pwr0, rapidSpeed)
       };
-      //document.getElementById('fileName').value = fileName;
-      //$('#mainStatus').html('Status: <b>'+fileName+' </b> loaded ...');
-
-      //g += generateGcode(fileObject, '1200', '255', '2000')
-
-      // if (boundingBox) {
-      //   scene.remove( boundingBox );
-      // }
 
       if (endgcode) {
         g += endgcode
@@ -115,15 +105,8 @@ $(document).ready(function() {
 
       openGCodeFromText();
       scene.remove(inflateGrp);
-      //$('#sendToLaser').removeClass('disabled');
-      //document.getElementById('fileInputGcode').value = '';
-      //document.getElementById('fileInputDXF').value = '';
-      //document.getElementById('fileInputSVG').value = '';
-      //document.getElementById('fileInputMILL').value = '';
+
       printLog('Gcode Generated', '0x0000');
-      //$('#noneg').click();
-      //object.translateX(laserxmax /2);
-      //object.translateY(laserymax /2);
 
   });
 });
@@ -188,30 +171,15 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                var localPt = child.geometry.vertices[i];
                var worldPt = grp.localToWorld(localPt.clone());
 
-
-               if (svgxpos) {
-                  if (!inflateGrp) {
-                    var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) - svgxpos ).toFixed(3);
-                  } else {
-                    var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
-                  };
-               } else {
-                  var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
-               };
-
-               if (svgypos) {
-                 if (!inflateGrp) {
-                  var ypos = ( -1 * parseFloat(worldPt.y.toFixed(3)) - ( parseFloat(laserymax) / 2 ) - svgypos ).toFixed(3);
-                 } else {
-                  var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
-                };
-               } else {
-                  var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
-               };
+              if (yflip == true) {
+                var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
+                var ypos = (  -1 * parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
+              } else {
+                var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
+                var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
+              };
 
                if (i == 0) {
-
-
                    // first point in line where we start lasering/milling
                    // move to point
 
@@ -223,10 +191,9 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                    }
 
                    // move to start point
-                   g += "G0 X" + xpos +
-                       " Y" + ypos + "\n";
+                   g += "G0 X" + xpos + " Y" + ypos + "\n";
 
-                   console.log( (parseFloat(worldPt.x.toFixed(3))) + (parseFloat(laserxmax)), ' ...')
+                   //console.log( (parseFloat(worldPt.x.toFixed(3))) + (parseFloat(laserxmax)), ' ...')
 
                   //subj_paths.push(worldPt.x.toFixed(3) +',' + worldPt.y.toFixed(3));
                    // if milling move back to depth cut
@@ -280,7 +247,6 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                    g += " X" + xpos;
                    g += " Y" + ypos;
                    g += " S" + laserPwrVal + "\n";
-                   //subj_paths.push(worldPt.x.toFixed(3) +',' + worldPt.y.toFixed(3));
                    var xpos = parseFloat(worldPt.x.toFixed(3));
                    var ypos = parseFloat(worldPt.y.toFixed(3));
                    subj_paths.push({X:xpos,Y:ypos});
@@ -310,19 +276,6 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                g += "G0 Z" + options.millclearanceheight + "\n";
                isAtClearanceHeight = true;
            }
-          //  console.log('Input Path', subj_paths);
-          //  subj_path2 = getInflatedPath(subj_paths, 10);
-          //  console.log('Output Path', subj_path2);
-          //
-          // //var mesh = createClipperPathsAsMesh(subj_path2, 0xff0000, 0.2, subj_path2);
-          // tool_offset = createClipperPathsAsLines(subj_path2);
-          // tool_offset.translateX(laserxmax /2 * -1);
-          // tool_offset.translateY(laserymax /2 * -1);
-          // tool_offset.name = 'Mill Path';
-          //scene.add(tool_offset);  // Plasma Mode! W.I.P
-
-
-
        }
    });
 
@@ -330,13 +283,6 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
 
   isGcodeInRegeneratingState = false;
 
-  // Remove DXF/SVG Preview
-  // if (typeof(fileObject) !== 'undefined') {
-  //   scene.remove(fileObject);
-  // };
-
-  // Send to LaserWeb
-  //document.getElementById("gcodepreview").value = g;
   return g;
 
 };
@@ -364,27 +310,15 @@ onInflateChange = function(evt) {
 
      if (options.inflate != 0) {
          console.log("user wants to inflate. val:", options.inflate);
-        //fileObject.updateMatrix();
-        fileParentGroup.updateMatrix();
-        //  // save the original path and make a new one so we can go back to the original
-        //  if (!fileObjectOriginal) {
-        //      console.log("creating original store");
-        //      // no original stored yet
-        //     fileParentGroupOriginal = fileParentGroup;
-        //     fileObjectOriginal = fileObject;
-        //  } else {
-        //      console.log("restoring original");
-        //      // restore original
-        //     fileParentGroup = fileParentGroupOriginal;
-        //     fileObject = fileObjectOriginal;
-        //  }
 
-         //var grp = fileObject;
+         fileParentGroup.updateMatrix();
+
          var grp = fileObject;
 
          var clipperPaths = [];
 
          grp.traverse( function(child) {
+           console.log('Traverse: ', child)
 
              if (child.name == "inflatedGroup") {
                  console.log("this is the inflated path from a previous run. ignore.");
@@ -399,7 +333,9 @@ onInflateChange = function(evt) {
                  for (i = 0; i < child.geometry.vertices.length; i++) {
                     var localPt = child.geometry.vertices[i];
                     var worldPt = scene.localToWorld(localPt.clone());
-                    clipperArr.push({X: worldPt.x, Y: worldPt.y});
+                    var xpos = (worldPt.x + child.position.x);
+                    var ypos = (worldPt.y + child.position.y);
+                    clipperArr.push({X: xpos, Y: ypos});
                 }
                 clipperPaths.push(clipperArr);
                 // Commented out - makes original dim
@@ -432,52 +368,23 @@ onInflateChange = function(evt) {
          var inflatedPaths = getInflatePath(newClipperPaths, options.inflate);
 
          inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, 0.01, 0, true, false, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name)
-
-        //  inflateGrp.position.x = fileParentGroup.position.x
-        //  inflateGrp.position.y = fileParentGroup.position.y
-
-        //  var hScale = ( $( "#scaleFactor" ).val() / 100);
-        //  console.log('Scaling to ', hScale);
-        //  inflateGrp.scale.x = hScale;
-        //  inflateGrp.scale.y = - hScale;
-
-
          inflateGrp.name = 'inflateGrp';
 
           var hScale = ($( "#scaleFactor" ).val() / 100);
           console.log('Scaling to ', hScale);
           inflateGrp.scale.x = hScale;
 
-          if (svgxpos > 0) {
+          if (yflip == true) {
             inflateGrp.scale.y = - hScale;
              putInflateGrpAtZero()
-
-
           } else {
              inflateGrp.scale.y = hScale;
-            //  inflateGrp.position.x = fileParentGroup.position.x
-            //  inflateGrp.position.y = fileParentGroup.position.y
              putInflateGrpAtZero();
           }
 
          scene.add(inflateGrp);
-
-         //grp.add(threeObj);
-
-        //  this.wakeAnimate();
      }
   };
-
-
-// threeJsVectorArrayToClipperArray = function(threeJsVectorArray) {
-//     var clipperArr = [];
-//     //for (var i in threeJsVectorArray) {
-//     for (i = 0; i < threeJsVectorArray.length; i++) {
-//         var pt = threeJsVectorArray[i];
-//         clipperArr.push({X: pt.x, Y: pt.y});
-//     }
-//     return clipperArr;
-// };
 
 simplifyPolygons = function(paths) {
     console.log('Simplifying: ', paths)

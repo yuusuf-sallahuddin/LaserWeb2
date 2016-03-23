@@ -1,9 +1,11 @@
 var options = {};
 var shape = null;
 var fileParentGroup;
+var yflip = false;
 
 drawSvg = function(file) {
 
+    yflip = true;
     if (typeof(fileObject) !== 'undefined') {
       scene.remove(fileObject);
       fileObject = null;
@@ -22,6 +24,10 @@ drawSvg = function(file) {
     if ( typeof(fileParentGroup) != 'undefined' ) {
       scene.remove(fileParentGroup);
       fileParentGroup = null;
+    }
+
+    if (boundingBox) {
+       scene.remove( boundingBox );
     }
 
     // see if file is valid
@@ -189,11 +195,11 @@ svgGroup.scale.y = -1;
 
 var bbox = new THREE.Box3().setFromObject(svgGroup);
 
-console.log("bbox for shift:", bbox);
-svgGroup.translateX( - (bbox.min.x + (laserxmax / 2))  );
-svgGroup.translateY( - (bbox.min.y + (laserymax / 2))  );
-svgxpos = bbox.min.x;
-svgypos = bbox.min.y;
+// console.log("bbox for shift:", bbox);
+// svgGroup.translateX( - (bbox.min.x + (laserxmax / 2))  );
+// svgGroup.translateY( - (bbox.min.y + (laserymax / 2))  );
+// svgxpos = bbox.min.x;
+// svgypos = bbox.min.y;
 
 // now that we have an svg that we have flipped and shifted to a zero position
 // create a parent group so we can attach some point positions for width/height
