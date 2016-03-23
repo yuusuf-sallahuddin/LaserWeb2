@@ -62,6 +62,7 @@ function putFileObjectAtZero() {
   console.log('bbox for putFileObjectAtZero: Min X: ', (bbox.min.x + (laserxmax / 2) ), '  Max X:', (bbox.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox.min.y + (laserymax / 2) ), '  Max Y:', (bbox.max.y + (laserymax / 2) ) );
   fileParentGroup.translateX( - (bbox.min.x + (laserxmax / 2))  );
   fileParentGroup.translateY( - (bbox.min.y + (laserymax / 2))  );
+  currentWorld();
 }
 
 function putInflateGrpAtZero() {
@@ -69,16 +70,25 @@ function putInflateGrpAtZero() {
   console.log('bbox for putFileObjectAtZero: inflate:  Min X: ', (bbox.min.x + (laserxmax / 2) ), '  Max X:', (bbox.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox.min.y + (laserymax / 2) ), '  Max Y:', (bbox.max.y + (laserymax / 2) ) );
   var bbox2 = new THREE.Box3().setFromObject(fileParentGroup);
   console.log('bbox for putFileObjectAtZero: file: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
-  inflateGrp.translateX( - (bbox.min.x + (laserxmax / 2))  );
-  inflateGrp.translateY( - (bbox.min.y + (laserymax / 2))  );
 
   var offset = parseFloat($('#inflateVal').val());
+  var xmove = parseFloat($('#xpos').val());
+  var ymove = parseFloat($('#ypos').val());
+
+  inflateGrp.translateX( - (bbox.min.x + (laserxmax / 2))  );
+  inflateGrp.translateY( - (bbox.min.y + (laserymax / 2))  );
+  // inflateGrp.position.x = (offset -(laserxmax / 2));
+  // inflateGrp.position.y = (offset -(laserymax / 2));
+
   if (svgxpos > 0) {
       fileParentGroup.position.x = offset;
       fileParentGroup.position.y = offset;
   } else {
     fileParentGroup.position.x = (offset - (laserxmax / 2));
     fileParentGroup.position.y = (offset - (laserymax / 2));
+    // fileParentGroup.translateX( - (bbox2.min.x + (laserxmax / 2) - offset - xmove)  );
+    // fileParentGroup.translateY( - (bbox2.min.y + (laserymax / 2) - offset - ymove)  );
   }
+  currentWorld();
 
 }

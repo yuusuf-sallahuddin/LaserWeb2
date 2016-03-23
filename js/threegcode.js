@@ -169,7 +169,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
 	 var g = "";
 
    // get the THREE.Group() that is the txt3d
-   var grp = threeGroup
+   var grp = threeGroup;
    var txtGrp = threeGroup;
 
    var that = this;
@@ -390,30 +390,28 @@ onInflateChange = function(evt) {
                  console.log("this is the inflated path from a previous run. ignore.");
                  return;
              }
-             else if (child.type == "Line") {
 
+             else if (child.type == "Line") {
                  // let's inflate the path for this line. it may not be closed
                  // so we need to check that.
-
-                 //var threeObj = that.inflateThreeJsLineShape(child, that.options.inflate);
-                 var clipperPath = threeJsVectorArrayToClipperArray(child.geometry.vertices);
-                 clipperPaths.push(clipperPath);
-
-                 // hide for now. we can unhide later if we reset.
-                 //child.visible = false;
-
-                 // Commented out - makes original dim
+                 var clipperArr = [];
+                 // Fix world Coordinates
+                 for (i = 0; i < child.geometry.vertices.length; i++) {
+                    var localPt = child.geometry.vertices[i];
+                    var worldPt = scene.localToWorld(localPt.clone());
+                    clipperArr.push({X: worldPt.x, Y: worldPt.y});
+                }
+                clipperPaths.push(clipperArr);
+                // Commented out - makes original dim
                 //  child.material.color = 0x000000;
                 //  child.material.transparent = true;
                 //  child.material.opacity = 0.2;
-
-                 // for now add to existing object
-                 // eventually replace it
-                 //grp.add(threeObj);
              }
+
              else if (child.type == "Points") {
                  child.visible = false;
              }
+
              else {
                  console.log("type of ", child.type, " being skipped");
              }
@@ -425,12 +423,15 @@ onInflateChange = function(evt) {
          // figures out holes and path orientations
          var newClipperPaths = simplifyPolygons(clipperPaths);
 
+         if (newClipperPaths.length < 1) {
+           console.error("Clipper Simplification Failed!:");
+           printLog('Clipper Simplification Failed!', '#cc0000')
+         }
+
          // get the inflated/deflated path
          var inflatedPaths = getInflatePath(newClipperPaths, options.inflate);
 
-         // we now have a huge array of clipper paths
-         console.log("newClipperPaths:", newClipperPaths);
-         inflateGrp = drawClipperPaths(inflatedPaths, 0x0000ff, 0.99, 0.01, 0, true, false, "inflatedGroup");
+         inflateGrp = drawClipperPaths(inflatedPaths, 0xff00ff, 0.8, 0.01, 0, true, false, "inflatedGroup"); // (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name)
 
         //  inflateGrp.position.x = fileParentGroup.position.x
         //  inflateGrp.position.y = fileParentGroup.position.y
@@ -468,22 +469,23 @@ onInflateChange = function(evt) {
   };
 
 
-threeJsVectorArrayToClipperArray = function(threeJsVectorArray) {
-    var clipperArr = [];
-    //for (var i in threeJsVectorArray) {
-    for (i = 0; i < threeJsVectorArray.length; i++) {
-        var pt = threeJsVectorArray[i];
-        clipperArr.push({X: pt.x, Y: pt.y});
-    }
-    return clipperArr;
-};
+// threeJsVectorArrayToClipperArray = function(threeJsVectorArray) {
+//     var clipperArr = [];
+//     //for (var i in threeJsVectorArray) {
+//     for (i = 0; i < threeJsVectorArray.length; i++) {
+//         var pt = threeJsVectorArray[i];
+//         clipperArr.push({X: pt.x, Y: pt.y});
+//     }
+//     return clipperArr;
+// };
 
 simplifyPolygons = function(paths) {
-
+    console.log('Simplifying: ', paths)
     var scale = 10000;
     ClipperLib.JS.ScaleUpPaths(paths, scale);
 
     var newClipperPaths = ClipperLib.Clipper.SimplifyPolygons(paths, ClipperLib.PolyFillType.pftEvenOdd);
+    console.log('Simplified: ', newClipperPaths)
 
     // scale back down
     ClipperLib.JS.ScaleDownPaths(newClipperPaths, scale);
@@ -514,6 +516,8 @@ getInflatePath = function (paths, delta, joinType) {
 
 drawClipperPaths = function (paths, color, opacity, z, zstep, isClosed, isAddDirHelper, name) {
  console.log("drawClipperPaths");
+
+
  var lineUnionMat = new THREE.LineBasicMaterial({
      color: color,
      transparent: true,

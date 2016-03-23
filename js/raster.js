@@ -1,0 +1,199 @@
+var minpwr;
+var maxpwr;
+var spotSizeMul;
+var laserRapid;
+var width;
+var height;
+var rectWidth;
+var rectHeight;
+var boundingBox;
+var BBmaterial;
+var BBgeometry;
+var intensity;
+
+// add MAP function to the Numbers function
+Number.prototype.map = function (in_min, in_max, out_min, out_max) {
+  return (this - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+};
+
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
+}
+
+function drawRaster() {
+
+			$('#rasterProgressShroud').hide();
+			$('#rasterparams').show();
+			// $('#rasterwidget').modal('show');
+			// $('#rasterparams').show();
+			// $('#rasterProgressShroud').hide();
+			var rasterWidgetTitle = document.getElementById("rasterModalLabel");
+			rasterWidgetTitle.innerText = 'Raster Engraving';
+			var sendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
+			sendToLaserButton.style.display = "none";
+			var rasterOutput = document.getElementById("rasterOutput");
+			rasterOutput.style.display = "none";
+			var selectedFile = event.target.files[0];
+			var reader = new FileReader();
+			document.getElementById('fileImage').value = '';
+};
+
+function rasterInit() {
+
+  // Raster support
+  var paperscript = {};
+
+  $( "#laserpwrslider" ).slider({
+      range:true,
+      min: 0,
+      max: 100,
+      values: [ 0, 100 ],
+      slide: function( event, ui ) {
+        minpwr = [ui.values[ 0 ]];
+        maxpwr = [ui.values[ 1 ]];
+        $('#rasterNow').removeClass('disabled');
+        $('#laserpwr').html( $( "#laserpwrslider" ).slider( "values", 0 ) + '% - ' + $( "#laserpwrslider" ).slider( "values", 1 ) +'%');
+        setImgDims()
+      }
+  });
+  $('#laserpwr').html( $( "#laserpwrslider" ).slider( "values", 0 ) + '% - ' + $( "#laserpwrslider" ).slider( "values", 1 ) +'%');
+  minpwr = $( "#laserpwrslider" ).slider( "values", 0 );
+  maxpwr = $( "#laserpwrslider" ).slider( "values", 1 );
+
+  $( "#spotsizeslider" ).slider({
+      min: 0,
+      max: 250,
+      values: [ 100 ],
+      slide: function( event, ui ) {
+        //spotSize = [ui.values[ 0 ]];
+        $('#rasterNow').removeClass('disabled');
+        setImgDims()
+      }
+  });
+
+  $( "#laservariablespeedslider" ).slider({
+      range:true,
+      min: 0,
+      max: 100,
+      values: [ 20, 80 ],
+      slide: function( event, ui ) {
+        $('#rasterNow').removeClass('disabled');
+        laserRapid = $('#rapidRate').val();
+        $('#laservariablespeed').html( $( "#laservariablespeedslider" ).slider( "values", 0 )*laserRapid/100.0 + ' - ' + $( "#laservariablespeedslider" ).slider( "values", 1 )*laserRapid/100.0);
+      }
+  });
+  $('#laservariablespeed').html( $( "#laservariablespeedslider" ).slider( "values", 0 )*$('#rapidRate').val()/100.0 + ' - ' + $( "#laservariablespeedslider" ).slider( "values", 1 )*$('#rapidRate').val()/100.0);
+
+  $("#useRasterBlackWhiteSpeeds").change( function() {
+    if($('#useRasterBlackWhiteSpeeds').prop('checked')) {
+      $("#blackwhitespeedsection").show();
+    } else {
+      $("#blackwhitespeedsection").hide();
+    }
+  });
+
+  $("#rapidRate").change( function() {
+    $('#laservariablespeed').html( $( "#laservariablespeedslider" ).slider( "values", 0 )*$('#rapidRate').val()/100.0 + ' - ' + $( "#laservariablespeedslider" ).slider( "values", 1 )*$('#rapidRate').val()/100.0);
+  });
+
+  $('#spotsize').html(':  '+ ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm ');
+  spotSizeMul = $( "#spotsizeslider" ).slider( "values", 0 ) / 100;
+
+  $('#rasterNow').on('click', function() {
+    $('#rasterWidgetSendRasterToLaser').addClass('disabled');
+    var spotSize = $( "#spotsizeslider" ).slider( "values", 0 ) / 100;
+    var laserFeed = $('#feedRate').val();
+    var laserRapid = $('#rapidRate').val();
+    var blackspeed = $( "#laservariablespeedslider" ).slider( "values", 0 ) * laserRapid / 100.0;
+    var whitespeed = $( "#laservariablespeedslider" ).slider( "values", 1 ) * laserRapid / 100.0;
+    var useVariableSpeed = $('#useRasterBlackWhiteSpeeds').prop('checked');
+    $('#rasterProgressShroud').hide();
+
+    paper.RasterNow({
+      completed: gcodereceived,
+      minIntensity: [minpwr],
+      maxIntensity: [maxpwr],
+      spotSize1: [spotSize],
+      imgheight: [height],
+      imgwidth: [width],
+      feedRate: [laserFeed],
+      blackRate: [blackspeed],
+      whiteRate: [whitespeed],
+      useVariableSpeed: [useVariableSpeed],
+      rapidRate: [laserRapid]
+    });
+  });
+
+  $('#spotSize').bind('input propertychange', function() {
+      //console.log('empty');
+      // Todo if empty
+      if(this.value.length){
+        setImgDims();
+      }
+  });
+}
+
+
+function setImgDims() {
+	spotSizeMul = $( "#spotsizeslider" ).slider( "values", 0 ) / 100;
+	minpwr = $( "#laserpwrslider" ).slider( "values", 0 );
+	maxpwr = $( "#laserpwrslider" ).slider( "values", 1 );
+	var img = document.getElementById('origImage');
+	width = img.naturalWidth;
+	height = img.naturalHeight;
+	$("#dims").text(width+'px x '+height+'px');
+	$('#canvas-1').prop('width', (width*2));
+	$('#canvas-1').prop('height', (height*2));
+	//$('#canvas-1').prop('width', laserxmax);
+	//$('#canvas-1').prop('height', laserymax);
+	var physwidth = spotSizeMul * (width+1);
+	var physheight = spotSizeMul * (height);
+	$("#physdims").text(physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm');
+	$('#spotsize').html( ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm (distance between dots )<br>Resultant Job Size: '+ physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm' );
+
+	//  Draw a rect showing outer dims of Engraving - engravings with white space to sides are tricky to visualise without
+	rectWidth = physwidth +spotSizeMul, rectHeight = physheight + spotSizeMul;
+	if (boundingBox) {
+		scene.remove( boundingBox );
+	}
+	BBmaterial = new THREE.LineDashedMaterial( { color: 0xcccccc, dashSize: 10, gapSize: 5, linewidth: 2 });
+	BBgeometry = new THREE.Geometry();
+	BBgeometry.vertices.push(
+		new THREE.Vector3( -spotSizeMul, 0, 0 ),
+		new THREE.Vector3( -spotSizeMul, (rectHeight + 1) , 0 ),
+		new THREE.Vector3( (rectWidth + 1), (rectHeight +1), 0 ),
+		new THREE.Vector3( (rectWidth + 1), 0, 0 ),
+		new THREE.Vector3( -spotSizeMul, 0, 0 )
+	);
+ 	boundingBox= new THREE.Line( BBgeometry, BBmaterial );
+	boundingBox.translateX(laserxmax /2 * -1);
+	boundingBox.translateY(laserymax /2 * -1);
+ 	scene.add( boundingBox );
+	};
+
+function gcodereceived() {
+	var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
+	if (rasterSendToLaserButton.style.display == "none") {
+		$('#rasterwidget').modal('hide');
+		$('#rasterparams').show();
+		$('#rasterProgressShroud').hide();
+	} else {
+		$('#rasterWidgetSendRasterToLaser').removeClass('disabled');
+	}
+	console.log('New Gcode');
+	$('#sendToLaser').removeClass('disabled');
+	openGCodeFromText();
+	gCodeToSend = document.getElementById('gcodepreview').value;
+	$('#mainStatus').html('Status: <b>Gcode</b> loaded ...');
+	$('#openMachineControl').removeClass('disabled');
+	$('#sendCommand').removeClass('disabled');
+	$('#sendToLaser').removeClass('disabled');
+};

@@ -9,6 +9,9 @@ $(document).ready(function() {
   animate();
   filePrepInit();
   initJog();
+  errorHandlerJS();
+  var paperscript = {};
+  rasterInit();
   //initRaster();
 
    $('#inflateVal').change(onInflateChange.bind(this));
@@ -86,6 +89,16 @@ $(document).ready(function() {
 
 // From here down we can have the actual functions
 
+// Error handling
+errorHandlerJS = function() {
+  window.onerror = function(message, url, line) {
+    message = message.replace(/^Uncaught /i, "");
+    //alert(message+"\n\n("+url+" line "+line+")");
+    console.log(message+"\n\n("+url+" line "+line+")");
+    printLog(message+"\n\n("+url+" line "+line+")", '#cc0000');
+  };
+};
+
 // Function to execute when opening file (triggered by fileOpen.addEventListener('change', readFile, false); )
 function readFile(evt) {
   // Close the menu
@@ -131,10 +144,23 @@ function readFile(evt) {
                $('#cammodule').hide();
              };
       } else {
-            console.log(f.name + " is probably a Raster");
+          console.log(f.name + " is probably a Raster");
+
+          r.readAsDataURL(evt.target.files[0]);
+          r.onload = function(event) {
+            var imgtag = document.getElementById("origImage");
+            imgtag.title = evt.target.files[0].name;
+            imgtag.src = event.target.result;
+            setImgDims();
+            //drawRaster();
+            printLog('Bitmap Opened', '#000000');
+            $('#cammodule').hide();
+          };
       }
     }
   };
+
+
 
 function saveFile() {
   var textToWrite = document.getElementById("gcodepreview").value;
