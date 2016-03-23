@@ -288,21 +288,24 @@ Rasterizer.prototype.rasterInterval = function() {
 
 		this.currentPosy++;
 		var progress = Math.round((this.currentPosy / this.raster.height) * 100.0);
-    $('#rasterProgressShroud .progress-bar').width(progress + "%");
-    $('#rasterProgressShroud .progress-bar').text(progress + "%");
+    //$('#rasterProgressShroud .progress-bar').width(progress + "%");
+    $('#rasterProgressPerc').html(progress + "%");
+    NProgress.set(progress / 100);
 		//console.log('[Rasterizer] ', progress, '% done');
 		} else {
 		this.onFinish();
-    var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
-    if (rasterSendToLaserButton.style.display == "none") { // Raster Mode
-      $('#rasterparams').hide();
-      $('#rasterwidget').modal('hide');
-    } else {  // Calibration Mode
-      $('#rasterparams').show();
-      $('#rasterProgressShroud').hide();
-      $('.progress').removeClass('active');
-    	$('#rasterProgressShroud .progress-bar').width(0);
-    }
+    //var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
+    //if (rasterSendToLaserButton.style.display == "none") { // Raster Mode
+      NProgress.done();
+      NProgress.remove();
+      //$('#rasterparams').hide();
+      //$('#rasterwidget').modal('hide');
+      // } else {  // Calibration Mode
+       $('#rasterparams').show();
+       $('#rasterProgressShroud').hide();
+    //   $('.progress').removeClass('active');
+    // 	$('#rasterProgressShroud .progress-bar').width(0);
+    // }
 		window.clearInterval(this.rasterIntervalTimer);
 	}
 };
@@ -310,17 +313,17 @@ Rasterizer.prototype.rasterInterval = function() {
 Rasterizer.prototype.onRasterLoaded = function() {
 	//console.log('[Rasterizer] onRasterLoaded');
   var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
-  if (rasterSendToLaserButton.style.display == "none") {  // Raster Mode
+  //if (rasterSendToLaserButton.style.display == "none") {  // Raster Mode
     $('#rasterparams').hide();
     $('#rasterProgressShroud').show();
     $('.progress').removeClass('active');
   	$('#rasterProgressShroud .progress-bar').width(0);
-  } else {  // Calibration Mode
-    $('#rasterparams').hide();
-    $('#rasterProgressShroud').show();
-    $('.progress').removeClass('active');
-  	$('#rasterProgressShroud .progress-bar').width(0);
-  }
+  // } else {  // Calibration Mode
+  //   $('#rasterparams').hide();
+  //   $('#rasterProgressShroud').show();
+  //   $('.progress').removeClass('active');
+  // 	$('#rasterProgressShroud .progress-bar').width(0);
+  // }
 
 	// Iterate through the Pixels asynchronously
   this.currentPosy = 0;
@@ -356,6 +359,7 @@ Rasterizer.prototype.onFinish = function() {
 
 this.RasterNow = function(config) {
   console.time("Process Raster");
+  printLog('Process Raster', '#000000')
 
   var rasterizer = new Rasterizer(config);
   rasterizer.init();

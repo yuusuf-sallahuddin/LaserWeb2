@@ -457,4 +457,6 @@ $(window).on('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   controls.reset();
+  $('#viewReset').click();
+
 });

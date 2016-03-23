@@ -141,15 +141,17 @@
                         </ul>
                     </li>
                 </ul>
-                <ul class="nav navbar-nav">
+                <!-- <ul class="nav navbar-nav">
                     <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
 
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="viewReset"><i class="fa fa-search fa-fw"></i>Reset</a></li>
                         </ul>
                     </li>
-                </ul>
-
+                </ul> -->
+                <form class="navbar-form navbar-left" role="form">
+                  <a class="btn btn-default" id="viewReset" href="#"><i class="fa fa-search"></i></a>
+                </form>
 
                 <form class="navbar-form navbar-left" role="form">
                  <div class="form-group">
@@ -214,7 +216,80 @@
   <!-- Main Body -->
   <div class="container-fluid">
     <div class="row">
-      <div class="col-sm-9"><!-- Start of Main Window -->
+      <div class="col-sm-3"><!-- Start of Left Column -->
+        <!-- Module Raster -->
+        <div class="list-group" id="rastermodule" style="display: none;">
+           <span class="list-group-item">
+             <h4 class="list-group-item-heading">Raster<a data-toggle="collapse" href="#rasterBody" aria-expanded="false" aria-controls="rasterBody"><span class="pull-right"><i class="fa fa-bars" style="color: #aaa;"></i></span></a></h4>
+             <div class="collapse in" id="rasterBody">
+               <p class="list-group-item-text">
+                 <div class="" id="rasterparams">
+                   <div class="well">
+                     <label for="laserpwrsliderlbl">Constrain Laser Power: </label>
+                     <span id="laserpwr" style="border:0;  font-weight:bold; background: transparent;" ></span>
+                     <div id="laserpwrslider"></div>
+                   </div>
+                   <div class="well">
+                     <input type="checkbox" value="1" id="useRasterBlackWhiteSpeeds" /> Enable Adaptive Feedrate Grayscale Control
+                     <div class="" id="blackwhitespeedsection" style="display: none;">
+                       <span style="font-size: 10px; font-color: #ccc">This feature allows you to fine tune the grayscale for linearity based on the material in use. </span>
+                       <center>
+                         <label for="laservariablespeedlbl">Feedrate for lightest (white) and darkest (black)</label><br>
+                         <div id="laservariablespeedslider"></div>
+                         <span id="laservariablespeed" style="border:0;  font-weight:bold; background: transparent;" ></span><span>&nbsp;mm/min</span>
+                       </center>
+                     </div>
+                   </div>
+                   <div class="well">
+                     <label for="spotsizesliderlbl">Zoom/Resolution: </label>
+                        <span id="spotsize" style="border:0;  font-weight:bold; background: transparent;" ></span>
+                     <div id="spotsizeslider"></div>
+                   </div>
+                   <div class="input-group" style="margin-bottom:10px; width: 100%;">
+                     <span class="input-group-addon"  style="width: 100px;"><i class="fa fa-line-chart fa-lg" style="margin-right: 20px;"></i>Engrave (G1) Feedrate</span>
+                     <input type="text input-sm" class="form-control" value="2000" id="feedRate">
+                     <span class="input-group-addon"  style="width: 60px;">mm/min</span>
+                   </div>
+                   <div class="input-group" style="margin-bottom:10px; width: 100%;">
+                     <span class="input-group-addon"  style="width: 100px;"><i class="fa fa-line-chart fa-lg" style="margin-right: 20px;"></i>Rapid (G0) Feedrate</span>
+                     <input type="text input-sm" class="form-control" value="6000" id="rapidRate">
+                     <span class="input-group-addon"  style="width: 60px;">mm/min</span>
+                   </div>
+                   <center>
+                     <a class="btn btn-sm btn-default disabled" id="rasterNow"><i class="fa fa-square-o fa-lg" style="margin-right: 3px;"></i>Prepare Raster</a>
+                     <!-- button type="button" class="btn btn-danger disabled" id="rasterWidgetSendRasterToLaser"><i class="fa fa-fire" style="margin-right: 8px;"></i>Send to Laser</button -->
+                   </center>
+                   <center>
+                     Imported Image Dimensions: <span id="dims">0px x 0 px</span><br>
+                     Engraved Image Dimensions: <span id="physdims">0mm x 0 mm</span><br>
+                     <img id="origImage" style="border: 1px solid #555;  max-width:598px;">
+                   </center>
+                   <hr>
+                   <div class="canvas" id="rasterOutput" style="display: none;">
+                     <canvas id="canvas-1"></canvas>
+                   </div>
+                 </div> <!-- rasterparams -->
+                 <div id="rasterProgressShroud">
+
+                   <center>
+                     <h3>Converting...</h3>
+                     <span id="rasterProgressPerc"></span>
+                   </center>
+                   <!-- <div class="progress">
+                     <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                       <span class="sr-only">0% Complete</span>
+                     </div>
+                   </div> -->
+                 </div> <!-- rastershroud -->
+
+               </p>
+             </div>
+           </span>
+        </div>
+        <!-- End Module Raster -->
+
+     </div> <!-- End of Left Column -->
+      <div class="col-sm-6"><!-- Start of Main Window -->
 
      </div> <!-- End of Main Window -->
      <div class="col-sm-3"><!-- Start of Right Column -->
@@ -409,72 +484,6 @@
       </div>
       <!-- End Module Console -->
 
-      <!-- Module Raster -->
-      <div class="list-group" id="rastermodule">
-         <span class="list-group-item">
-           <h4 class="list-group-item-heading">Raster<a data-toggle="collapse" href="#rasterBody" aria-expanded="false" aria-controls="rasterBody"><span class="pull-right"><i class="fa fa-bars" style="color: #aaa;"></i></span></a></h4>
-           <div class="collapse in" id="rasterBody">
-             <p class="list-group-item-text">
-               <div class="" id="rasterparams">
-                 <label for="laserpwrsliderlbl">Constrain Laser Power: </label>
-                 <span id="laserpwr" style="border:0;  font-weight:bold; background: transparent;" ></span>
-                 <div id="laserpwrslider"></div>
-                 <br/>
-                 <input type="checkbox" value="1" id="useRasterBlackWhiteSpeeds" /> Enable Adaptive Feedrate Grayscale Control
-                 <div class="" id="blackwhitespeedsection" style="display: none;">
-                   This feature allows you to fine tune the grayscale for linearity based on the material in use. Adjusting both the Adaptive Feedrate, and the Constrained Laser power, to achieve the best, linear gray level from 0% through to 100%
-                   (Note:  This overrides your engrave speed)
-                   <center>
-                     <label for="laservariablespeedlbl">Feedrate for Lightest shade (white) and for darkest shade (black)</label><br>
-                     <span id="laservariablespeed" style="border:0;  font-weight:bold; background: transparent;" ></span><span>&nbsp;mm/min</span>
-                   </center>
-                   <div id="laservariablespeedslider"></div>
-                 </div>
-                 <div class="well">
-                   <label for="spotsizesliderlbl">Zoom/Resolution: </label>
-                      <span id="spotsize" style="border:0;  font-weight:bold; background: transparent;" ></span>
-                   <div id="spotsizeslider"></div>
-                 </div>
-                 <div class="input-group" style="margin-bottom:10px; width: 100%;">
-                   <span class="input-group-addon"  style="width: 100px;"><i class="fa fa-line-chart fa-lg" style="margin-right: 20px;"></i>Engrave (G1) Feedrate</span>
-                   <input type="text" class="form-control" value="2000" id="feedRate">
-                   <span class="input-group-addon"  style="width: 60px;">mm/min</span>
-                 </div>
-                 <br>
-                 <div class="input-group" style="margin-bottom:10px; width: 100%;">
-                   <span class="input-group-addon"  style="width: 100px;"><i class="fa fa-line-chart fa-lg" style="margin-right: 20px;"></i>Rapid (G0) Feedrate</span>
-                   <input type="text" class="form-control" value="6000" id="rapidRate">
-                   <span class="input-group-addon"  style="width: 60px;">mm/min</span>
-                 </div>
-                 <br>
-                 <center>
-                   <a class="btn btn-danger disabled" id="rasterNow"><i class="fa fa-square-o fa-lg" style="margin-right: 3px;"></i>Prepare Raster</a>
-                   <button type="button" class="btn btn-danger disabled" id="rasterWidgetSendRasterToLaser"><i class="fa fa-fire" style="margin-right: 8px;"></i>Send to Laser</button>
-                 </center>
-                 <center>
-                   Imported Image Dimensions: <span id="dims">0px x 0 px</span><br>
-                   Engraved Image Dimensions: <span id="physdims">0mm x 0 mm</span><br>
-                   <img id="origImage" style="border: 1px solid orange;  max-width:598px;">
-                 </center>
-                 <hr>
-                 <div class="canvas" id="rasterOutput" style="display: none;">
-                   <canvas id="canvas-1"></canvas>
-                 </div>
-               </div> <!-- rasterparams -->
-               <div id="rasterProgressShroud">
-                 <h1>Rasterizing...</h1>
-                 <div class="progress">
-                   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
-                     <span class="sr-only">0% Complete</span>
-                   </div>
-                 </div>
-               </div> <!-- rastershroud -->
-
-             </p>
-           </div>
-         </span>
-     </div>
-     <!-- End Module Raster -->
 
      </div><!-- End of Right Column -->
    </div>

@@ -114,6 +114,7 @@ function readFile(evt) {
             r.onload = function(e) {
               dxf = r.result
               $('#cammodule').show();
+              $('#rastermodule').hide();
               getSettings();
               drawDXF(dxf);
               currentWorld();
@@ -128,6 +129,7 @@ function readFile(evt) {
               svg = r.result
               // /console.log(svg);
               $('#cammodule').show();
+              $('#rastermodule').hide();
               getSettings();
               drawSvg(svg);
               currentWorld();
@@ -142,19 +144,20 @@ function readFile(evt) {
                openGCodeFromText();
                printLog('GCODE Opened', '#000000');
                $('#cammodule').hide();
+               $('#rastermodule').hide();
              };
       } else {
           console.log(f.name + " is probably a Raster");
-
           r.readAsDataURL(evt.target.files[0]);
           r.onload = function(event) {
             var imgtag = document.getElementById("origImage");
             imgtag.title = evt.target.files[0].name;
             imgtag.src = event.target.result;
             setImgDims();
-            //drawRaster();
+            drawRaster();
             printLog('Bitmap Opened', '#000000');
             $('#cammodule').hide();
+            $('#rastermodule').show();
           };
       }
     }

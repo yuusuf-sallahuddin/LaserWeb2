@@ -32,21 +32,29 @@ function drawRaster() {
 
 			$('#rasterProgressShroud').hide();
 			$('#rasterparams').show();
+      $("body").trigger("click")  // close dropdown menu
+
+      if($('#useRasterBlackWhiteSpeeds').prop('checked')) {
+        $("#blackwhitespeedsection").show();
+      } else {
+        $("#blackwhitespeedsection").hide();
+      }
 			// $('#rasterwidget').modal('show');
 			// $('#rasterparams').show();
 			// $('#rasterProgressShroud').hide();
-			var rasterWidgetTitle = document.getElementById("rasterModalLabel");
-			rasterWidgetTitle.innerText = 'Raster Engraving';
-			var sendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
-			sendToLaserButton.style.display = "none";
-			var rasterOutput = document.getElementById("rasterOutput");
-			rasterOutput.style.display = "none";
-			var selectedFile = event.target.files[0];
-			var reader = new FileReader();
-			document.getElementById('fileImage').value = '';
+			// var rasterWidgetTitle = document.getElementById("rasterModalLabel");
+			// rasterWidgetTitle.innerText = 'Raster Engraving';
+			// var sendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
+			// sendToLaserButton.style.display = "none";
+			// var rasterOutput = document.getElementById("rasterOutput");
+			// rasterOutput.style.display = "none";
+			// var selectedFile = event.target.files[0];
+			// var reader = new FileReader();
+			// document.getElementById('fileImage').value = '';
 };
 
 function rasterInit() {
+  printLog('Raster module Activated', '#000000')
 
   // Raster support
   var paperscript = {};
@@ -157,7 +165,8 @@ function setImgDims() {
 	var physwidth = spotSizeMul * (width+1);
 	var physheight = spotSizeMul * (height);
 	$("#physdims").text(physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm');
-	$('#spotsize').html( ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm (distance between dots )<br>Resultant Job Size: '+ physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm' );
+	$('#spotsize').html( ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm (distance between dots )' );
+  //$('#spotsize').html( ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm (distance between dots )<br>Resultant Job Size: '+ physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm' );
 
 	//  Draw a rect showing outer dims of Engraving - engravings with white space to sides are tricky to visualise without
 	rectWidth = physwidth +spotSizeMul, rectHeight = physheight + spotSizeMul;
@@ -180,20 +189,23 @@ function setImgDims() {
 	};
 
 function gcodereceived() {
-	var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
-	if (rasterSendToLaserButton.style.display == "none") {
-		$('#rasterwidget').modal('hide');
-		$('#rasterparams').show();
-		$('#rasterProgressShroud').hide();
-	} else {
-		$('#rasterWidgetSendRasterToLaser').removeClass('disabled');
-	}
+  printLog('Raster Completed', '#000000')
+	//var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
+	//if (rasterSendToLaserButton.style.display == "none") {
+	// 	//$('#rasterwidget').modal('hide');
+
+	$('#rasterProgressShroud').hide();
+  $('#rasterparams').show();
+	// } else {
+	// 	$('#rasterWidgetSendRasterToLaser').removeClass('disabled');
+	// }
 	console.log('New Gcode');
-	$('#sendToLaser').removeClass('disabled');
+	//$('#sendToLaser').removeClass('disabled');
 	openGCodeFromText();
 	gCodeToSend = document.getElementById('gcodepreview').value;
-	$('#mainStatus').html('Status: <b>Gcode</b> loaded ...');
-	$('#openMachineControl').removeClass('disabled');
-	$('#sendCommand').removeClass('disabled');
-	$('#sendToLaser').removeClass('disabled');
+	//$('#mainStatus').html('Status: <b>Gcode</b> loaded ...');
+	//$('#openMachineControl').removeClass('disabled');
+	//$('#sendCommand').removeClass('disabled');
+	//$('#sendToLaser').removeClass('disabled');
+  $('#viewReset').click();
 };
