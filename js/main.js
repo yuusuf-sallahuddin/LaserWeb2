@@ -94,7 +94,7 @@ errorHandlerJS = function() {
   window.onerror = function(message, url, line) {
     message = message.replace(/^Uncaught /i, "");
     //alert(message+"\n\n("+url+" line "+line+")");
-    console.log(message+"\n\n("+url+" line "+line+")");
+    //console.log(message+"\n\n("+url+" line "+line+")");
     printLog(message+"\n\n("+url+" line "+line+")", '#cc0000');
   };
 };

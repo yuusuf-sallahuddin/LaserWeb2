@@ -145,6 +145,7 @@ extractSvgPathsFromSVGFile = function(file) {
         var paths = that.transformSVGPath(path.realPath);
         // var paths = that.transformSVGPath(path.attr('d'));
         //for (var pathindex in paths) {
+        console.log('Number of Paths', paths.length)
         for (pathindex = 0; pathindex < paths.length; pathindex++ ) {
 
             var shape = paths[pathindex];
@@ -152,59 +153,25 @@ extractSvgPathsFromSVGFile = function(file) {
             shape.autoClose = true;
             console.log("shape: Number", pathindex , "Value: ", shape);
 
-            if (opts.cut == "dashed") {
+          				// solid line
+          if (shape.curves.length != 0) {
+            console.log('Generating Shape', shape)
+            var geometry = new THREE.ShapeGeometry( shape );
+            var lineSvg = new THREE.Line( geometry, material );
+      			svgGroup.add(lineSvg);
+          } else {
+            console.log('Skipped path: ', shape)
+          }
 
-		    // figure out how many points to generate
-		    var ptCnt = shape.getLength() / (opts.dashPercent / 10);
-		    //console.log("ptCnt:", ptCnt);
-		    shape.autoClose = false;
-		    var spacedPoints = shape.createSpacedPointsGeometry( ptCnt );
-		    console.log("spacedPoints", spacedPoints);
+    			// var particles = new THREE.Points( geometry, new THREE.PointsMaterial( {
+    			//     color: 0xff0000,
+    			//     size: 1,
+    			//     opacity: 0.5,
+    			//     transparent: true
+    			// } ) );
+    		  //   //particles.position.z = 1;
+          //   //svgGroup.add(particles);
 
-		    // we need to generate a ton of lines
-		    // rather than one ongoing line
-		    var isFirst = true;
-		    var mypointsGeo = new THREE.Geometry();
-
-		    for (var iv in spacedPoints.vertices) {
-		        var pt = spacedPoints.vertices[iv];
-		        //console.log("pt:", pt, "isFirst:", isFirst, "mypointsGeo:", mypointsGeo);
-
-		        if (isFirst) {
-		            // first point, start the line
-		            mypointsGeo = new THREE.Geometry(); // reset array to empty
-		            mypointsGeo.vertices[0] = pt;
-				        isFirst = false;
-		        } else {
-		            // is second point, finish the line
-		            mypointsGeo.vertices[1] = pt;
-		            var line = new THREE.Line( mypointsGeo, material );
-		            svgGroup.add( line );
-		            isFirst = true;
-		        }
-		        //console.log("working on point:", pt);
-		    }
-		    //charGroup.add( line );
-
-		    var particles = new THREE.Points( spacedPoints, new THREE.PointsMaterial( { color: 0xff0000, size: opts.size / 10 } ) );
-		    particles.position.z = 1;
-		    //charGroup.add(particles);
-
-		} else {
-				// solid line
-          var geometry = new THREE.ShapeGeometry( shape );
-          var lineSvg = new THREE.Line( geometry, material );
-    			svgGroup.add(lineSvg);
-
-    			var particles = new THREE.Points( geometry, new THREE.PointsMaterial( {
-    			    color: 0xff0000,
-    			    size: 1,
-    			    opacity: 0.5,
-    			    transparent: true
-    			} ) );
-    		    //particles.position.z = 1;
-            //svgGroup.add(particles);
-}
 
 
 }

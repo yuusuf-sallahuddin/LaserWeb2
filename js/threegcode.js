@@ -224,7 +224,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
 
                    // move to start point
                    g += "G0 X" + xpos +
-                       " Y" + ypos + " F" + rapidSpeed + "\n";
+                       " Y" + ypos + "\n";
 
                    console.log( (parseFloat(worldPt.x.toFixed(3))) + (parseFloat(laserxmax)), ' ...')
 
