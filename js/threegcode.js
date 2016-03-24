@@ -61,7 +61,7 @@ $(document).ready(function() {
       cutSpeed = [];
 
 
-      if (typeof(inflateGrp) != 'undefined') {
+      if (typeof(inflateGrp) != 'undefined' && inflateGrp != null) {
          console.log('looks like we are generating gcode for a Offset Path');
          pwr0 = $('#pwr0').val();
          cutSpeed0 = $('#sp0').val();
@@ -171,7 +171,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                var localPt = child.geometry.vertices[i];
                var worldPt = grp.localToWorld(localPt.clone());
 
-              if (yflip == true) {
+              if (yflip == true && !inflateGrp) {
                 var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
                 var ypos = (  -1 * parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
               } else {
@@ -179,7 +179,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                 var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
               };
 
-               if (i == 0) {
+              if (i == 0) {
                    // first point in line where we start lasering/milling
                    // move to point
 

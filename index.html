@@ -115,7 +115,7 @@
 
     <div id="renderArea"></div> <!-- Note - background div - see CSS -->
 
-    <nav id="navbar-top" class="navbar navbar-default navbar-static" role="navigation">
+    <nav id="navbar-top" class="navbar navbar-default navbar-static navbar-fixed-top" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#top-menu"> <span class="sr-only">Menu</span>
@@ -128,19 +128,19 @@
 
             </div>
             <div class="collapse navbar-collapse bs-js-navbar-collapse" id="top-menu">
-                <ul class="nav navbar-nav">
+                <!-- <ul class="nav navbar-nav">
                     <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>File</b> <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" class="btn-file">
+                            <!-- <li role="presentation"><a role="menuitem" tabindex="-1" class="btn-file">
                                 <i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf" />
                             </li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" id="save" href="#"><i class="fa fa-floppy-o fa-fw"></i>Save</a></li>
+                            <li role="presentation"><a role="menuitem" tabindex="-1" id="save" href="#"><i class="fa fa-floppy-o fa-fw"></i>Save</a></li> -->
                             <!-- li role="presentation" class="divider"></li>
                             <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Print</a>
                             </li -->
-                        </ul>
+                        <!-- </ul>
                     </li>
-                </ul>
+                </ul> -->
                 <!-- <ul class="nav navbar-nav">
                     <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
 
@@ -150,7 +150,8 @@
                     </li>
                 </ul> -->
                 <form class="navbar-form navbar-left" role="form">
-                  <a class="btn btn-default" id="viewReset" href="#"><i class="fa fa-search"></i></a>
+                <span class="btn btn-default btn-file"><i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf" /></span>
+                  <a class="btn btn-default" id="viewReset" href="#"><i class="fa fa-search fa-fw"></i>Reset</a>
                 </form>
 
                 <form class="navbar-form navbar-left" role="form">
@@ -214,7 +215,7 @@
     <!-- /navbar-example -->
 
   <!-- Main Body -->
-  <div class="container-fluid">
+  <div class="container-fluid" style="margin-top: 70px;">
     <div class="row">
       <div class="col-sm-3"><!-- Start of Left Column -->
         <!-- Module Raster -->

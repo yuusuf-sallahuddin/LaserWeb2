@@ -32,19 +32,6 @@ $(document).ready(function() {
      resetView();
  	 });
 
-   function resetView() {
-     if ( typeof(object) != 'undefined' ) {
-       viewExtents(object);
-     } else if ( typeof(inflateGrp) != 'undefined' ) {
-       viewExtents(inflateGrp);
-     } else if ( typeof(fileParentGroup) != 'undefined' ) {
-       viewExtents(fileParentGroup);
-     } else {
-       viewExtents(helper);
-     };
-   }
-
-
   // Connection Toolbar
   $('#connect').on('click', function() {
 		serialConnect($('#port').val(), $('#baud option:selected').val(), $('#buffer').val());
@@ -120,6 +107,8 @@ function readFile(evt) {
               currentWorld();
               printLog('DXF Opened', '#000000');
               $('#cammodule').show();
+              putFileObjectAtZero();
+              resetView()
             };
 
       } else if (f.name.match(/.svg$/i)) {
@@ -135,6 +124,8 @@ function readFile(evt) {
               currentWorld();
               printLog('SVG Opened', '#000000');
               $('#cammodule').show();
+              putFileObjectAtZero();
+              resetView()
             };
 
       } else if (f.name.match(/.gcode$/i)) {
@@ -145,6 +136,8 @@ function readFile(evt) {
                printLog('GCODE Opened', '#000000');
                $('#cammodule').hide();
                $('#rastermodule').hide();
+               putFileObjectAtZero();
+               resetView()
              };
       } else {
           console.log(f.name + " is probably a Raster");
@@ -158,6 +151,8 @@ function readFile(evt) {
             printLog('Bitmap Opened', '#000000');
             $('#cammodule').hide();
             $('#rastermodule').show();
+            putFileObjectAtZero();
+            resetView()
           };
       }
     }

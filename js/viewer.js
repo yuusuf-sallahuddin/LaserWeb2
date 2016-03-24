@@ -85,7 +85,7 @@ if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.matc
     $('#viewermodule').show();
     $('#mobileRenderArea').append(renderer.domElement);
     renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-    renderer.setSize(1000, 1000);
+    renderer.setSize($('#mobileRenderArea').width(), $('#mobileRenderArea').height());
     renderer.clear();
     camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
     camera.updateProjectionMatrix();

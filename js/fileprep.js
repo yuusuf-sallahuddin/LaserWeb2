@@ -1,3 +1,7 @@
+var Xtofix;
+var Ytofix;
+
+
 function filePrepInit() {
 
 
@@ -49,6 +53,19 @@ function filePrepInit() {
 
 }
 
+function resetView() {
+  if ( typeof(object) != 'undefined' ) {
+    viewExtents(object);
+  } else if ( typeof(inflateGrp) != 'undefined' ) {
+    viewExtents(inflateGrp);
+  } else if ( typeof(fileParentGroup) != 'undefined' ) {
+    viewExtents(fileParentGroup);
+  } else {
+    viewExtents(helper);
+  };
+}
+
+
 //' Sets the input boxes to the current real-world sizes.  But why, well maybe we arent only going to scale/position via the input boxes?
 // in which case we want to update the textboxes to match what we did from some other function'
 function currentWorld() {
@@ -58,49 +75,29 @@ function currentWorld() {
 }
 
 function putFileObjectAtZero() {
-  // var bbox = new THREE.Box3().setFromObject(fileParentGroup);
-  // console.log('bbox for putFileObjectAtZero: Min X: ', (bbox.min.x + (laserxmax / 2) ), '  Max X:', (bbox.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox.min.y + (laserymax / 2) ), '  Max Y:', (bbox.max.y + (laserymax / 2) ) );
-  // fileParentGroup.translateX( - (bbox.min.x + (laserxmax / 2))  );
-  // fileParentGroup.translateY( - (bbox.min.y + (laserymax / 2))  );
+  // var hex  = 0xff0000;
+  // var bbox = new THREE.BoundingBoxHelper( fileParentGroup, hex );
+  // bbox.update();
+  // scene.add( bbox );
+  var bbox2 = new THREE.Box3().setFromObject(fileParentGroup);
+  console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
+  Xtofix = - (bbox2.min.x + (laserxmax / 2) );
+  Ytofix = - (bbox2.min.y + (laserymax / 2) );
+  console.log('X Offset', Xtofix)
+  console.log('Y Offset', Ytofix)
+  fileParentGroup.translateX(Xtofix);
+  fileParentGroup.translateY(Ytofix);
   currentWorld();
 }
 
 function putInflateGrpAtZero() {
   if (yflip == true) {
     inflateGrp.position.x = fileParentGroup.position.x
-    inflateGrp.position.y = - fileParentGroup.position.y
+    inflateGrp.position.y = fileParentGroup.position.y
   } else {
     inflateGrp.position.x = fileParentGroup.position.x
     inflateGrp.position.y = fileParentGroup.position.y
   };
-// var bbox = new THREE.Box3().setFromObject(inflateGrp);
-// console.log('bbox for putFileObjectAtZero: inflate:  Min X: ', (bbox.min.x + (laserxmax / 2) ), '  Max X:', (bbox.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox.min.y + (laserymax / 2) ), '  Max Y:', (bbox.max.y + (laserymax / 2) ) );
-// var bbox2 = new THREE.Box3().setFromObject(fileParentGroup);
-// console.log('bbox for putFileObjectAtZero: file: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
-//
-// var offset = parseFloat($('#inflateVal').val());
-// var xmove = parseFloat($('#xpos').val());
-// var ymove = parseFloat($('#ypos').val());
-//
-// if (svgxpos > 0) {
-//   inflateGrp.translateX( - (bbox.min.x + (laserxmax / 2) + xmove)  );
-//   inflateGrp.translateY( - (bbox.min.y + (laserymax / 2) + ymove)  );
-// } else {
-//   inflateGrp.translateX( - (bbox.min.x + (laserxmax / 2))  );
-//   inflateGrp.translateY( - (bbox.min.y + (laserymax / 2))  );
-// };
-// // inflateGrp.position.x = (offset -(laserxmax / 2));
-// // inflateGrp.position.y = (offset -(laserymax / 2));
-//
-// if (svgxpos > 0) {
-//   fileParentGroup.position.x = offset;
-//   fileParentGroup.position.y = offset;
-// } else {
-//   fileParentGroup.position.x = (offset - (laserxmax / 2));
-//   fileParentGroup.position.y = (offset - (laserymax / 2));
-//   // fileParentGroup.translateX( - (bbox2.min.x + (laserxmax / 2) - offset - xmove)  );
-//   // fileParentGroup.translateY( - (bbox2.min.y + (laserymax / 2) - offset - ymove)  );
-// };
-// currentWorld();
+ currentWorld();
 
 }
