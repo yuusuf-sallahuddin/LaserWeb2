@@ -172,8 +172,8 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                var worldPt = grp.localToWorld(localPt.clone());
 
               if (yflip == true && !inflateGrp) {
-                var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
-                var ypos = (  -1 * parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
+                var xpos = (      parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
+                var ypos = ( -1 * parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
               } else {
                 var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
                 var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
