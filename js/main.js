@@ -82,7 +82,10 @@ errorHandlerJS = function() {
     message = message.replace(/^Uncaught /i, "");
     //alert(message+"\n\n("+url+" line "+line+")");
     //console.log(message+"\n\n("+url+" line "+line+")");
-    printLog(message+"\n\n("+url+" line "+line+")", '#cc0000');
+    //if (url.indexof('three') = -1) { // Ignoring threejs messages
+      printLog(message+"\n("+url+" on line "+line+")", '#cc0000');
+    //}
+
   };
 };
 
@@ -139,7 +142,49 @@ function readFile(evt) {
                putFileObjectAtZero();
                resetView()
              };
-      } else {
+     } else if (f.name.match(/.stl$/i)) {
+            //r.readAsText(evt.target.files[0]);
+            var stlloader = new MeshesJS.STLLoader;
+            r.onload = function(event) {
+                  // Parse ASCII STL
+                  if (typeof r.result === 'string' ) {
+                     console.log("Inside STL.js Found ASCII");
+                     stlloader.loadString(r.result);
+                     return;
+                  }
+
+                  // buffer reader
+                  var view = new DataView(this.result);
+
+                  // get faces number
+                  try {
+                     var faces = view.getUint32(80, true);
+                  }
+                  catch(error) {
+                     self.onError(error);
+                     return;
+                  }
+
+                  // is binary ?
+                  var binary = view.byteLength == (80 + 4 + 50 * faces);
+
+                  if (! binary) {
+                     // get the file contents as string
+                     // (faster than convert array buffer)
+                     r.readAsText(evt.target.files[0]);
+                     return;
+                  }
+
+                  // parse binary STL
+                  console.log("Inside STL.js Binary STL");
+                  stlloader.loadBinaryData(view, faces, number, mainScope, fileInfo);
+               };
+               // start reading file as array buffer
+              r.readAsArrayBuffer(evt.target.files[0]);
+              printLog('STL Opened', '#000000');
+              $('#cammodule').hide();
+              $('#rastermodule').hide();
+        } else {
           console.log(f.name + " is probably a Raster");
           r.readAsDataURL(evt.target.files[0]);
           r.onload = function(event) {

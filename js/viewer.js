@@ -1,5 +1,5 @@
 var scene, camera, renderer;
-var geometry, material, mesh, helper, axes, axesgrp;
+var geometry, material, mesh, helper, axes, axesgrp, light;
 
 
 // Global Vars
@@ -142,6 +142,12 @@ helper = new THREE.GridHelper(laserxmax, laserymax, 10);
               //this.sceneAdd(this.grid);
   //console.log('[VIEWER] - added Helpert');
 scene.add(helper);
+
+var light = new THREE.DirectionalLight( 0xffffff );
+  light.position.set( 0, 1, 1 ).normalize();
+  scene.add(light);
+
+
 
 if (axesgrp) {
     scene.remove(axesgrp);
