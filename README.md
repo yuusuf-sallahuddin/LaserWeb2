@@ -1,8 +1,8 @@
 
 # LaserWeb2
-Yip its time to start working on its successor already!
+Yup, its time to start working on its successor already!
 
-This repo will not be production ready anytime soon
+This repo will not be production ready anytime soon.
 
 Laserweb (https://github.com/openhardwarecoza/LaserWeb) was born out of a need! Last year when I gave up on getting a certain well known open source java based laser cutting software to work and my skills at the time didnt allow me to complete my development inside Chilipeppr - i caved in and did what I could to help myself get going! The result of which astounds even me! In just over three months LaserWeb grew to be a massively successful opensource project!  But its not without its flaws
 
