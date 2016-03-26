@@ -16,6 +16,9 @@ Let the Dev begin!
 
 (Note readme / wiki here will stay very quiet!   If you are a user, head over to https://github.com/openhardwarecoza/LaserWeb  - if you are a developer, talk to @openhardwarecoza or view the commit log!)
 
+## Sponsors
+Have a look at companies and individuals that support us financially or with parts donations, or if you would like to get involved by sponsoring us in any way, please see the Sponsors Page on the wiki: https://github.com/openhardwarecoza/LaserWeb/wiki/SPONSORS
+
 ## Disclaimer
 By using this software, the user accepts complete responsibility for each and every aspect of safety associated with the use of the Laser machine, Laser system and LaserWeb2 Software.
 
