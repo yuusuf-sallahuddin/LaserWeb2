@@ -60,7 +60,7 @@ parseStlBinary = function(stl) { //this is from jsstl.  we have a failure on the
             shading: THREE.FlatShading
         }));
     //scene.add(mesh);
-    this.sceneAdd(mesh);
+    scene.add(mesh);
 
     stl = null;
 };
@@ -70,5 +70,20 @@ parseStlBinary = function(stl) { //this is from jsstl.  we have a failure on the
 
 // Start SLAcer.js - slice functions
 var slicer = new SLAcer.Slicer();
-console.log('We Have Slicer? ', slicer)
+console.log()
 var shapes;
+
+function drawSlice(zheight) {
+  var layer = slicer.getFaces(zheight);
+  for (i=0; i<= layer.shapes.length; i++) {
+    var slice = new THREE.Group();
+    slice.add(layer.shapes[i]);
+    var edges = new THREE.EdgesHelper(layer.shapes[i], 0x000000);
+    scene.add(edges);
+    console.log('Edges ', edges)
+    console.log('slice ', slice)
+
+
+  }
+
+}

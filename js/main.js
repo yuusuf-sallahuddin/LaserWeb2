@@ -16,6 +16,9 @@ $(document).ready(function() {
 
   // Tooltips
   $( document ).tooltip();
+  $(document).click(function() {
+    $(this).tooltip( "option", "hide", { effect: "clip", duration: 500 } ).off("focusin focusout");
+  });
 
    $('#inflateVal').change(onInflateChange.bind(this));
 
@@ -180,7 +183,7 @@ function readFile(evt) {
 
                   // parse binary STL
                   console.log("Inside STL.js Binary STL");
-                  stlloader.loadBinaryData(view, faces, number, mainScope, fileInfo);
+                  stlloader.loadBinaryData(view, faces, 100, window, evt.target.files[0]);
                };
                // start reading file as array buffer
               r.readAsArrayBuffer(evt.target.files[0]);
