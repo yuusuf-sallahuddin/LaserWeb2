@@ -99,6 +99,7 @@ function drawSlice(zheight) {
          // solid line
          //if (shape.curves.length != 0) {
            console.log('Generating Shape', shape)
+           shape.autoClose = true;
            var geometry = new THREE.ShapeGeometry( shape );
            var lineSvg = new THREE.Line( geometry, material );
            svgGroup.add(lineSvg);
