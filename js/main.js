@@ -14,6 +14,9 @@ $(document).ready(function() {
   rasterInit();
   //initRaster();
 
+  // Tooltips
+  $( document ).tooltip();
+
    $('#inflateVal').change(onInflateChange.bind(this));
 
   // Top toolbar Menu
