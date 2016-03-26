@@ -106,9 +106,9 @@ if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.matc
 
 controls = new THREE.OrbitControls( camera, renderer.domElement );
 controls.target.set( 0, 0, 0 ); // view direction perpendicular to XY-plane
-controls.enableRotate = false;
+//controls.enableRotate = false;
 controls.enableZoom = true; // optional
-controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
+//controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
 // /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
 
 

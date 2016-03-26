@@ -26,6 +26,8 @@ var svgPath;
 */
 var fileInflatePath;
 
+// stl
+var i, il, y, yl, shape, lines, line;
 
 $(document).ready(function() {
   $('#generategcode').on('click', function() {  // DXF job Params to MC

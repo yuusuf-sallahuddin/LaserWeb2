@@ -73,17 +73,42 @@ var slicer = new SLAcer.Slicer();
 console.log()
 var shapes;
 
-function drawSlice(zheight) {
-  var layer = slicer.getFaces(zheight);
-  for (i=0; i<= layer.shapes.length; i++) {
-    var slice = new THREE.Group();
-    slice.add(layer.shapes[i]);
-    var edges = new THREE.EdgesHelper(layer.shapes[i], 0x000000);
-    scene.add(edges);
-    console.log('Edges ', edges)
-    console.log('slice ', slice)
+var fileObject = new THREE.Group();
 
 
+function allSlice(maxheight, step) {
+  for (i=0; i< maxheight; i++) {
+    drawSlice([i]);
   }
+
+}
+
+
+function drawSlice(zheight) {
+  var faces = slicer.getFaces(zheight);
+  console.log('Faces:', faces)
+  var svgGroup = new THREE.Group();
+  var fileObject = new THREE.Group();
+  //var stlslice = new Three.Group();
+
+  for (i = 0; i< faces.shapes.length; i++) {
+    // current shape
+         var shape = faces.shapes[i];
+         console.log('Current Shape:', shape)
+
+         // solid line
+         //if (shape.curves.length != 0) {
+           console.log('Generating Shape', shape)
+           var geometry = new THREE.ShapeGeometry( shape );
+           var lineSvg = new THREE.Line( geometry, material );
+           svgGroup.add(lineSvg);
+         //} else {
+//           console.log('Skipped path: ', shape)
+         //}
+  }
+  svgGroup.position.z = zheight;
+  scene.add(svgGroup);
+  //fileObject.add(stlslice);
+
 
 }
