@@ -83,7 +83,33 @@ function allSlice(maxheight, step) {
 
 }
 
+function drawSlice(zheight) {
+    var group  = new THREE.Group();
+    var shapes = slicer.getFaces(zheight).shapes;
 
+    var i, il, y, yl, hole, line;
+
+    for (i = 0, il = shapes.length; i < il; i++) {
+        shape = shapes[i];
+
+        if (shape.holes && shape.holes.length) {
+            for (y = 0, yl = shape.holes.length; y < yl; y++) {
+                hole = new THREE.Shape(shape.holes[y].getPoints());
+                hole.autoClose = true;
+                group.add(new THREE.Line(new THREE.ShapeGeometry(hole)));
+            }
+        }
+
+        shape.holes = [];
+        shape.autoClose = true;
+        group.add(new THREE.Line(new THREE.ShapeGeometry(shape)));
+    }
+
+    group.position.z = zheight;
+    scene.add(group);
+}
+
+/*
 function drawSlice(zheight) {
   var faces = slicer.getFaces(zheight);
   console.log('Faces:', faces)
@@ -113,3 +139,4 @@ function drawSlice(zheight) {
 
 
 }
+*/
