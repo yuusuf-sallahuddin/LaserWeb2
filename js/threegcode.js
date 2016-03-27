@@ -172,7 +172,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
    var subj_path2 = [];
    console.log(txtGrp);
    txtGrp.traverse( function(child) {
-
+       //console.log(child);
        if (child.type == "Line") {
            // let's create gcode for all points in line
            for (i = 0; i < child.geometry.vertices.length; i++) {
@@ -180,7 +180,10 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
                var localPt = child.geometry.vertices[i];
                var worldPt = grp.localToWorld(localPt.clone());
 
-              if (yflip == true && !inflateGrp) {
+              if (stl) {
+                var xpos = ( parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) + child.parent.position.x).toFixed(3);
+                var ypos = ( parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) + child.parent.position.y).toFixed(3);
+              } else if (yflip == true && !inflateGrp) {
                 var xpos = (      parseFloat(worldPt.x.toFixed(3)) + ( parseFloat(laserxmax) / 2 ) ).toFixed(3);
                 var ypos = ( -1 * parseFloat(worldPt.y.toFixed(3)) + ( parseFloat(laserymax) / 2 ) ).toFixed(3);
               } else {

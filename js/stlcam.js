@@ -101,24 +101,24 @@ function slicegrid(step) {
   var numlayers =Math.floor(stlzsize / parseFloat($('#layerheight').val()))
   console.log('Will be able to fit ', numx, ' on X, and ', numy,  'on Y. ', 'We will need space for ', numlayers)
 
-  var rectShape = new THREE.Shape();
-  rectShape.moveTo( 0,0 );
-  rectShape.lineTo( 0, stlysize );
-  rectShape.lineTo( stlxsize, stlysize );
-  rectShape.lineTo( stlxsize, 0 );
-  rectShape.lineTo( 0, 0 );
-  rectShape.autoClose = true;
-
-  var rectGeom = new THREE.ShapeGeometry( rectShape );
+  // var rectShape = new THREE.Shape();
+  // rectShape.moveTo( 0,0 );
+  // rectShape.lineTo( 0, stlysize );
+  // rectShape.lineTo( stlxsize, stlysize );
+  // rectShape.lineTo( stlxsize, 0 );
+  // rectShape.lineTo( 0, 0 );
+  // rectShape.autoClose = true;
+  //
+  // var rectGeom = new THREE.ShapeGeometry( rectShape );
 
   slicegroup  = new THREE.Group();
   var i = 0;
   for (col = 0; col < numy; col++) {
     for (row = 0; row < numx; row++) {
-      var rectMesh = new THREE.Line( rectGeom, new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.6 } ) ) ;
-      rectMesh.position.x = ((- laserxmax / 2) + (stlxsize * row) );
-      rectMesh.position.y = ((- laserymax / 2) + (stlysize * col) ) ;
-      scene.add( rectMesh );
+      // var rectMesh = new THREE.Line( rectGeom, new THREE.LineBasicMaterial( { color: 0xcccccc, opacity: 0.6 } ) ) ;
+      // rectMesh.position.x = ((- laserxmax / 2) + (stlxsize * row) );
+      // rectMesh.position.y = ((- laserymax / 2) + (stlysize * col) ) ;
+      // scene.add( rectMesh );
       group  = new THREE.Group();
       //for(var i = 0; i < stlzsize; i+= step) {
        (function(i) {
@@ -126,8 +126,8 @@ function slicegrid(step) {
        })(i);
        i++
       //}
-      group.position.x = ((- laserxmax / 2) + (stlxsize * row) );
-      group.position.y = ((- laserymax / 2) + (stlysize * col) ) ;
+      group.translateX(stlxsize * row);
+      group.translateY(stlysize * col);
       slicegroup.add(group);
     }
   }
@@ -148,6 +148,8 @@ function slicegrid(step) {
   slicegroup.translateY(- laserymax / 2)
 
   scene.add( slicegroup );
+  fileParentGroup = slicegroup;
+  fileobject = slicegroup;
 }
 
 function allSlice(maxheight, step) {
