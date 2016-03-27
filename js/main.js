@@ -188,8 +188,10 @@ function readFile(evt) {
                // start reading file as array buffer
               r.readAsArrayBuffer(evt.target.files[0]);
               printLog('STL Opened', '#000000');
-              $('#cammodule').hide();
+              //$('#cammodule').hide();
               $('#rastermodule').hide();
+              $('#stlopt').show();
+              $('#stlopt').click();
         } else {
           console.log(f.name + " is probably a Raster");
           r.readAsDataURL(evt.target.files[0]);

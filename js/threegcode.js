@@ -70,7 +70,14 @@ $(document).ready(function() {
          rapidSpeed = $('#rapidSpeed').val()
          g += generateGcode(inflateGrp, cutSpeed0, pwr0, rapidSpeed)
 
-     } else if (typeof(dxf2) != 'undefined') {
+     } else if (typeof(slicegroup) != 'undefined') {
+         console.log('looks like we are generating gcode for a STL Slice Path');
+         pwr0 = $('#pwr0').val();
+         cutSpeed0 = $('#sp0').val();
+         rapidSpeed = $('#rapidSpeed').val()
+         g += generateGcode(slicegroup, cutSpeed0, pwr0, rapidSpeed)
+
+      } else if (typeof(dxf2) != 'undefined') {
         console.log('looks like we are generating gcode for a DXF');
         for (var c=0; c<dxf2.entities.length; c++) {
           var lay = layers.indexOf(dxf2.entities[c].layer);

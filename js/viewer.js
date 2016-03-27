@@ -143,10 +143,15 @@ helper = new THREE.GridHelper(laserxmax, laserymax, 10);
   //console.log('[VIEWER] - added Helpert');
 scene.add(helper);
 
-var light = new THREE.DirectionalLight( 0xffffff );
-  light.position.set( 0, 1, 1 ).normalize();
-  scene.add(light);
+particleLight = new THREE.Mesh( new THREE.SphereBufferGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+				scene.add( particleLight );
 
+scene.add( new THREE.AmbientLight( 0x222222 ) );
+				var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+				directionalLight.position.set( 1, 1, 1 ).normalize();
+				scene.add( directionalLight );
+				var pointLight = new THREE.PointLight( 0xffffff, 2, 800 );
+				particleLight.add( pointLight );
 
 
 if (axesgrp) {
@@ -216,14 +221,14 @@ var materialY = new THREE.LineBasicMaterial({
 
 var geometryX = new THREE.Geometry();
 geometryX.vertices.push(
-	   new THREE.Vector3( 0, 0, 0 ),
-	   new THREE.Vector3( 0, (laserymax - 5), 0 )
+	   new THREE.Vector3( -0.1, 0, 0 ),
+	   new THREE.Vector3( -0.1, (laserymax - 5), 0 )
 );
 
 var geometryY = new THREE.Geometry();
 geometryY.vertices.push(
-	   new THREE.Vector3( 0, 0, 0 ),
-	   new THREE.Vector3( (laserxmax -5), 0, 0 )
+	   new THREE.Vector3( 0, -0.1, 0 ),
+	   new THREE.Vector3( (laserxmax -5), -0.1, 0 )
 );
 
 var line1 = new THREE.Line( geometryX, materialY );
