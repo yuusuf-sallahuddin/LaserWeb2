@@ -18,33 +18,10 @@ function drawDXF(file) {
   }
 
 
-  //fileName = fileInputDXF.value.replace("C:\\fakepath\\", "");
+
   // Remove the UI elements from last run
-  if (typeof(fileObject) !== 'undefined') {
-    scene.remove(fileObject);
-    fileObject = null;
-  };
-
-  if ( typeof(inflateGrp) != 'undefined' ) {
-    scene.remove(inflateGrp);
-    inflateGrp = null;
-  }
-
-  if ( typeof(object) != 'undefined' ) {
-    scene.remove(object);
-    object = null;
-  }
-
-  if ( typeof(fileParentGroup) != 'undefined' ) {
-    scene.remove(fileParentGroup);
-    fileParentGroup = null;
-  }
-
-  if (boundingBox) {
-     scene.remove( boundingBox );
-  }
-
-
+  cleanupThree();
+  
   // Empty File Prep Table
   $("#layersbody").empty();
   // if (typeof(showDxf) !== 'undefined') {

@@ -118,6 +118,9 @@ function readFile(evt) {
               $('#cammodule').show();
               putFileObjectAtZero();
               resetView()
+              $('#stlopt').hide();
+              $('#prepopt').show();
+              $('#prepopt').click();
             };
 
       } else if (f.name.match(/.svg$/i)) {
@@ -135,11 +138,16 @@ function readFile(evt) {
               $('#cammodule').show();
               putFileObjectAtZero();
               resetView()
+              $('#stlopt').show();
+              $('#prepopt').show();
+              $('#prepopt').click();
             };
 
       } else if (f.name.match(/.gcode$/i)) {
+             cleanupThree();
              r.readAsText(evt.target.files[0]);
              r.onload = function(event) {
+               cleanupThree();
                document.getElementById('gcodepreview').value = this.result;
                openGCodeFromText();
                printLog('GCODE Opened', '#000000');
@@ -147,11 +155,16 @@ function readFile(evt) {
                $('#rastermodule').hide();
                putFileObjectAtZero();
                resetView()
+               $('#stlopt').hide();
+               $('#prepopt').hide();
              };
      } else if (f.name.match(/.stl$/i)) {
             //r.readAsText(evt.target.files[0]);
+            // Remove the UI elements from last run
+            cleanupThree();
             var stlloader = new MeshesJS.STLLoader;
             r.onload = function(event) {
+                  cleanupThree();
                   // Parse ASCII STL
                   if (typeof r.result === 'string' ) {
                      console.log("Inside STL.js Found ASCII");
@@ -183,6 +196,7 @@ function readFile(evt) {
 
                   // parse binary STL
                   console.log("Inside STL.js Binary STL");
+                  cleanupThree();
                   stlloader.loadBinaryData(view, faces, 100, window, evt.target.files[0]);
                };
                // start reading file as array buffer
@@ -190,7 +204,9 @@ function readFile(evt) {
               printLog('STL Opened', '#000000');
               //$('#cammodule').hide();
               $('#rastermodule').hide();
+              $('#cammodule').show();
               $('#stlopt').show();
+              $('#prepopt').hide();
               $('#stlopt').click();
         } else {
           console.log(f.name + " is probably a Raster");
@@ -206,11 +222,50 @@ function readFile(evt) {
             $('#rastermodule').show();
             putFileObjectAtZero();
             resetView()
+            $('#stlopt').hide();
+            $('#prepopt').hide();
           };
       }
     }
   };
 
+// Removed and null all object when a new file is loaded
+function cleanupThree() {
+    if (typeof(fileObject) !== 'undefined') {
+      scene.remove(fileObject);
+      fileObject = null;
+    };
+
+    if ( typeof(inflateGrp) != 'undefined' ) {
+      scene.remove(inflateGrp);
+      inflateGrp = null;
+    }
+
+    if ( typeof(slicegroup) != 'undefined' ) {
+      scene.remove(slicegroup);
+      slicegroup = null;
+    }
+
+    if ( typeof(stl) != 'undefined' ) {
+      scene.remove(stl);
+      stl = null;
+    }
+
+    if ( typeof(object) != 'undefined' ) {
+      scene.remove(object);
+      object = null;
+    }
+
+    if ( typeof(fileParentGroup) != 'undefined' ) {
+      scene.remove(fileParentGroup);
+      fileParentGroup = null;
+    }
+
+    if (boundingBox) {
+       scene.remove( boundingBox );
+       boundingBox = null;
+    }
+  }
 
 
 function saveFile() {

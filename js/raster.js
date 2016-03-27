@@ -30,6 +30,10 @@ if (!String.prototype.format) {
 
 function drawRaster() {
 
+      // Remove the UI elements from last run
+      cleanupThree();
+
+
 			$('#rasterProgressShroud').hide();
 			$('#rasterparams').show();
       $("body").trigger("click")  // close dropdown menu

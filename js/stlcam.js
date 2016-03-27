@@ -150,6 +150,7 @@ function slicegrid(step) {
   scene.add( slicegroup );
   fileParentGroup = slicegroup;
   fileobject = slicegroup;
+  viewExtents(slicegroup);
 }
 
 function allSlice(maxheight, step) {

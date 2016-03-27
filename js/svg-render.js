@@ -6,29 +6,9 @@ var yflip = false;
 drawSvg = function(file) {
 
     yflip = true;
-    if (typeof(fileObject) !== 'undefined') {
-      scene.remove(fileObject);
-      fileObject = null;
-    };
-
-    if ( typeof(inflateGrp) != 'undefined' ) {
-      scene.remove(inflateGrp);
-      inflateGrp = null;
-    }
-
-    if ( typeof(object) != 'undefined' ) {
-      scene.remove(object);
-      object = null;
-    }
-
-    if ( typeof(fileParentGroup) != 'undefined' ) {
-      scene.remove(fileParentGroup);
-      fileParentGroup = null;
-    }
-
-    if (boundingBox) {
-       scene.remove( boundingBox );
-    }
+    // Remove the UI elements from last run
+    cleanupThree();
+    
 
     // see if file is valid
     if (file.length == 0) return;
