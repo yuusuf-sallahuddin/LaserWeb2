@@ -14,6 +14,19 @@ function sendGcode(gcode) {
   };
 };
 
+function playGcode() {
+  var g;
+  g = document.getElementById('gcodepreview').value;
+  sendGcode(g);
+};
+
+function homeMachine() {
+  var homecommand;
+  homecommand = document.getElementById('homingseq').value;
+  sendGcode(homecommand);
+};
+
+
 wsConnect=  function (host) {
   //host = '127.0.0.1';
   fullurl = "ws://" + host + ":8989/ws";
@@ -196,6 +209,7 @@ onWsMessage = function (msg) {
             var data = data.D;
             if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
 
+              // Smoothie
               console.log('posData: ', data);
               data = data.replace(/:/g,' ');
               data = data.replace(/X/g,' ');
@@ -210,7 +224,47 @@ onWsMessage = function (msg) {
               // cylinder.position.y = (parseInt(posArray[6],10) - (laserymax /2));
               // cylinder.position.z = (parseInt(posArray[8],10) + 20);
             };
+
+            // Repetier!
+            if (data.indexOf('X:') == 0 || data.indexOf('ok X:') == 0) {
+              //var data = data.D;
+              data = data.replace(/:/g,' ');
+              data = data.replace(/X/g,' ');
+              data = data.replace(/Y/g,' ');
+              data = data.replace(/Z/g,' ');
+              data = data.replace(/E/g,' ');
+              var posArray = data.split(/(\s+)/);
+              $('#mX').html('X: '+posArray[2]);
+              $('#mY').html('Y: '+posArray[4]);
+              $('#mZ').html('Z: '+posArray[6]);
+              // cylinder.position.x = (parseInt(posArray[2],10) - (laserxmax /2));
+              // cylinder.position.y = (parseInt(posArray[4],10) - (laserymax /2));
+              // cylinder.position.z = (parseInt(posArray[6],10) + 20);
+            };
+
+            // Grbl!
+            if (data.indexOf('<') == 0) {
+          		// https://github.com/grbl/grbl/wiki/Configuring-Grbl-v0.8#---current-status
+          		// remove first <
+          		var t = data.substr(1);
+          		// remove last >
+          		t = t.substr(0,t.length-2);
+          		// split on , and :
+          		t = t.split(/,|:/);
+          		//emitToPortSockets(port, 'machineStatus', {'status':t[0], 'mpos':[t[2], t[3], t[4]], 'wpos':[t[6], t[7], t[8]]});
+              $('#mX').html('X: '+t[6]);
+              $('#mY').html('Y: '+t[7]);
+          		$('#mZ').html('Z: '+t[8]);
+              // $('#mX').html('X: '+data.wpos[0]);
+              // $('#mY').html('Y: '+data.wpos[1]);
+          		// $('#mZ').html('Z: '+data.wpos[2]);
+          		// cylinder.position.x = (parseInt(data.wpos[0],10) - (laserxmax /2));
+          		// cylinder.position.y = (parseInt(data.wpos[1],10) - (laserymax /2));
+          		// cylinder.position.z = (parseInt(data.wpos[2],10) + 20);
+
+          	}
           };
+
 
 
 

@@ -301,7 +301,7 @@ function destroyClickedElement(event)
 localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset'];
 
 function saveSettingsLocal() {
-  for (i in localParams) {
+  for (i=0; i < localParams.length; i++) {
     var val = $('#'+localParams[i]).val(); // Read the value from form
     console.log('Saving: ', localParams[i], ' : ', val);
     localStorage.setItem(localParams[i], val);
@@ -309,18 +309,12 @@ function saveSettingsLocal() {
 };
 
 function loadSettingsLocal() {
-  for (i in localParams) {
+  for (i=0; i < localParams.length; i++) {
     var val = localStorage.getItem(localParams[i]);
     if (val) {
       console.log('Loading: ', localParams[i], ' : ', val);
       $('#'+localParams[i]).val(val) // Set the value to Form from Storage
     };
-  };
-};
-
-function logSettingsLocal() {
-  for (var key in localStorage) {
-    console.log(key + ':' + localStorage[key]);
   };
 };
 
