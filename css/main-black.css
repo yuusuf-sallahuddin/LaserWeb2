@@ -1,0 +1,81 @@
+#renderArea {
+   background-color: #ffffff;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   border: 1px #000;
+   float: left;
+   margin-right: 1%;
+}
+
+#rasterArea {
+   background-color: #ffffff;
+   position: absolute;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   border: 1px #000;
+   float: left;
+   margin-right: 1%;
+}
+
+
+#mobileRenderArea {
+   float: none;
+   margin-left: 0px;
+   margin-right: 0px;
+   margin-top: 0px;
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: pointer;
+    display: block;
+}
+
+/* tab color */
+.nav-tabs>li>a {
+  color:#ccc;
+}
+
+/* active tab color */
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus {
+  color: #fff;
+}
+
+#console {
+	height: 200px;
+	width: auto;
+	overflow-y: auto;
+	text-align: left;
+	background-color: #222;
+	padding: 10px;
+	font-size: 10px;
+}
+
+.pf {
+	white-space: pre;
+}
+
+.ui-slider  {
+  background: #ccc;
+
+}

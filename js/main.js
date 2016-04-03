@@ -12,6 +12,7 @@ $(document).ready(function() {
   errorHandlerJS();
   var paperscript = {};
   rasterInit();
+  setTheme();
   //initRaster();
 
   // Tooltips
@@ -64,18 +65,42 @@ $(document).ready(function() {
     clickInfo.x = evt.clientX;
     clickInfo.y = evt.clientY;
   }, false);
-    // we just do the following to hide the event from controls
-    // and disable moving via mouse buttons
-    var stopEvent = function (evt) {
-      evt.preventDefault();
-      evt.stopPropagation();
-    };
-    //viewer.addEventListener('mousedown', stopEvent, false);
-    //viewer.addEventListener('mouseup', stopEvent, false);
+  // we just do the following to hide the event from controls
+  // and disable moving via mouse buttons
+  var stopEvent = function (evt) {
+    evt.preventDefault();
+    evt.stopPropagation();
+  };
+  //viewer.addEventListener('mousedown', stopEvent, false);
+  //viewer.addEventListener('mouseup', stopEvent, false);
 
-    // Progressbar
-    //NProgress.configure({ parent: '#consolemodule' });
-    NProgress.configure({ showSpinner: false });
+  // Progressbar
+  //NProgress.configure({ parent: '#consolemodule' });
+  NProgress.configure({ showSpinner: false });
+
+  // Theme Switcher (just add boostrap CSS's)
+
+  $('#theme').change(setTheme.bind(this));
+
+  function setTheme() {
+    var theme = $('#theme').val()
+    if ( theme == "default" ) {
+      document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap.min.css';
+      document.getElementById('extra_css').href = 'css/main.css';
+      renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+      printLog('Loaded Default Theme', '#cc0000');
+    } else if (theme == "black") {
+      document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap-black.css';
+      document.getElementById('extra_css').href = 'css/main-black.css';
+      renderer.setClearColor(0x111111, 1);  // Background color of viewer
+      printLog('Loaded Black Theme', '#cc0000');
+    };
+  };
+
+
+
+
+
 
 });
 // End of document.reader
@@ -298,7 +323,7 @@ function destroyClickedElement(event)
 	document.body.removeChild(event.target);
 }
 
-localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset', 'imagePosition'];
+localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset', 'imagePosition', 'theme'];
 
 function saveSettingsLocal() {
   for (i=0; i < localParams.length; i++) {

@@ -1,5 +1,5 @@
 var scene, camera, renderer;
-var geometry, material, mesh, helper, axes, axesgrp, light;
+var geometry, material, mesh, helper, axes, axesgrp, light, bullseye;
 
 
 // Global Vars
@@ -96,7 +96,7 @@ if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.matc
     console.log('Running on unknown/Desktop');
     $('#viewermodule').hide();
     $('#renderArea').append(renderer.domElement);
-    renderer.setClearColor(0xffffff, 1);  // Background color of viewer
+    renderer.setClearColor(0xffffff, 0);  // Background color of viewer = transparent
     renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
     renderer.clear();
 
@@ -143,15 +143,55 @@ helper = new THREE.GridHelper(laserxmax, laserymax, 10);
   //console.log('[VIEWER] - added Helpert');
 scene.add(helper);
 
-particleLight = new THREE.Mesh( new THREE.SphereBufferGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
-				scene.add( particleLight );
+// particleLight = new THREE.Mesh( new THREE.SphereBufferGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+// 				scene.add( particleLight );
+//
+// scene.add( new THREE.AmbientLight( 0x222222 ) );
+// 				var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+// 				directionalLight.position.set( 1, 1, 1 ).normalize();
+// 				scene.add( directionalLight );
+// 				var pointLight = new THREE.PointLight( 0xffffff, 2, 800 );
+// 				particleLight.add( pointLight );
 
-scene.add( new THREE.AmbientLight( 0x222222 ) );
-				var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-				directionalLight.position.set( 1, 1, 1 ).normalize();
-				scene.add( directionalLight );
-				var pointLight = new THREE.PointLight( 0xffffff, 2, 800 );
-				particleLight.add( pointLight );
+
+if (bullseye) {
+    scene.remove(bullseye);
+}
+bullseye = new THREE.Object3D();
+
+        var material = new THREE.MeshBasicMaterial({
+        	color: 0xFF0000
+        });
+
+        var radius = 3.5;
+        var segments = 32;
+        var circleGeometry = new THREE.CircleGeometry( radius, segments );
+        var circle = new THREE.Line( circleGeometry, material );
+        bullseye.add( circle );
+
+        var geometryx = new THREE.Geometry();
+        geometryx.vertices.push(
+        	new THREE.Vector3( -6, 0, 0 ),
+          new THREE.Vector3( 6, 0, 0 )
+        );
+        var linex = new THREE.Line( geometryx, material );
+        linex.position = (0, 0, 0)
+        bullseye.add( linex );
+
+        var geometryy = new THREE.Geometry();
+        geometryy.vertices.push(
+        	new THREE.Vector3( 0, -6, 0 ),
+          new THREE.Vector3( 0, 6, 0 )
+        );
+        var liney = new THREE.Line( geometryy, material );
+        liney.position = (0, 0, 0)
+        bullseye.add( liney );
+
+scene.add(bullseye);
+bullseye.position.x = -(laserxmax / 2) + 50 ;
+bullseye.position.y = -(laserymax / 2) + 50 ;
+
+
 
 
 if (axesgrp) {

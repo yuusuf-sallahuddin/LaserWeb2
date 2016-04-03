@@ -220,9 +220,9 @@ onWsMessage = function (msg) {
               $('#mX').html('X: '+posArray[4]);
               $('#mY').html('Y: '+posArray[6]);
               $('#mZ').html('Z: '+posArray[8]);
-              // cylinder.position.x = (parseInt(posArray[4],10) - (laserxmax /2));
-              // cylinder.position.y = (parseInt(posArray[6],10) - (laserymax /2));
-              // cylinder.position.z = (parseInt(posArray[8],10) + 20);
+              bullseye.position.x = (parseInt(posArray[4],10) - (laserxmax /2));
+              bullseye.position.y = (parseInt(posArray[6],10) - (laserymax /2));
+              bullseye.position.z = (parseInt(posArray[8],10));
             };
 
             // Repetier!
@@ -237,9 +237,9 @@ onWsMessage = function (msg) {
               $('#mX').html('X: '+posArray[2]);
               $('#mY').html('Y: '+posArray[4]);
               $('#mZ').html('Z: '+posArray[6]);
-              // cylinder.position.x = (parseInt(posArray[2],10) - (laserxmax /2));
-              // cylinder.position.y = (parseInt(posArray[4],10) - (laserymax /2));
-              // cylinder.position.z = (parseInt(posArray[6],10) + 20);
+              bullseye.position.x = (parseInt(posArray[2],10) - (laserxmax /2));
+              bullseye.position.y = (parseInt(posArray[4],10) - (laserymax /2));
+              bullseye.position.z = (parseInt(posArray[6],10));
             };
 
             // Grbl!
@@ -258,9 +258,9 @@ onWsMessage = function (msg) {
               // $('#mX').html('X: '+data.wpos[0]);
               // $('#mY').html('Y: '+data.wpos[1]);
           		// $('#mZ').html('Z: '+data.wpos[2]);
-          		// cylinder.position.x = (parseInt(data.wpos[0],10) - (laserxmax /2));
-          		// cylinder.position.y = (parseInt(data.wpos[1],10) - (laserymax /2));
-          		// cylinder.position.z = (parseInt(data.wpos[2],10) + 20);
+          		bullseye.position.x = (parseInt(t[6],10) - (laserxmax /2));
+          		bullseye.position.y = (parseInt(t[7],10) - (laserymax /2));
+          		bullseye.position.z = (parseInt(t[8],10));
 
           	}
           };

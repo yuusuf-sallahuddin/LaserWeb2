@@ -44,14 +44,15 @@
     <title>LaserWeb 2.0</title>
 
     <!-- Bootstrap and FuelUX -->
-    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="lib/bootstrap/css/dropdowns-enhancement.min.css" rel="stylesheet">
-    <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet">
-    <link href="css/main.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap.min.css" id="theme_css" />
+
+    <!-- <link href="lib/bootstrap/css/dropdowns-enhancement.min.css" rel="stylesheet">
+    <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet"> -->
+    <link type="text/css" rel="stylesheet" media="all" href="css/main.css" id="extra_css" />
 
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="lib/fuelux/js/fuelux.min.js"></script>
+    <!-- <script src="lib/fuelux/js/fuelux.min.js"></script> -->
     <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
     <script src="lib/bootstrap/js/dropdowns-enhancement.js"></script>
 
@@ -690,6 +691,15 @@
                 <select class="form-control" id="imagePosition">
                   <option>BottomLeft</option>
                   <option>TopLeft</option>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="theme" class="control-label col-xs-3">Theme</label>
+                <div class="col-xs-9">
+                <select class="form-control" id="theme">
+                  <option>default</option>
+                  <option>black</option>
                 </select>
                 </div>
             </div>
