@@ -43,16 +43,14 @@
 
     <title>LaserWeb 2.0</title>
 
-    <!-- Bootstrap and FuelUX -->
+    <!-- Bootstrap and UX -->
     <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap.min.css" id="theme_css" />
-
-    <!-- <link href="lib/bootstrap/css/dropdowns-enhancement.min.css" rel="stylesheet">
-    <link href="lib/fuelux/css/fuelux.min.css" rel="stylesheet"> -->
     <link type="text/css" rel="stylesheet" media="all" href="css/main.css" id="extra_css" />
 
     <script src="lib/jquery/jquery.min.js"></script>
+    <script src="lib/jquery/mindmup-editabletable.js"></script>
+
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
-    <!-- <script src="lib/fuelux/js/fuelux.min.js"></script> -->
     <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
     <script src="lib/bootstrap/js/dropdowns-enhancement.js"></script>
 
@@ -194,6 +192,7 @@
                  <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
                  <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
                  <a class="btn btn-default" id="settings" href="#" data-toggle="modal" data-target="#modal-settings"><i class="fa fa-cog"></i></a>
+                 <a class="btn btn-default" id="togglemacro" href="#"><i class="fa fa-w fa-table"></i>&nbsp;Macro</a>
                </form>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -223,7 +222,87 @@
 
   <!-- Main Body -->
   <div class="container-fluid" style="margin-top: 70px;">
-    <div class="row">
+
+    <div class="container" id="macro_container" style="display: none;">
+      <div class="container" id="macro_settings" style="display: none;">
+
+        <div class="table-responsive">
+          <table class="table" id="macroEdit">
+            <thead>
+              <tr>
+                <th data-formatter="runningFormatter">Button #</th>
+                <th>Label</th>
+                <th>G-Code</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody id="macrostbody">
+              <!-- <tr>
+                <td>1</td>
+                <td>Center</td>
+                <td>G28\nG0 X400 Y300</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Test Plasma</td>
+                <td>M3\nG4 S500\nM5</td>
+              </tr> -->
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-sm btn-default" id="addrow"><i class="fa fa-w fa-plus"></i></button>
+
+          </div>
+
+      </div> <!-- End of Macro Settings -->
+      <div class="container" id="macro_pad">
+        <div class="row">
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro1" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro2" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro3" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro4" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro5" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro6" style="width:100%; height:100%;">Macro</button></div>
+        </div>
+        <p>
+        <div class="row" >
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro7" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro8" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro9" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro10" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro11" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro12" style="width:100%; height:100%;">Macro</button></div>
+        </div>
+        <p>
+        <div class="row">
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro13" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro14" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro15" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro16" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro17" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro18" style="width:100%; height:100%;">Macro</button></div>
+        </div>
+        <p>
+        <div class="row">
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro19" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro20" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro21" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro22" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro23" style="width:100%; height:100%;">Macro</button></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro24" style="width:100%; height:100%;">Macro</button></div>
+        </div>
+      </div>
+
+      <div class="row">
+        <p>
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4"><button type="button" class="btn btn-lg btn-default" id="savemacro" style="width:100%; height:100%; display: none;"><i class="fa fa-w fa-floppy-o"></i>&nbsp;Save</button><button type="button" class="btn btn-lg btn-default" id="editmacro" style="width:100%; height:100%;"><i class="fa fa-w fa-pencil-square-o"></i>&nbsp;Edit</button></div>
+        <div class="col-sm-4"></div>
+      </div>
+    </div>
+
+
+
+    <div class="row" id="viewer_container">
       <div class="col-sm-3"><!-- Start of Left Column -->
         <!-- Module Raster -->
         <div class="list-group" id="rastermodule" style="display: none;">
@@ -298,6 +377,7 @@
 
      </div> <!-- End of Left Column -->
       <div class="col-sm-6"><!-- Start of Main Window -->
+
 
      </div> <!-- End of Main Window -->
      <div class="col-sm-3"><!-- Start of Right Column -->

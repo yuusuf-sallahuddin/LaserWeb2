@@ -60,6 +60,87 @@ $(document).ready(function() {
 		saveSettingsLocal();
 	});
 
+  $('#macroEdit').editableTableWidget({ preventColumns: [1, 4] });
+  //$('#macroEdit').editableTableWidget();
+
+  // Show/Hide Macro Pad
+  $('#togglemacro').on('click', function() {
+    printLog('Toggling Button Pad', msgcolor);
+    $('#macro_container').toggle();
+    $('#viewer_container').toggle();
+    $('#renderArea').toggle();
+	});
+
+  // Show/Hide Macro Pad
+  $('#editmacro').on('click', function() {
+
+    printLog('Editing Macros', msgcolor);
+    $("#macrostbody").empty();
+    for (i=1; i < 24; i++) {
+      var name = 'macro' + i;
+      var val = localStorage.getItem(name);
+      if (val) {
+        var details = val.split(',');
+        console.log('Loading: ', name, ' : ', details[1]);
+        $('#macroEdit > tbody:last-child').append('<tr><td></td><td>'+ details[1] + '</td><td>'+ details[2] +'</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
+        //$('#'+localParams[i]).val(val) // Set the value to Form from Storage
+      };
+    };
+    $('#macro_pad').toggle();
+    $('#macro_settings').toggle();
+    $('#editmacro').hide();
+    $('#savemacro').show();
+    // $('#viewer_container').toggle();
+    // $('#renderArea').toggle();
+  });
+
+  $('#addrow').on('click', function() {
+    $('#macroEdit > tbody:last-child').append('<tr><td></td><td>Name</td><td>G-Code</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
+    $('#macroEdit').editableTableWidget({ preventColumns: [1, 4] });
+  });
+
+  $('#savemacro').on('click', function() {
+    printLog('Saving Macros', msgcolor);
+    $('#macro_pad').toggle();
+    $('#macro_settings').toggle();
+    $('#savemacro').hide();
+    $('#editmacro').show();
+    // Cleanup
+    for (i=1; i < 24; i++) {
+      var name = 'macro' + i;
+      localStorage.removeItem(name);
+    };
+    //gets table
+     var oTable = document.getElementById('macroEdit');
+
+     //gets rows of table
+     var rowLength = oTable.rows.length;
+
+     //loops through rows
+     for (i = 1; i < rowLength; i++){
+       var macro = [];
+       //gets cells of current row
+        var oCells = oTable.rows.item(i).cells;
+
+        //gets amount of cells of current row
+        var cellLength = oCells.length;
+
+        //loops through each cell in current row
+        for(var j = 0; j < cellLength; j++){
+
+               // get your cell info here
+
+               var cellVal = oCells.item(j).innerHTML;
+               console.log(cellVal);
+               macro.push(cellVal);
+            };
+        var name = 'macro' + i;
+        localStorage.setItem(name, macro);
+     };
+
+  });
+
+
   // Viewer
 
   var viewer = document.getElementById('renderArea');
@@ -115,7 +196,20 @@ $(document).ready(function() {
 
 
 });
-// End of document.reader
+// End of document.ready
+
+// Table Auto Numbering Helper from http://jsfiddle.net/DominikAngerer/yx275pyd/2/
+function runningFormatter(value, row, index) {
+    return index;
+}
+
+// Table Delete row with onclick="deleteRow(this)
+function deleteRow(t)
+{
+    var row = t.parentNode.parentNode;
+    document.getElementById("macroEdit").deleteRow(row.rowIndex);
+    console.log(row);
+}
 
 // From here down we can have the actual functions
 
