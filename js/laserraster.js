@@ -384,7 +384,7 @@ Rasterizer.prototype.onFinish = function() {
 
 this.RasterNow = function(config) {
   console.time("Process Raster");
-  printLog('Process Raster', '#000000')
+  printLog('Process Raster', msgcolor)
 
   var rasterizer = new Rasterizer(config);
   rasterizer.init();

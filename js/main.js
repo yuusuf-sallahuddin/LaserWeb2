@@ -1,3 +1,9 @@
+// colors for the consolelog
+var msgcolor = '#000000';
+var successcolor = '#00cc00';
+var errorcolor = '#cc0000';
+
+
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
 $(document).ready(function() {
 
@@ -88,12 +94,18 @@ $(document).ready(function() {
       document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap.min.css';
       document.getElementById('extra_css').href = 'css/main.css';
       renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-      printLog('Loaded Default Theme', '#cc0000');
+      msgcolor = '#000000';
+      successcolor = '#00cc00';
+      errorcolor = '#cc0000';
+      printLog('Loaded Default Theme', successcolor);
     } else if (theme == "black") {
       document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap-black.css';
       document.getElementById('extra_css').href = 'css/main-black.css';
       renderer.setClearColor(0x111111, 1);  // Background color of viewer
-      printLog('Loaded Black Theme', '#cc0000');
+      msgcolor = '#ffffff';
+      successcolor = '#00ff00';
+      errorcolor = '#ff0000';
+      printLog('Loaded Black Theme', successcolor);
     };
   };
 
@@ -114,7 +126,7 @@ errorHandlerJS = function() {
     //alert(message+"\n\n("+url+" line "+line+")");
     //console.log(message+"\n\n("+url+" line "+line+")");
     //if (url.indexof('three') = -1) { // Ignoring threejs messages
-      printLog(message+"\n("+url+" on line "+line+")", '#cc0000');
+      printLog(message+"\n("+url+" on line "+line+")", errorcolor);
     //}
 
   };
@@ -139,7 +151,7 @@ function readFile(evt) {
               getSettings();
               drawDXF(dxf);
               currentWorld();
-              printLog('DXF Opened', '#000000');
+              printLog('DXF Opened', successcolor);
               $('#cammodule').show();
               putFileObjectAtZero();
               resetView()
@@ -159,7 +171,7 @@ function readFile(evt) {
               getSettings();
               drawSvg(svg);
               currentWorld();
-              printLog('SVG Opened', '#000000');
+              printLog('SVG Opened', successcolor);
               $('#cammodule').show();
               putFileObjectAtZero();
               resetView()
@@ -175,7 +187,7 @@ function readFile(evt) {
                cleanupThree();
                document.getElementById('gcodepreview').value = this.result;
                openGCodeFromText();
-               printLog('GCODE Opened', '#000000');
+               printLog('GCODE Opened', successcolor);
                $('#cammodule').hide();
                $('#rastermodule').hide();
                putFileObjectAtZero();
@@ -226,7 +238,7 @@ function readFile(evt) {
                };
                // start reading file as array buffer
               r.readAsArrayBuffer(evt.target.files[0]);
-              printLog('STL Opened', '#000000');
+              printLog('STL Opened', successcolor);
               //$('#cammodule').hide();
               $('#rastermodule').hide();
               $('#cammodule').show();
@@ -242,7 +254,7 @@ function readFile(evt) {
             imgtag.src = event.target.result;
             setImgDims();
             drawRaster();
-            printLog('Bitmap Opened', '#000000');
+            printLog('Bitmap Opened', successcolor);
             $('#cammodule').hide();
             $('#rastermodule').show();
             putFileObjectAtZero();

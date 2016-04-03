@@ -33,7 +33,7 @@ $(document).ready(function() {
   $('#generategcode').on('click', function() {  // DXF job Params to MC
 
       if (typeof(fileObject) == 'undefined') {
-        printLog('No file loaded. do, File -> Open, first!', '0xff0000')
+        printLog('No file loaded. do, File -> Open, first!', errorcolor)
       };
 
       // Lets get the machine specific Gcode from the settings Modal (:
@@ -114,7 +114,7 @@ $(document).ready(function() {
       openGCodeFromText();
       scene.remove(inflateGrp);
 
-      printLog('Gcode Generated', '0x0000');
+      printLog('Gcode Generated', successcolor);
 
   });
 });
@@ -396,7 +396,7 @@ onInflateChange = function(evt) {
 
          if (newClipperPaths.length < 1) {
            console.error("Clipper Simplification Failed!:");
-           printLog('Clipper Simplification Failed!', '#cc0000')
+           printLog('Clipper Simplification Failed!', errorcolor)
          }
 
          // get the inflated/deflated path

@@ -23,7 +23,7 @@ function runCommand(cmd, silent)
             $("#result").empty();
             $.each(data.split('\n'), function (index)
             {
-              printLog(this, '#000000')
+              printLog(this, msgcolor)
                 //$("#console").append(this + '<br/>');
             });
         });

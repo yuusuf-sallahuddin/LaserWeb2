@@ -58,7 +58,7 @@ function drawRaster() {
 };
 
 function rasterInit() {
-  printLog('Raster module Activated', '#000000')
+  printLog('Raster module Activated', msgcolor)
 
   // Raster support
   var paperscript = {};
@@ -193,7 +193,7 @@ function setImgDims() {
 	};
 
 function gcodereceived() {
-  printLog('Raster Completed', '#000000')
+  printLog('Raster Completed', msgcolor)
 	//var rasterSendToLaserButton = document.getElementById("rasterWidgetSendRasterToLaser");
 	//if (rasterSendToLaserButton.style.display == "none") {
 	// 	//$('#rasterwidget').modal('hide');

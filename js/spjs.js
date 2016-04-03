@@ -205,7 +205,7 @@ onWsMessage = function (msg) {
           var activePort = $('#port').val();
           // Now we only pay attention to data from the port we are connected to
           if (data.P.indexOf(activePort) != -1 && isConnected) {
-            printLog('Port '+ data.P + ' data: ' + data.D, '#000000');
+            printLog('Port '+ data.P + ' data: ' + data.D, msgcolor);
             var data = data.D;
             if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
 
