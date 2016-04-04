@@ -18,7 +18,7 @@ $(document).ready(function() {
   errorHandlerJS();
   var paperscript = {};
   rasterInit();
-  setTheme();
+  readMacros();
   //initRaster();
 
   // Tooltips
@@ -69,6 +69,13 @@ $(document).ready(function() {
     $('#macro_container').toggle();
     $('#viewer_container').toggle();
     $('#renderArea').toggle();
+    if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
+      $( "#togglemacro" ).removeClass( "btn-primary" )
+      $( "#togglemacro" ).addClass( "btn-default" )
+    } else {
+      $( "#togglemacro" ).removeClass( "btn-default" )
+      $( "#togglemacro" ).addClass( "btn-primary" )
+    }
 	});
 
   // Show/Hide Macro Pad
@@ -76,16 +83,7 @@ $(document).ready(function() {
 
     printLog('Editing Macros', msgcolor);
     $("#macrostbody").empty();
-    for (i=1; i < 24; i++) {
-      var name = 'macro' + i;
-      var val = localStorage.getItem(name);
-      if (val) {
-        var details = val.split(',');
-        console.log('Loading: ', name, ' : ', details[1]);
-        $('#macroEdit > tbody:last-child').append('<tr><td></td><td>'+ details[1] + '</td><td>'+ details[2] +'</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
-        //$('#'+localParams[i]).val(val) // Set the value to Form from Storage
-      };
-    };
+    readMacros();
     $('#macro_pad').toggle();
     $('#macro_settings').toggle();
     $('#editmacro').hide();
@@ -137,7 +135,7 @@ $(document).ready(function() {
         var name = 'macro' + i;
         localStorage.setItem(name, macro);
      };
-
+     readMacros();
   });
 
 
@@ -165,35 +163,6 @@ $(document).ready(function() {
   //NProgress.configure({ parent: '#consolemodule' });
   NProgress.configure({ showSpinner: false });
 
-  // Theme Switcher (just add boostrap CSS's)
-
-  $('#theme').change(setTheme.bind(this));
-
-  function setTheme() {
-    var theme = $('#theme').val()
-    if ( theme == "default" ) {
-      document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap.min.css';
-      document.getElementById('extra_css').href = 'css/main.css';
-      renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-      msgcolor = '#000000';
-      successcolor = '#00cc00';
-      errorcolor = '#cc0000';
-      printLog('Loaded Default Theme', successcolor);
-    } else if (theme == "black") {
-      document.getElementById('theme_css').href = 'lib/bootstrap/css/bootstrap-black.css';
-      document.getElementById('extra_css').href = 'css/main-black.css';
-      renderer.setClearColor(0x111111, 1);  // Background color of viewer
-      msgcolor = '#ffffff';
-      successcolor = '#00ff00';
-      errorcolor = '#ff0000';
-      printLog('Loaded Black Theme', successcolor);
-    };
-  };
-
-
-
-
-
 
 });
 // End of document.ready
@@ -209,6 +178,27 @@ function deleteRow(t)
     var row = t.parentNode.parentNode;
     document.getElementById("macroEdit").deleteRow(row.rowIndex);
     console.log(row);
+}
+
+function readMacros() {
+  $("#macro_pad").empty();
+  for (i=1; i < 24; i++) {
+    var name = 'macro' + i;
+    var val = localStorage.getItem(name);
+    if (val) {
+      var details = val.split(',');
+      console.log('Loading: ', name, ' : ', details[1]);
+      $('#macroEdit > tbody:last-child').append('<tr><td></td><td>'+ details[1] + '</td><td>'+ details[2] +'</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
+      if (i == 0 ) {
+        $('#macro_pad').append('<div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode("'+details[2]+'")">'+details[1]+'</button></div>');
+      } else if (i == 5 || i== 11 || i == 17 ) {
+        $('#macro_pad').append('</div><div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode("'+details[2]+'")">'+details[1]+'</button></div>');
+      } else {
+        $('#macro_pad').append('<div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode('+details[2]+')">'+details[1]+'</button></div>');
+      }
+      $('#macro_pad').append('</div>'); // close the last row
+    };
+  };
 }
 
 // From here down we can have the actual functions
@@ -429,7 +419,7 @@ function destroyClickedElement(event)
 	document.body.removeChild(event.target);
 }
 
-localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset', 'imagePosition', 'theme'];
+localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset', 'imagePosition'];
 
 function saveSettingsLocal() {
   for (i=0; i < localParams.length; i++) {

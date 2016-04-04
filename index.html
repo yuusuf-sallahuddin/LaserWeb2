@@ -125,35 +125,12 @@
             <div class="navbar-header">
                 <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#top-menu"> <span class="sr-only">Menu</span>
                  <span class="icon-bar"></span>
-                 <span class="icon-bar"></span>
-                 <span class="icon-bar"></span>
 
                </button>
                <!--a class="navbar-brand" href="#">LaserWeb 2.0</a -->
 
             </div>
             <div class="collapse navbar-collapse bs-js-navbar-collapse" id="top-menu">
-                <!-- <ul class="nav navbar-nav">
-                    <li class="dropdown"> <a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>File</b> <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-                            <!-- <li role="presentation"><a role="menuitem" tabindex="-1" class="btn-file">
-                                <i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf" />
-                            </li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" id="save" href="#"><i class="fa fa-floppy-o fa-fw"></i>Save</a></li> -->
-                            <!-- li role="presentation" class="divider"></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Print</a>
-                            </li -->
-                        <!-- </ul>
-                    </li>
-                </ul> -->
-                <!-- <ul class="nav navbar-nav">
-                    <li id="fat-menu" class="dropdown"> <a href="#" id="drop3" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>View</b> <span class="caret"></span></a>
-
-                        <ul class="dropdown-menu" role="menu" aria-labelledby="drop3">
-                            <li role="presentation"><a role="menuitem" tabindex="-1" href="#" id="viewReset"><i class="fa fa-search fa-fw"></i>Reset</a></li>
-                        </ul>
-                    </li>
-                </ul> -->
                 <form class="navbar-form navbar-left" role="form">
                 <span class="btn btn-default btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .svg, .dxf, or .stl file"><i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf,.stl" /></span>
                   <a class="btn btn-default" id="viewReset" href="#" title="Reset Zoom/View"><i class="fa fa-search fa-fw"></i>Reset</a>
@@ -192,8 +169,12 @@
                  <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
                  <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
                  <a class="btn btn-default" id="settings" href="#" data-toggle="modal" data-target="#modal-settings"><i class="fa fa-cog"></i></a>
+
+               </form>
+               <form class="navbar-form navbar-left" role="form">
                  <a class="btn btn-default" id="togglemacro" href="#"><i class="fa fa-w fa-table"></i>&nbsp;Macro</a>
                </form>
+
 
                 <ul class="nav navbar-nav navbar-right">
                     <li id="fat-menu" class="dropdown"> <a href="#" id="drop5" role="button" class="dropdown-toggle" data-toggle="dropdown"><b>About</b> <span class="caret"></span></a>
@@ -255,7 +236,7 @@
 
       </div> <!-- End of Macro Settings -->
       <div class="container" id="macro_pad">
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro1" style="width:100%; height:100%;">Macro</button></div>
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro2" style="width:100%; height:100%;">Macro</button></div>
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro3" style="width:100%; height:100%;">Macro</button></div>
@@ -289,7 +270,7 @@
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro22" style="width:100%; height:100%;">Macro</button></div>
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro23" style="width:100%; height:100%;">Macro</button></div>
           <div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro24" style="width:100%; height:100%;">Macro</button></div>
-        </div>
+        </div> -->
       </div>
 
       <div class="row">
@@ -771,15 +752,6 @@
                 <select class="form-control" id="imagePosition">
                   <option>BottomLeft</option>
                   <option>TopLeft</option>
-                </select>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="theme" class="control-label col-xs-3">Theme</label>
-                <div class="col-xs-9">
-                <select class="form-control" id="theme">
-                  <option>default</option>
-                  <option>black</option>
                 </select>
                 </div>
             </div>

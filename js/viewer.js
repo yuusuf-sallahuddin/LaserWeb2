@@ -96,7 +96,7 @@ if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.matc
     console.log('Running on unknown/Desktop');
     $('#viewermodule').hide();
     $('#renderArea').append(renderer.domElement);
-    renderer.setClearColor(0xffffff, 0);  // Background color of viewer = transparent
+    renderer.setClearColor(0xffffff, 1);  // Background color of viewer = transparent
     renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
     renderer.clear();
 
