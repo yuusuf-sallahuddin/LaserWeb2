@@ -93,7 +93,7 @@ $(document).ready(function() {
   });
 
   $('#addrow').on('click', function() {
-    $('#macroEdit > tbody:last-child').append('<tr><td></td><td>Name</td><td>G-Code</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
+    $('#macroEdit > tbody:last-child').append('<tr><td></td><td>...Label for new Button...</td><td>G0 X100 (for example)</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
     $('#macroEdit').editableTableWidget({ preventColumns: [1, 4] });
   });
 
@@ -182,6 +182,7 @@ function deleteRow(t)
 
 function readMacros() {
   $("#macro_pad").empty();
+  $('#macro_pad').append('<div class="list-group"><a href="#" class="list-group-item"><h4 class="list-group-item-heading">Macro Buttons</h4><p class="list-group-item-text">Custom preset GCode commands:</p></a></div>');
   for (i=1; i < 24; i++) {
     var name = 'macro' + i;
     var val = localStorage.getItem(name);
