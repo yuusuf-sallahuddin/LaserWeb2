@@ -10,7 +10,9 @@ function spjsInit() {
 
 function sendGcode(gcode) {
   if (isConnected) {
+    var gcode = + gcode
       wsSend('send /dev/' + $('#port').val() + ' ' + gcode );
+      console.log('Sending ', gcode)
   };
 };
 

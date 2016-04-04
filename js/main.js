@@ -187,14 +187,15 @@ function readMacros() {
     var val = localStorage.getItem(name);
     if (val) {
       var details = val.split(',');
-      console.log('Loading: ', name, ' : ', details[1]);
+      var label = details[1];
+      var gcode = String(details[2]);
       $('#macroEdit > tbody:last-child').append('<tr><td></td><td>'+ details[1] + '</td><td>'+ details[2] +'</td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
       if (i == 0 ) {
-        $('#macro_pad').append('<div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode("'+details[2]+'")">'+details[1]+'</button></div>');
+        $('#macro_pad').append('<div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode(' + '\'' + gcode+ '\'' + ')">'+label+'</button></div>');
       } else if (i == 5 || i== 11 || i == 17 ) {
-        $('#macro_pad').append('</div><div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode("'+details[2]+'")">'+details[1]+'</button></div>');
+        $('#macro_pad').append('</div><div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;"  onclick="sendGcode(' + '\'' + gcode+ '\'' + ')">'+label+'</button></div>');
       } else {
-        $('#macro_pad').append('<div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;" onclick="sendGcode('+details[2]+')">'+details[1]+'</button></div>');
+        $('#macro_pad').append('<div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro'+i+'" style="width:100%; height:100%;"  onclick="sendGcode(' + '\'' + gcode+ '\'' + ')">'+label+'</button></div>');
       }
       $('#macro_pad').append('</div>'); // close the last row
     };
