@@ -1,6 +1,6 @@
 // colors for the consolelog
 var msgcolor = '#000000';
-var successcolor = '#00cc00';
+var successcolor = '#00aa00';
 var errorcolor = '#cc0000';
 
 

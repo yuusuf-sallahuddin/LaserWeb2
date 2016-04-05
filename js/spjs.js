@@ -9,10 +9,11 @@ function spjsInit() {
 };
 
 function sendGcode(gcode) {
+  console.log('Being asked to send ', gcode)
   if (isConnected) {
-    var gcode = + gcode
+    var gcode = gcode;
       wsSend('send /dev/' + $('#port').val() + ' ' + gcode );
-      console.log('Sending ', gcode)
+      console.log('send /dev/' + $('#port').val() + ' ' + gcode )
   };
 };
 
@@ -20,6 +21,7 @@ function playGcode() {
   var g;
   g = document.getElementById('gcodepreview').value;
   sendGcode(g);
+  $('#playBtn').addClass('disabled');
 };
 
 function homeMachine() {
@@ -89,6 +91,7 @@ wsConnect=  function (host) {
 };
 
 wsSend = function (msg) {
+  console.log('Being asked to send ', msg)
   if (isWsConnected) {
     conn.send(msg);
     console.log('Sending: ', msg);
@@ -207,7 +210,9 @@ onWsMessage = function (msg) {
           var activePort = $('#port').val();
           // Now we only pay attention to data from the port we are connected to
           if (data.P.indexOf(activePort) != -1 && isConnected) {
-            printLog('Port '+ data.P + ' data: ' + data.D, msgcolor);
+            if (data.D.length > 1) {
+              printLog('Port '+ data.P + ' data: ' + data.D, msgcolor);
+            }
             var data = data.D;
             if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
 
@@ -677,7 +682,7 @@ if ('P' in data) port = data.P;
 var i = toSafePortName(port);
 if (data.Cmd == "Queued" || data.Cmd == "Write") {
     var val = data.QCnt;
-
+    printLog('Queued: ' + val, msgcolor)
     // fire off a pubsub for QCnt
     //chilipeppr.publish("/" + this.id + "/qcnt", val);
 

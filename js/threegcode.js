@@ -169,6 +169,9 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
    var subj_paths = [];
    var subj_path2 = [];
    console.log(txtGrp);
+   console.log(rapidSpeed)
+   console.log(cutSpeed);
+
    txtGrp.traverse( function(child) {
        //console.log(child);
        if (child.type == "Line") {
@@ -268,7 +271,7 @@ console.log('Laser Power Value', laserPwrVal, ' type of ', typeof(laserPwrVal));
 
                    } else {
                        console.log('Cut Speed: ', cutSpeed);
-                       if (rapidSpeed) {
+                       if (cutSpeed) {
                          feedrate = " F" + cutSpeed;
                          isFeedrateSpecifiedAlready = true;
                        } else {
