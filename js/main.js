@@ -2,6 +2,9 @@
 var msgcolor = '#000000';
 var successcolor = '#00aa00';
 var errorcolor = '#cc0000';
+var warncolor = '#ff6600';
+
+var debug = false;
 
 
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
@@ -19,6 +22,7 @@ $(document).ready(function() {
   var paperscript = {};
   rasterInit();
   readMacros();
+  grbl = new Grbl();
   //initRaster();
 
   // Tooltips
