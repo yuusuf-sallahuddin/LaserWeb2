@@ -4,10 +4,16 @@ var isConnected;
 var connectedDevice = null;
 
 function spjsInit() {
-    $('#sendCommand').on('click', function() {
-      wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
-      $('#command').val('');
-    });
+  $('#sendCommand').on('click', function() {
+    wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+    $('#command').val('');
+  });
+  $(document).bind('keydown',function(e){
+    if (e.which == 13 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
+        wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+        $('#command').val('');
+    }
+  });
 };
 
 function sendGcode(gcode) {
@@ -594,7 +600,7 @@ onSpjsName = function(spjsName) {
 onPortOpen = function(data) {
     connectedDevice = null;
     $('#refreshPort').addClass('disabled');
-    $('#sendCommand').removeClass('disabled');
+    $('#sendCommand').removeClass('disabled').prop("disabled", false);;
     $('#connect').html('Disconnect'); // Update Button Text
     $("#port").prop("disabled", true);
     $("#baud").prop("disabled", true);
@@ -644,7 +650,7 @@ onPortOpen = function(data) {
 onPortClose = function(data) {
     connectedDevice = null;
     $('#refreshPort').removeClass('disabled');
-    $('#sendCommand').addClass('disabled');
+    $('#sendCommand').addClass('disabled').prop("disabled", true);
     console.log("onPortClose Close a port: ", data, data.Port);
     var portname = data.Port;
     portname = toSafePortName(portname);
