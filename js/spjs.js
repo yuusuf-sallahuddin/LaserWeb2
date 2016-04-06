@@ -251,24 +251,29 @@ onWsMessage = function (msg) {
 
             // Grbl!
             if (data.indexOf('<') == 0) {
-          		// https://github.com/grbl/grbl/wiki/Configuring-Grbl-v0.8#---current-status
-          		// remove first <
-          		var t = data.substr(1);
-          		// remove last >
-          		t = t.substr(0,t.length-2);
-          		// split on , and :
-          		t = t.split(/,|:/);
-          		//emitToPortSockets(port, 'machineStatus', {'status':t[0], 'mpos':[t[2], t[3], t[4]], 'wpos':[t[6], t[7], t[8]]});
-              $('#mX').html('X: '+t[6]);
-              $('#mY').html('Y: '+t[7]);
-          		$('#mZ').html('Z: '+t[8]);
-              // $('#mX').html('X: '+data.wpos[0]);
-              // $('#mY').html('Y: '+data.wpos[1]);
-          		// $('#mZ').html('Z: '+data.wpos[2]);
-          		bullseye.position.x = (parseInt(t[6],10) - (laserxmax /2));
-          		bullseye.position.y = (parseInt(t[7],10) - (laserymax /2));
-          		bullseye.position.z = (parseInt(t[8],10));
-
+                // https://github.com/grbl/grbl/wiki/Configuring-Grbl-v0.8#---current-status
+                // remove first <
+                var t = data.substr(1);
+                // remove last >
+                t = t.substr(0,t.length-2);
+                // split on , and :
+                t = t.split(/,|:/);
+                // check for correct message
+                var messageError = false;
+                //messageError = t[0] === "Idle"? false:true;
+                messageError = t[1] === "MPos"? false:true;
+                messageError = t[5] === "WPos"? false:true;
+                messageError = t[9] === "S"? false:true;
+                messageError = t[11] === "laser off"? false:true;
+                
+                if (!messageError) {
+                    $('#mX').html('X: '+t[6]); // $('#mX').html('X: '+data.wpos[0]);
+                    $('#mY').html('Y: '+t[7]); // $('#mY').html('Y: '+data.wpos[1]);
+                    $('#mZ').html('Z: '+t[8]); // $('#mZ').html('Z: '+data.wpos[2]);
+                    bullseye.position.x = (parseInt(t[6],10) - (laserxmax /2));
+                    bullseye.position.y = (parseInt(t[7],10) - (laserymax /2));
+                    bullseye.position.z = (parseInt(t[8],10));
+                }
           	}
           };
 
