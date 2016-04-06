@@ -138,7 +138,7 @@ getPortList = function () {
 
 
 onWsMessage = function (msg) {
-  //console.log("inside onWsMessage. msg: " + msg);
+  console.log("inside onWsMessage. msg: " + msg);
   if (msg.match(/^\{/)) {
      // it's json
      //console.log("it is json");
@@ -250,8 +250,15 @@ onWsMessage = function (msg) {
             };
 
             // Grbl!
+            if (data.indexOf('Grbl') == 0) {
+              var t = data.split(' ');
+              console.info('Grbl device detected');
+              console.info('Grbl version: ', t[1]);
+
+              //We could store this data somewhere then we don't need to evaluate every time what board we have connected. 
+            }
+
             if (data.indexOf('<') == 0) {
-                // https://github.com/grbl/grbl/wiki/Configuring-Grbl-v0.8#---current-status
                 // remove first <
                 var t = data.substr(1);
                 // remove last >
@@ -260,13 +267,26 @@ onWsMessage = function (msg) {
                 t = t.split(/,|:/);
                 // check for correct message
                 var messageError = false;
-                //messageError = t[0] === "Idle"? false:true;
                 messageError = t[1] === "MPos"? false:true;
                 messageError = t[5] === "WPos"? false:true;
                 messageError = t[9] === "S"? false:true;
                 messageError = t[11] === "laser off"? false:true;
                 
                 if (!messageError) {
+                    console.log('Grbl device status: ', t[0]);
+                    var deviceState = t[0];
+
+                    switch (deviceState) {
+                      case 'Alarm':
+                        console.warn('send: $H or $X to unlock Grbl device');
+                        // lock all controls except home
+                        break;
+                      case 'Idle':
+                        break;
+                      case 'Run' :
+                        break;
+                    }
+
                     $('#mX').html('X: '+t[6]); // $('#mX').html('X: '+data.wpos[0]);
                     $('#mY').html('Y: '+t[7]); // $('#mY').html('Y: '+data.wpos[1]);
                     $('#mZ').html('Z: '+t[8]); // $('#mZ').html('Z: '+data.wpos[2]);
@@ -631,7 +651,7 @@ onPortOpen = function(data) {
     //     chilipeppr.publish("/com-chilipeppr-widget-serialport/jsonSend", {Id:"startup" +  that.configSendCtr++, D:script});
     // }, 3000);
     //
-    // console.groupEnd();
+    console.groupEnd();
 
 };
 onPortClose = function(data) {
