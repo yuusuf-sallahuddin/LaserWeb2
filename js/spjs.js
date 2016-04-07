@@ -3,15 +3,48 @@ var isConnected;
 
 var connectedDevice = null;
 
+var wsSendCommandsList = []
+var wsSendCommandsListPosition;
+
 function spjsInit() {
   $('#sendCommand').on('click', function() {
-    wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+    var commandValue = $('#command').val();
+    wsSend('send /dev/' + $('#port').val() + ' ' + commandValue );
+    wsSendCommandsList.push(commandValue);
+    wsSendCommandsListPosition = undefined;
     $('#command').val('');
   });
   $(document).bind('keydown',function(e){
     if (e.which == 13 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
-        wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+      var commandValue = $('#command').val();
+      wsSend('send /dev/' + $('#port').val() + ' ' + commandValue );
+      wsSendCommandsList.push(commandValue);
+      wsSendCommandsListPosition = undefined;
+      $('#command').val('');
+    }
+    if (e.which == 38 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
+      if (wsSendCommandsList.length > 0) {
+        console.log(wsSendCommandsListPosition);
+        if (wsSendCommandsListPosition === undefined) {
+          wsSendCommandsListPosition = wsSendCommandsList.length-1;
+        } else {
+          wsSendCommandsListPosition = wsSendCommandsListPosition-1;
+        }
+        wsSendCommandsListPosition = (wsSendCommandsListPosition < 0)? 0:wsSendCommandsListPosition;
+        $('#command').val(wsSendCommandsList[wsSendCommandsListPosition]);
+      }
+      
+    } else if (e.which == 40 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
+      if (wsSendCommandsList.length > 0) {
+        console.log(wsSendCommandsListPosition);
+        if (wsSendCommandsListPosition !== undefined) {
+          wsSendCommandsListPosition = wsSendCommandsListPosition+1;
+        }
+        wsSendCommandsListPosition = (wsSendCommandsListPosition > wsSendCommandsList.length)? wsSendCommandsList.length:wsSendCommandsListPosition;
+        $('#command').val(wsSendCommandsList[wsSendCommandsListPosition]);
+      } else {
         $('#command').val('');
+      }
     }
   });
   window.onbeforeunload = function() {
