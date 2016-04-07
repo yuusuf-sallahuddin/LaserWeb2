@@ -14,6 +14,11 @@ function spjsInit() {
         $('#command').val('');
     }
   });
+  window.onbeforeunload = function() {
+      if (isConnected) {
+        return "Whow, you still have a connected device. First disconnect, before you leave or refresh your page.";
+      }
+    }
 };
 
 function sendGcode(gcode) {
