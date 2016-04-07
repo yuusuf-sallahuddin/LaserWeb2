@@ -58,7 +58,6 @@ Grbl.prototype = function () {
 			for (var key in grbl.controls) {
 	    		if (grbl.controls.hasOwnProperty(key)) {
 	    			var control = grbl.controls[key];
-		    		console.log(control);
 		    		if (data.indexOf(control.description) > -1) {
 		    			messageType = 'control'
 		    			break;
@@ -111,7 +110,7 @@ Grbl.prototype = function () {
 					break;
 				case 'setting' :
 					var isSetting = function (setting) {
-						var suffix = parseInt(setting.substring(1,setting.length-1));
+						var suffix = parseInt(setting.substring(1,setting.length));
 						// check if returns NaN. NaN === NaN always returns false
 						return suffix === suffix? true:false;
 					}
