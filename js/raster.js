@@ -208,7 +208,7 @@ function gcodereceived() {
 	openGCodeFromText();
 	gCodeToSend = document.getElementById('gcodepreview').value;
 	//$('#mainStatus').html('Status: <b>Gcode</b> loaded ...');
-	//$('#openMachineControl').removeClass('disabled');
+	//$('#openMachineControl').removeClass('disabled').prop("disabled", false);
 	//$('#sendCommand').removeClass('disabled');
 	//$('#sendToLaser').removeClass('disabled');
   $('#viewReset').click();

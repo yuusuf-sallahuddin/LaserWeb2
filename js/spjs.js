@@ -1,11 +1,19 @@
 var isWsConnected = null;
 var isConnected;
 
+var connectedDevice = null;
+
 function spjsInit() {
-    $('#sendCommand').on('click', function() {
-      wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
-      $('#command').val('');
-    });
+  $('#sendCommand').on('click', function() {
+    wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+    $('#command').val('');
+  });
+  $(document).bind('keydown',function(e){
+    if (e.which == 13 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
+        wsSend('send /dev/' + $('#port').val() + ' ' + $('#command').val() );
+        $('#command').val('');
+    }
+  });
 };
 
 function sendGcode(gcode) {
@@ -131,14 +139,10 @@ getPortList = function () {
         }
         wsSend("list");
     }
-
-
 };
 
-
-
 onWsMessage = function (msg) {
-  console.log("inside onWsMessage. msg: " + msg);
+  //console.log("inside onWsMessage. msg: " + msg);
   if (msg.match(/^\{/)) {
      // it's json
      //console.log("it is json");
@@ -210,91 +214,50 @@ onWsMessage = function (msg) {
           var activePort = $('#port').val();
           // Now we only pay attention to data from the port we are connected to
           if (data.P.indexOf(activePort) != -1 && isConnected) {
-            if (data.D.length > 1) {
-              printLog('Port '+ data.P + ' data: ' + data.D, msgcolor);
+            if (data.D.length > 1 && debug) {
+              // replace < > by &lt; and &gt;
+              var dataText = data.D.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+              printLog('Port '+ data.P + ' data: ' + dataText, msgcolor);
             }
+
             var data = data.D;
-            if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
 
-              // Smoothie
-              console.log('posData: ', data);
-              data = data.replace(/:/g,' ');
-              data = data.replace(/X/g,' ');
-              data = data.replace(/Y/g,' ');
-              data = data.replace(/Z/g,' ');
-              data = data.replace(/E/g,' ');
-              var posArray = data.split(/(\s+)/);
-              $('#mX').html('X: '+posArray[4]);
-              $('#mY').html('Y: '+posArray[6]);
-              $('#mZ').html('Z: '+posArray[8]);
-              bullseye.position.x = (parseInt(posArray[4],10) - (laserxmax /2));
-              bullseye.position.y = (parseInt(posArray[6],10) - (laserymax /2));
-              bullseye.position.z = (parseInt(posArray[8],10));
-            };
-
-            // Repetier!
-            if (data.indexOf('X:') == 0 || data.indexOf('ok X:') == 0) {
-              //var data = data.D;
-              data = data.replace(/:/g,' ');
-              data = data.replace(/X/g,' ');
-              data = data.replace(/Y/g,' ');
-              data = data.replace(/Z/g,' ');
-              data = data.replace(/E/g,' ');
-              var posArray = data.split(/(\s+)/);
-              $('#mX').html('X: '+posArray[2]);
-              $('#mY').html('Y: '+posArray[4]);
-              $('#mZ').html('Z: '+posArray[6]);
-              bullseye.position.x = (parseInt(posArray[2],10) - (laserxmax /2));
-              bullseye.position.y = (parseInt(posArray[4],10) - (laserymax /2));
-              bullseye.position.z = (parseInt(posArray[6],10));
-            };
-
-            // Grbl!
-            if (data.indexOf('Grbl') == 0) {
-              var t = data.split(' ');
-              console.info('Grbl device detected');
-              console.info('Grbl version: ', t[1]);
-
-              //We could store this data somewhere then we don't need to evaluate every time what board we have connected. 
+            if (!connectedDevice) {
+              connectedDevice = detectTypeOfConnectedDevice(data);
             }
 
-            if (data.indexOf('<') == 0) {
-                // remove first <
-                var t = data.substr(1);
-                // remove last >
-                t = t.substr(0,t.length-2);
-                // split on , and :
-                t = t.split(/,|:/);
-                // check for correct message
-                var messageError = false;
-                messageError = t[1] === "MPos"? false:true;
-                messageError = t[5] === "WPos"? false:true;
-                messageError = t[9] === "S"? false:true;
-                messageError = t[11] === "laser off"? false:true;
-                
-                if (!messageError) {
-                    console.log('Grbl device status: ', t[0]);
-                    var deviceState = t[0];
+            if (connectedDevice) {
+              switch (connectedDevice.device) {
+                case 'Smoothie':
+                  data = data.replace(/:/g,' ');
+                  data = data.replace(/X/g,' ');
+                  data = data.replace(/Y/g,' ');
+                  data = data.replace(/Z/g,' ');
+                  data = data.replace(/E/g,' ');
+                  var posArray = data.split(/(\s+)/);
 
-                    switch (deviceState) {
-                      case 'Alarm':
-                        console.warn('send: $H or $X to unlock Grbl device');
-                        // lock all controls except home
-                        break;
-                      case 'Idle':
-                        break;
-                      case 'Run' :
-                        break;
-                    }
+                  setBullseyePosition(posArray[4],posArray[6],posArray[8]);
+                  break;
+                case 'Repetier':
+                  data = data.replace(/:/g,' ');
+                  data = data.replace(/X/g,' ');
+                  data = data.replace(/Y/g,' ');
+                  data = data.replace(/Z/g,' ');
+                  data = data.replace(/E/g,' ');
+                  var posArray = data.split(/(\s+)/);
 
-                    $('#mX').html('X: '+t[6]); // $('#mX').html('X: '+data.wpos[0]);
-                    $('#mY').html('Y: '+t[7]); // $('#mY').html('Y: '+data.wpos[1]);
-                    $('#mZ').html('Z: '+t[8]); // $('#mZ').html('Z: '+data.wpos[2]);
-                    bullseye.position.x = (parseInt(t[6],10) - (laserxmax /2));
-                    bullseye.position.y = (parseInt(t[7],10) - (laserymax /2));
-                    bullseye.position.z = (parseInt(t[8],10));
-                }
-          	}
+                  setBullseyePosition(posArray[2],posArray[4],posArray[6]);
+                  break;
+                case 'Grbl':
+                  // Grbl fun stuff
+                  var messageType = grbl.parseData(data);
+                  if (messageType === 'statusReport') {
+                    setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
+                  }
+                  break;
+                default: break;
+              }
+            }
           };
 
 
@@ -356,6 +319,40 @@ onWsMessage = function (msg) {
   }
 };
 
+detectTypeOfConnectedDevice = function (data) {
+  if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
+    printLog('<b>Smoothie connected</b>', successcolor);
+    return {
+      device: 'Smoothie',
+      version: ''
+    }
+  }
+  if (data.indexOf('X:') == 0 || data.indexOf('ok X:') == 0) {
+    printLog('<b>Repetier connected</b>', successcolor);
+    return {
+      device: 'Repetier',
+      version: ''
+    }
+  }
+  if (data.indexOf('Grbl') == 0) {
+    var t = data.split(' ');
+    printLog('<b>Grbl '+ t[1] +' connected</b>', successcolor);
+    grbl.setVersion(t[1]);
+    return {
+      device: 'Grbl',
+      version: t[1]
+    } 
+  }
+  return null;
+}
+setBullseyePosition = function (x,y,z) {
+  $('#mX').html('X: '+ x);
+  $('#mY').html('Y: '+ y);
+  $('#mZ').html('Z: '+ z); 
+  bullseye.position.x = (parseInt(x,10) - (laserxmax /2));
+  bullseye.position.y = (parseInt(y,10) - (laserymax /2));
+  bullseye.position.z = (parseInt(z,10));
+}
 
 onVersion = function(version) {
   //console.log("got version cmd. version:", version);
@@ -365,107 +362,104 @@ onVersion = function(version) {
 };
 
 onPortList = function (portlist) {
-     //console.group("serial port widget onPortList");
-     //console.log("inside onPortList");
-     var html = "";
-     var htmlFirst = ""; // show the connected ports first in the HTML
-     var that = this;
-     this.portlist = portlist;
+  //console.group("serial port widget onPortList");
+  //console.log("inside onPortList");
+  var html = "";
+  var htmlFirst = ""; // show the connected ports first in the HTML
+  var that = this;
+  this.portlist = portlist;
 
-    // now build the UI
+  // now build the UI
 
-     // keep flag for whether we know what all these devices are
-     // thus we can hide the buffer encouragement flag
-     var areAllDevicesKnown = true;
+  // keep flag for whether we know what all these devices are
+  // thus we can hide the buffer encouragement flag
+  var areAllDevicesKnown = true;
 
-     var options = $("#port");
+  var options = $("#port");
 
-     var availBuffers = [];
+  var availBuffers = [];
 
-     if (portlist.length > 0) {
-         $.each(portlist, function (portlistIndex, item) {
-             //console.log("looping thru ports. item:", item);
+  if (portlist.length > 0) {
+    $.each(portlist, function (portlistIndex, item) {
+      //console.log("looping thru ports. item:", item);
 
-             // see if this is deleted
-             if (item.isDeleted) {
-                 //console.log("this port is deleted so skipping");
-                 return;
-             }
+      // see if this is deleted
+      if (item.isDeleted) {
+         //console.log("this port is deleted so skipping");
+         return;
+      }
 
-             // create friendly version of port name
-             item.DisplayPort = item.Name.replace("/dev/", "");
+      // create friendly version of port name
+      item.DisplayPort = item.Name.replace("/dev/", "");
 
-             //console.log('Name: ', item.DisplayPort)
-             options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
-             if ('IsOpen' in item && item.IsOpen == true) {
-               //console.log('Port ', item.DisplayPort, ' is already open');
-             };
-
-
-
-
-            //  var rowClass = "";
-            //  if (item.Name == that.singleSelectPort) {
-            //      rowClass = "success";
-            //  }
-            //  var i = item.Name;
-            //  i = that.toSafePortName(i);
-            //  console.log("the port name we will use is:", i);
-             //
-            //  // create available algorithms dropdown
-            //  var availArgsHtml = "";
-            if ('AvailableBufferAlgorithms' in item) {
-                  // we are on a version of the server that gives us this
-            //      availArgsHtml = "<td><select id=\"" + i + "Buffer\" class=\"com-chilipeppr-widget-serialport-buffer\" class=\"form-control\">";
-            //      //availArgsHtml += "<option></option>"
-                  item.AvailableBufferAlgorithms.forEach(function(alg) {
-                  //console.log("algorithm:", alg);
-                  availBuffers.push(alg);
-            //          availArgsHtml += "<option value=\"" + alg + "\">" + alg + "</option>";
-                  });
-            //      availArgsHtml += "</select>" +
-            //          //"</td>" +
-            //          "";
-            }
-           });
-
-     } else {
-         // no serial ports in list
-         html = '<div class="alert alert-danger" style="margin-bottom:0;">No serial ports found on your Serial Port JSON Server.</div>';
-     }
-
-     availBuffers = $.grep(availBuffers, function(v, k){
-         return $.inArray(v ,availBuffers) === k;
-     });
-
-    // console.log('Buffer List', availBuffers);
-     for (i = 0; i < availBuffers.length; i++) {
-  //    console.log("algorithm:", availBuffers[i]);
-      $("#buffer").append($("<option />").val(availBuffers[i]).text(availBuffers[i]));
-     }
+      //console.log('Name: ', item.DisplayPort)
+      options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
+      if ('IsOpen' in item && item.IsOpen == true) {
+        //console.log('Port ', item.DisplayPort, ' is already open');
+      };
 
 
 
-     // Might as well pre-select the last-used port and buffer
-     var lastBuffer = localStorage.getItem("lastUsedBuffer")
-     var lastUsed = localStorage.getItem("lastUsedPort");
-     var lastBaud = localStorage.getItem("lastUsedBaud");
-     $("#port option:contains(" + lastUsed + ")").attr('selected', 'selected');
-     $("#buffer option:contains(" + lastBuffer + ")").attr('selected', 'selected');
-     $("#baud option:contains(" + lastBaud + ")").attr('selected', 'selected');
+
+      //  var rowClass = "";
+      //  if (item.Name == that.singleSelectPort) {
+      //      rowClass = "success";
+      //  }
+      //  var i = item.Name;
+      //  i = that.toSafePortName(i);
+      //  console.log("the port name we will use is:", i);
+       //
+      //  // create available algorithms dropdown
+      //  var availArgsHtml = "";
+      if ('AvailableBufferAlgorithms' in item) {
+        // we are on a version of the server that gives us this
+        //      availArgsHtml = "<td><select id=\"" + i + "Buffer\" class=\"com-chilipeppr-widget-serialport-buffer\" class=\"form-control\">";
+        //      //availArgsHtml += "<option></option>"
+        item.AvailableBufferAlgorithms.forEach(function(alg) {
+        //console.log("algorithm:", alg);
+        availBuffers.push(alg);
+        //          availArgsHtml += "<option value=\"" + alg + "\">" + alg + "</option>";
+        });
+        //      availArgsHtml += "</select>" +
+        //          //"</td>" +
+        //          "";
+      }
+    });
+
+  } else {
+     // no serial ports in list
+     html = '<div class="alert alert-danger" style="margin-bottom:0;">No serial ports found on your Serial Port JSON Server.</div>';
+  }
+
+  availBuffers = $.grep(availBuffers, function(v, k){
+     return $.inArray(v ,availBuffers) === k;
+  });
+
+  // console.log('Buffer List', availBuffers);
+  for (i = 0; i < availBuffers.length; i++) {
+    // console.log("algorithm:", availBuffers[i]);
+    $("#buffer").append($("<option />").val(availBuffers[i]).text(availBuffers[i]));
+  }
+  // Might as well pre-select the last-used port and buffer
+  var lastBuffer = localStorage.getItem("lastUsedBuffer")
+  var lastUsed = localStorage.getItem("lastUsedPort");
+  var lastBaud = localStorage.getItem("lastUsedBaud");
+  $("#port option:contains(" + lastUsed + ")").attr('selected', 'selected');
+  $("#buffer option:contains(" + lastBuffer + ")").attr('selected', 'selected');
+  $("#baud option:contains(" + lastBaud + ")").attr('selected', 'selected');
 
 
-     // Now that we have a Portlist we can enable the relevant UI elements
+  // Now that we have a Portlist we can enable the relevant UI elements
 
-     if ( isConnected ) {
-       console.log('Ignoring Portlist since we are already connected on this Endpoint');
-     } else {
-       console.log('Processing Portlist');
-       $('#connect').removeClass('disabled')
-       $("#port").prop("disabled", false);
-       $("#baud").prop("disabled", false);
-       $("#buffer").prop("disabled", false);
-     }
+  if ( isConnected ) {
+    console.log('Ignoring Portlist since we are already connected on this Endpoint');
+  } else {
+    console.log('Processing Portlist');
+    $('#connect').removeClass('disabled')
+    $("#port").prop("disabled", false);
+    $("#baud").prop("disabled", false);
+    $("#buffer").prop("disabled", false);
+  }
 
      //          availArgsHtml += "<option value=\"" + alg + "\">" + alg + "</option>";
     //  });
@@ -596,8 +590,7 @@ onPortList = function (portlist) {
     //  chilipeppr.publish("/com-chilipeppr-widget-serialport/listAfterMetaDataAdded", portlist);
      //
     //  console.groupEnd();
-
- };
+};
 
 onSpjsName = function(spjsName) {
   //$('.com-chilipeppr-widget-serialport .panel-heading .hosttitle').text(spjsName);
@@ -605,8 +598,9 @@ onSpjsName = function(spjsName) {
 };
 
 onPortOpen = function(data) {
+    connectedDevice = null;
     $('#refreshPort').addClass('disabled');
-    $('#sendCommand').removeClass('disabled');
+    $('#sendCommand').removeClass('disabled').prop("disabled", false);;
     $('#connect').html('Disconnect'); // Update Button Text
     $("#port").prop("disabled", true);
     $("#baud").prop("disabled", true);
@@ -652,11 +646,11 @@ onPortOpen = function(data) {
     // }, 3000);
     //
     console.groupEnd();
-
 };
 onPortClose = function(data) {
+    connectedDevice = null;
     $('#refreshPort').removeClass('disabled');
-    $('#sendCommand').addClass('disabled');
+    $('#sendCommand').addClass('disabled').prop("disabled", true);
     console.log("onPortClose Close a port: ", data, data.Port);
     var portname = data.Port;
     portname = toSafePortName(portname);
@@ -672,6 +666,7 @@ onPortClose = function(data) {
     // chilipeppr.publish('/' + this.id + '/onportclose', data);
 };
 onPortOpenFail = function(data) {
+    connectedDevice = null;
     console.log("Opening a port failed: ", data, data.Port);
     var portname = data.Port;
     portname = toSafePortName(portname);
@@ -698,14 +693,14 @@ toSafePortName = function(portname) {
 };
 
 onUpdateQueueCnt = function(data) {
-// we'll get json like this so we know our buffer state in spjs
-// {"Cmd":"Queued","QCnt":6,"Type":["Buf","Buf","Buf","Buf","Buf"],...,"Port":"COM22"}
+  // we'll get json like this so we know our buffer state in spjs
+  // {"Cmd":"Queued","QCnt":6,"Type":["Buf","Buf","Buf","Buf","Buf"],...,"Port":"COM22"}
 
-console.log("got onUpdateQueueCnt. data:", data);
-var port = data.Port;
-if ('P' in data) port = data.P;
-var i = toSafePortName(port);
-if (data.Cmd == "Queued" || data.Cmd == "Write") {
+  console.log("got onUpdateQueueCnt. data:", data);
+  var port = data.Port;
+  if ('P' in data) port = data.P;
+  var i = toSafePortName(port);
+  if (data.Cmd == "Queued" || data.Cmd == "Write") {
     var val = data.QCnt;
     printLog('Queued: ' + val, msgcolor)
     // fire off a pubsub for QCnt
