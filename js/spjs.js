@@ -223,7 +223,7 @@ onWsMessage = function (msg) {
             var data = data.D;
 
             if (!connectedDevice) {
-              connectedDevice = connectedDeviceCheck(data);
+              connectedDevice = detectTypeOfConnectedDevice(data);
             }
 
             if (connectedDevice) {
@@ -319,7 +319,7 @@ onWsMessage = function (msg) {
   }
 };
 
-connectedDeviceCheck = function (data) {
+detectTypeOfConnectedDevice = function (data) {
   if (data.indexOf('ok C: X:') == 0 || data.indexOf('C: X:') == 0) {
     printLog('<b>Smoothie connected</b>', successcolor);
     return {
