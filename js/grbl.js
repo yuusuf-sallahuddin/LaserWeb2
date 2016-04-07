@@ -18,9 +18,7 @@ var Grbl = function () {
 		'?' : {description: 'current status'},
 		'ctrl-x' : {description: 'reset Grbl'} 
 	};
-	this.settings = {
-
-	}
+	this.settings = {}
 }
 
 Grbl.prototype = function () {
@@ -139,9 +137,17 @@ Grbl.prototype = function () {
 		}
 		return error? 0:messageType;
 	}
+	var homeCycle = function () {
+		return "$H";
+	}
+	var zeroOut = function () {
+		return "G92 X0 Y0 Z0"
+	}
 
 	return {
 		parseData : parseData, // parses incoming data and returns parsed messageType
-		setVersion: setVersion
+		setVersion: setVersion,
+		homeCycle: homeCycle,
+		zeroOut: zeroOut
 	}
 } ();
