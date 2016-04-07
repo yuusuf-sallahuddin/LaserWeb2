@@ -2,11 +2,30 @@
 
 var Grbl = function () {
 	this.initiated = false;
+	this.controls = {
+		'$$': {description: 'view Grbl settings'},
+		'$#': {description: 'view # parameters', parameter:'#'},
+		'$G': {description: 'view parser state'},
+		'$I': {description: 'view build info'},
+		'$N': {description: 'view startup blocks'},
+		'$#': {parameter: '#', description:'save Grbl setting', value: ''},
+		'$N#':{parameter: '#', description: 'save startup block', value: ''},
+		'$C': {description: 'check gcode mode'},
+		'$X': {description: 'kill alarm lock'},
+		'$H': {description: 'run homing cycle'},
+		'~' : {description: 'cycle start'},
+		'!' : {description: 'feed hold'},
+		'?' : {description: 'current status'},
+		'ctrl-x' : {description: 'reset Grbl'} 
+	};
+	this.settings = {
+
+	}
 }
 
 Grbl.prototype = function () {
 	var checkStatusReportForError = function (rawMessageArray) {
-		var messageArray = rawMessageArray || this.rawMessageArray
+		var messageArray = rawMessageArray
 		var messageError = false;
 
 		messageError = messageArray[0] === "Alarm" || messageArray[0] === "Idle" || messageArray[0] === "Run"? false:true;
@@ -26,20 +45,33 @@ Grbl.prototype = function () {
 		this.version = version;
 		return this.version
 	}
-	var detectMessageType = function (data) {
+	var detectMessageType = function (data, grbl) {
 		var messageType = null;
 
 		messageType = (messageType === null && data[0] === '<' && data[data.length-2] === '>')? 'statusReport':messageType;
 		messageType = (messageType === null && data.indexOf('[') > -1 && data.indexOf(']') > -1)? 'feedbackMessage': messageType;
 		messageType = (messageType === null && data.indexOf('ok') > -1)? 'ok':messageType; 
 		messageType = (messageType === null && data.indexOf('error:') > -1)? 'error':messageType;
-		messageType = (messageType === null && data[0] === '$')? 'setting':messageType; 
+		messageType = (messageType === null && data[0] === '$')? 'setting':messageType;
+
+		if (messageType === null || messageType === 'setting') {
+			for (var key in grbl.controls) {
+	    		if (grbl.controls.hasOwnProperty(key)) {
+	    			var control = grbl.controls[key];
+		    		console.log(control);
+		    		if (data.indexOf(control.description) > -1) {
+		    			messageType = 'control'
+		    			break;
+		    		}
+	    		}
+	    	}
+		}
 
 		return messageType;
 	}
 	var parseData = function (data) {
 		var error;
-		var messageType = detectMessageType(data);
+		var messageType = detectMessageType(data,this);
 		var grblState = {};
 
 		if (messageType) {
@@ -48,7 +80,7 @@ Grbl.prototype = function () {
 					// remove first < and last > and split on , and :
 					var rawMessageArray = data.substr(1,data.length-2).split(/,|:/);
 
-					if (!this.checkStatusReportForError()) {
+					if (!checkStatusReportForError(rawMessageArray)) {
 						grblState = {
 							state : rawMessageArray[0],
 							MPos  : [rawMessageArray[2],rawMessageArray[3],rawMessageArray[4]],
@@ -78,9 +110,25 @@ Grbl.prototype = function () {
 					error = false;
 					break;
 				case 'setting' :
-					// split on :
-					// trim spaces
-					// this.settings[name] = value
+					var isSetting = function (setting) {
+						var suffix = parseInt(setting.substring(1,setting.length-1));
+						// check if returns NaN. NaN === NaN always returns false
+						return suffix === suffix? true:false;
+					}
+					var setting = data.split('=')[0]
+					if (isSetting(setting)) {
+						var value = data.split('=')[1].split(' ')[0];
+						var description = data.replace(/.*\(|\)/gi,'').slice(0, -1);
+						this.settings[setting] = {
+							value: value,
+							description: description
+						}
+						printLog("<b>Grbl setting: </b> <i>" + description + '= '+ value + "</i>",msgcolor);
+					}
+					error = false;
+					break;
+				case 'control' :
+					printLog("<b>Grbl control: </b> <i>" + data + "</i>",msgcolor);
 					error = false;
 					break;
 				default:
