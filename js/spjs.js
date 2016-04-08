@@ -20,7 +20,7 @@ function spjsInit() {
       wsSend('send ' + $('#port').val() + ' ' + commandValue );
       wsSendCommandsList.push(commandValue);
       wsSendCommandsListPosition = undefined;
-      $('#command').val('')set;
+      $('#command').val('');
     }
     if (e.which == 38 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
       if (wsSendCommandsList.length > 0) {
