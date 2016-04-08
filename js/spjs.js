@@ -9,7 +9,7 @@ var wsSendCommandsListPosition;
 function spjsInit() {
   $('#sendCommand').on('click', function() {
     var commandValue = $('#command').val();
-    wsSend('send /dev/' + $('#port').val() + ' ' + commandValue );
+    wsSend('send ' + $('#port').val() + ' ' + commandValue );
     wsSendCommandsList.push(commandValue);
     wsSendCommandsListPosition = undefined;
     $('#command').val('');
@@ -17,7 +17,7 @@ function spjsInit() {
   $(document).bind('keydown',function(e){
     if (e.which == 13 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
       var commandValue = $('#command').val();
-      wsSend('send /dev/' + $('#port').val() + ' ' + commandValue );
+      wsSend('send ' + $('#port').val() + ' ' + commandValue );
       wsSendCommandsList.push(commandValue);
       wsSendCommandsListPosition = undefined;
       $('#command').val('');
@@ -33,7 +33,7 @@ function spjsInit() {
         wsSendCommandsListPosition = (wsSendCommandsListPosition < 0)? 0:wsSendCommandsListPosition;
         $('#command').val(wsSendCommandsList[wsSendCommandsListPosition]);
       }
-      
+
     } else if (e.which == 40 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
       if (wsSendCommandsList.length > 0) {
         console.log(wsSendCommandsListPosition);
@@ -58,8 +58,8 @@ function sendGcode(gcode) {
   console.log('Being asked to send ', gcode)
   if (isConnected) {
     var gcode = gcode;
-      wsSend('send /dev/' + $('#port').val() + ' ' + gcode );
-      console.log('send /dev/' + $('#port').val() + ' ' + gcode )
+      wsSend('send ' + $('#port').val() + ' ' + gcode );
+      console.log('send ' + $('#port').val() + ' ' + gcode )
   };
 };
 
@@ -152,13 +152,13 @@ serialConnect = function (portname, baud, buf) {
     // pause queue on server
       //$('#connect').html('Disconnect'); // Letting onPortOpen do this instead
       console.log('Connecting ', portname, ' at ', baud, ' using ', buf)
-      wsSend("open /dev/" + portname + " " + baud + " " + buf);
+      wsSend("open " + portname + " " + baud + " " + buf);
       localStorage.setItem("lastUsedPort", portname);
       localStorage.setItem("lastUsedBuffer", buf);
       localStorage.setItem("lastUsedBaud", baud);
   } else {
     console.log('Closing ', portname)
-    wsSend("close /dev/" + portname);
+    wsSend("close " + portname);
   }
 }
 
@@ -379,14 +379,14 @@ detectTypeOfConnectedDevice = function (data) {
     return {
       device: 'Grbl',
       version: t[1]
-    } 
+    }
   }
   return null;
 }
 setBullseyePosition = function (x,y,z) {
   $('#mX').html('X: '+ x);
   $('#mY').html('Y: '+ y);
-  $('#mZ').html('Z: '+ z); 
+  $('#mZ').html('Z: '+ z);
   bullseye.position.x = (parseInt(x,10) - (laserxmax /2));
   bullseye.position.y = (parseInt(y,10) - (laserymax /2));
   bullseye.position.z = (parseInt(z,10));
@@ -428,7 +428,8 @@ onPortList = function (portlist) {
       }
 
       // create friendly version of port name
-      item.DisplayPort = item.Name.replace("/dev/", "");
+      //item.DisplayPort = item.Name.replace("/dev/", "");
+      item.DisplayPort = item.Name; //.replace("/dev/", "");
 
       //console.log('Name: ', item.DisplayPort)
       options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
