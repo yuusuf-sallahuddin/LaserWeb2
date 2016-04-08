@@ -20,7 +20,7 @@ function spjsInit() {
       wsSend('send ' + $('#port').val() + ' ' + commandValue );
       wsSendCommandsList.push(commandValue);
       wsSendCommandsListPosition = undefined;
-      $('#command').val('');
+      $('#command').val('')set;
     }
     if (e.which == 38 && $('#command:focus').length > 0 && !$('#sendCommand').is(':disabled')) {
       if (wsSendCommandsList.length > 0) {
@@ -384,13 +384,21 @@ detectTypeOfConnectedDevice = function (data) {
   return null;
 }
 setBullseyePosition = function (x,y,z) {
-  $('#mX').html('X: '+ x);
-  $('#mY').html('Y: '+ y);
-  $('#mZ').html('Z: '+ z);
-  bullseye.position.x = (parseInt(x,10) - (laserxmax /2));
-  bullseye.position.y = (parseInt(y,10) - (laserymax /2));
-  bullseye.position.z = (parseInt(z,10));
+  console.log('Set Position: ', x, y, z)
+  if (x) {
+    $('#mX').html('X: '+ x);
+    bullseye.position.x = (parseInt(x,10) - (laserxmax /2));
+  };
+  if (y) {
+    $('#mY').html('Y: '+ y);
+    bullseye.position.y = (parseInt(y,10) - (laserymax /2));
+  };
+  if (z) {
+    $('#mZ').html('Z: '+ z);
+    bullseye.position.z = (parseInt(z,10));
+  };
 }
+
 
 onVersion = function(version) {
   //console.log("got version cmd. version:", version);
