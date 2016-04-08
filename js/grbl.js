@@ -114,13 +114,15 @@ Grbl.prototype = function () {
 					}
 					var setting = data.split('=')[0]
 					if (isSetting(setting)) {
+						var command = data.split('=')[0];
 						var value = data.split('=')[1].split(' ')[0];
 						var description = data.replace(/.*\(|\)/gi,'').slice(0, -1);
 						this.settings[setting] = {
 							value: value,
-							description: description
+							description: description,
+							command: command
 						}
-						printLog("<b>Grbl setting: </b> <i>" + description + '= '+ value + "</i>",msgcolor);
+						printLog("<b>Grbl setting: </b> <i>"+ command + '=> ' + description + '= '+ value + "</i>",msgcolor);
 					}
 					error = false;
 					break;
