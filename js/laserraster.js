@@ -256,13 +256,29 @@ Rasterizer.prototype.rasterRow = function(y) {
           // if (this.config.firmware.indexOf('Grbl') == 0) {
           //   this.result += 'M3 S{2}\nG1 X{0} Y{1} F{3} S{2}\nM5\n'.format(posx, gcodey, lastIntensity, speed);
           // } else {
-            this.result += 'G1 X{0} Y{1} S{2} F{3}\n'.format(posx, gcodey, lastIntensity, speed);
+          if (laseron) {
+            this.result += laseron
+            this.result += '\n'
+          }
+          this.result += 'G1 X{0} Y{1} S{2} F{3}\n'.format(posx, gcodey, lastIntensity, speed);
+          if (laseroff) {
+            this.result += laseroff
+            this.result += '\n'
+          }
           // }
         } else {
           // if (this.config.firmware.indexOf('Grbl') == 0) {
           //   this.result += 'M3 S{2}\nG1 X{0} Y{1} S{2}\nM5\n'.format(posx, gcodey, lastIntensity);
           // } else {
-            this.result += 'G1 X{0} Y{1} S{2}\n'.format(posx, gcodey, lastIntensity);
+          if (laseron) {
+            this.result += laseron
+            this.result += '\n'
+          }
+          this.result += 'G1 X{0} Y{1} S{2}\n'.format(posx, gcodey, lastIntensity);
+          if (laseroff) {
+            this.result += laseroff
+            this.result += '\n'
+          }
           // }
         }
         // This will hopefully get rid of black marks at the end of a line segment
