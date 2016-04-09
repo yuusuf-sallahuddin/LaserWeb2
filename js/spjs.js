@@ -76,6 +76,10 @@ function homeMachine() {
   sendGcode(homecommand);
 };
 
+function unlockMachine() {
+  sendGcode('$X');
+};
+
 
 wsConnect=  function (host) {
   //host = '127.0.0.1';
@@ -375,6 +379,7 @@ detectTypeOfConnectedDevice = function (data) {
   if (data.indexOf('Grbl') == 0) {
     var t = data.split(' ');
     printLog('<b>Grbl '+ t[1] +' connected</b>', successcolor);
+    $('#unlockBtnGrp').show();
     grbl.setVersion(t[1]);
     return {
       device: 'Grbl',
@@ -749,7 +754,8 @@ onUpdateQueueCnt = function(data) {
   var i = toSafePortName(port);
   if (data.Cmd == "Queued" || data.Cmd == "Write") {
     var val = data.QCnt;
-    printLog('Queued: ' + val, msgcolor)
+    //printLog('Queued: ' + val, msgcolor)
+    $('#queueCnt').html('Queued: ' + val)
     // fire off a pubsub for QCnt
     //chilipeppr.publish("/" + this.id + "/qcnt", val);
 

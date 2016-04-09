@@ -97,3 +97,11 @@ table tr td:first-child::before {
     min-width: 1em;
     margin-right: 0.5em;
 }
+
+/* Badget over Glyphs */
+.badge-notify{
+   background-color: #cc0000;
+   /*position:relative;
+   top: -6px;
+   left: -30px;*/
+}

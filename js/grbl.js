@@ -16,7 +16,7 @@ var Grbl = function () {
 		'~' : {description: 'cycle start'},
 		'!' : {description: 'feed hold'},
 		'?' : {description: 'current status'},
-		'ctrl-x' : {description: 'reset Grbl'} 
+		'ctrl-x' : {description: 'reset Grbl'}
 	};
 	this.settings = {}
 }
@@ -48,7 +48,7 @@ Grbl.prototype = function () {
 
 		messageType = (messageType === null && data[0] === '<' && data[data.length-2] === '>')? 'statusReport':messageType;
 		messageType = (messageType === null && data.indexOf('[') > -1 && data.indexOf(']') > -1)? 'feedbackMessage': messageType;
-		messageType = (messageType === null && data.indexOf('ok') > -1)? 'ok':messageType; 
+		messageType = (messageType === null && data.indexOf('ok') > -1)? 'ok':messageType;
 		messageType = (messageType === null && data.indexOf('error:') > -1)? 'error':messageType;
 		messageType = (messageType === null && data[0] === '$')? 'setting':messageType;
 
