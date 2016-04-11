@@ -214,10 +214,10 @@ errorHandlerJS = function() {
   window.onerror = function(message, url, line) {
     message = message.replace(/^Uncaught /i, "");
     //alert(message+"\n\n("+url+" line "+line+")");
-    //console.log(message+"\n\n("+url+" line "+line+")");
-    //if (url.indexof('three') = -1) { // Ignoring threejs messages
+    console.log(message+"\n\n("+url+" line "+line+")");
+    if (message.indexof('updateMatrixWorld') == -1) { // Ignoring threejs messages, add more || as discovered
       printLog(message+"\n("+url+" on line "+line+")", errorcolor);
-    //}
+    }
 
   };
 };
@@ -280,7 +280,7 @@ function readFile(evt) {
                printLog('GCODE Opened', successcolor);
                $('#cammodule').hide();
                $('#rastermodule').hide();
-               putFileObjectAtZero();
+              //  putFileObjectAtZero();
                resetView()
                $('#stlopt').hide();
                $('#prepopt').hide();
@@ -347,7 +347,7 @@ function readFile(evt) {
             printLog('Bitmap Opened', successcolor);
             $('#cammodule').hide();
             $('#rastermodule').show();
-            putFileObjectAtZero();
+            // putFileObjectAtZero();
             resetView()
             $('#stlopt').hide();
             $('#prepopt').hide();

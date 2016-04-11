@@ -403,10 +403,10 @@
                   <!-- span class="input-group-addon"><i class="fa fa-cube"></i></span -->
                   <div class="btn-group" role="group" id="unlockBtnGrp" style="display: none;"><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></div>
                   <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><i class="fa fa-home fa-lg"></i></button></div>
-                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="playBtn" onclick="playGcode();"><i class="fa fa-play fa-lg"></i></button></div>
-                  <!-- <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="pauseBtn" onclick="sendGcode('!');"><i class="fa fa-pause fa-lg"></i></button></div>
-                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="stopBtn" onclick="sendGcode('!~%');"><i class="fa fa-stop fa-lg"></i></button></div>
-                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><i class="fa fa-location-arrow fa-lg"></i></button></div> -->
+                  <!-- <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="playBtn" onclick="playGcode();"><i class="fa fa-play fa-lg"></i></button></div> -->
+                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><i id="playicon" class="fa fa-play fa-lg"></i></button></div>
+                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><i class="fa fa-stop fa-lg"></i></button></div>
+                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><i class="fa fa-location-arrow fa-lg"></i></button></div>
                 </div>
               </div>
             </div>

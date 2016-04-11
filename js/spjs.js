@@ -5,6 +5,8 @@ var connectedDevice = null;
 
 var wsSendCommandsList = []
 var wsSendCommandsListPosition;
+var paused = false;
+var playing = false;
 
 function spjsInit() {
   $('#sendCommand').on('click', function() {
@@ -67,7 +69,9 @@ function playGcode() {
   var g;
   g = document.getElementById('gcodepreview').value;
   sendGcode(g);
-  $('#playBtn').addClass('disabled');
+  playing = true;
+  $('#playicon').removeClass('fa-play');
+  $('#playicon').addClass('fa-pause');
 };
 
 function homeMachine() {
@@ -75,6 +79,46 @@ function homeMachine() {
   homecommand = document.getElementById('homingseq').value;
   sendGcode(homecommand);
 };
+
+function playpauseMachine() {
+  if (isConnected) {
+    if (playing) {
+      if (paused) {
+        sendGcode('~');
+        paused = false;
+        $('#playicon').removeClass('fa-play');
+        $('#playicon').addClass('fa-pause');
+      } else {
+        var laseroffcmd;
+        laseroffcmd = document.getElementById('laseroff').value;
+        sendGcode(laseroffcmd);
+        sendGcode('!');
+        paused = true;
+        $('#playicon').removeClass('fa-pause');
+        $('#playicon').addClass('fa-play');
+      }
+    } else {
+      playGcode();
+    }
+  } else {
+    printLog('You have to Connect to a machine First!', errorcolor)
+  }
+
+
+
+};
+
+
+function stopMachine() {
+  var laseroffcmd;
+  laseroffcmd = document.getElementById('laseroff').value;
+  sendGcode(laseroffcmd);
+  sendGcode('!');
+  sendGcode('%');
+  $('#playicon').removeClass('fa-pause');
+  $('#playicon').addClass('fa-play');
+};
+
 
 function unlockMachine() {
   sendGcode('$X');
@@ -756,6 +800,14 @@ onUpdateQueueCnt = function(data) {
     var val = data.QCnt;
     //printLog('Queued: ' + val, msgcolor)
     $('#queueCnt').html('Queued: ' + val)
+
+    // if job is done, make pause button a play button again
+    if (val < 1) {
+      $('#playicon').removeClass('fa-pause');
+      $('#playicon').addClass('fa-play');
+      playing = false;
+      paused = false;
+    }
     // fire off a pubsub for QCnt
     //chilipeppr.publish("/" + this.id + "/qcnt", val);
 

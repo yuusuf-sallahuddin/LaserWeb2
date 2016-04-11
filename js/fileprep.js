@@ -79,21 +79,24 @@ function putFileObjectAtZero() {
   // var bbox = new THREE.BoundingBoxHelper( fileParentGroup, hex );
   // bbox.update();
   // scene.add( bbox );
-  imagePosition = $('#imagePosition').val()
-  var bbox2 = new THREE.Box3().setFromObject(fileParentGroup);
-  console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
-  Xtofix = - (bbox2.min.x + (laserxmax / 2) );
-  console.log('ImagePosition', imagePosition)
-  if ( imagePosition == "TopLeft" ) {
-    Ytofix = (laserymax /2 ) - bbox2.max.y;
-  } else {
-  Ytofix = - (bbox2.min.y + (laserymax / 2) );
+  if (fileParentGroup) {
+    imagePosition = $('#imagePosition').val()
+    var bbox2 = new THREE.Box3().setFromObject(fileParentGroup);
+    console.log('bbox for putFileObjectAtZero: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
+    Xtofix = - (bbox2.min.x + (laserxmax / 2) );
+    console.log('ImagePosition', imagePosition)
+    if ( imagePosition == "TopLeft" ) {
+      Ytofix = (laserymax /2 ) - bbox2.max.y;
+    } else {
+    Ytofix = - (bbox2.min.y + (laserymax / 2) );
+    }
+    console.log('X Offset', Xtofix)
+    console.log('Y Offset', Ytofix)
+    fileParentGroup.translateX(Xtofix);
+    fileParentGroup.translateY(Ytofix);
+    currentWorld();
   }
-  console.log('X Offset', Xtofix)
-  console.log('Y Offset', Ytofix)
-  fileParentGroup.translateX(Xtofix);
-  fileParentGroup.translateY(Ytofix);
-  currentWorld();
+
 }
 
 function putInflateGrpAtZero() {
