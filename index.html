@@ -108,6 +108,9 @@
 
     <!-- Grbl -->
     <script type="text/javascript" src="js/grbl.js"></script>
+    
+    <!-- DregKnife -->
+    <script type="text/javascript" src="js/DragKnife.js"></script>
 
     <!-- Gcode Viewer -->
     <script src="lib/gcode-viewer/gcode-parser.js"></script>
@@ -438,6 +441,15 @@
                  <div class="tab-pane active" id="preptab">
                    <div class="btn-group" role="group" aria-label="cam">
                      <!-- Row 2 -->
+                    <div id="toolChooser" class="input-group" style="width: 100%">
+                        <span class="input-group-addon">Tools:</span>
+                        <div class="input-group">
+                            <select id="ToolChoose" class="input-sm">
+                                <option value="Laser">Laser</option>
+                                <option value="DragKnife">Drag Knife</option>
+                            </select>
+                        </div>
+                    </div>
                     <p>
                     <div id="inflateFeature" class="input-group" style="width: 100%;">
                       <span class="input-group-addon"  >Tool Offset:</span>
@@ -450,6 +462,25 @@
                       </span>
                     </div>
                     <p>
+                    <div id="DragKnifeFeatureOffset" class="input-group hidden" style="width: 100%;">
+                      <span class="input-group-addon"  >knife Offset:</span>
+                      <div class="input-group">
+                        <input type="number" step="0.05" class="form-control  input-sm" value="0" id="inflateVal" style="text-align:right;">
+                        <span class="input-group-addon"  >mm</span>
+                      </div>
+                    </div>
+                    <p>
+                    <div id="DragKnifeFeatureThreshold" class="input-group hidden" style="width: 100%;">
+                      <span class="input-group-addon"  >Threshold angle:</span>
+                      <div class="input-group">
+                        <input type="number" step="1" class="form-control  input-sm" value="20" id="inflateVal" style="text-align:right;">
+                        <span class="input-group-addon"  >°</span>
+                      </div>
+                      <span class="input-group-btn">
+                        <button id="removeInflateGrp" class="btn btn-default btn-sm" type="button"><i class="fa fa-times"></i></button>
+                      </span>
+                    </div>
+                    <p>    
                     <div class="input-group" style="width: 100%;">
                       <span class="input-group-addon"  >Scale:</span>
                       <div class="input-group">

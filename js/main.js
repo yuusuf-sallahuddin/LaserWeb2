@@ -32,6 +32,7 @@ $(document).ready(function() {
   });
 
    $('#inflateVal').change(onInflateChange.bind(this));
+   $('#ToolChoose').change(onToolChange.bind(this));
 
   // Top toolbar Menu
 
