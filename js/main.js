@@ -215,7 +215,7 @@ errorHandlerJS = function() {
     message = message.replace(/^Uncaught /i, "");
     //alert(message+"\n\n("+url+" line "+line+")");
     console.log(message+"\n\n("+url+" line "+line+")");
-    if (message.indexof('updateMatrixWorld') == -1) { // Ignoring threejs messages, add more || as discovered
+    if (message.indexOf('updateMatrixWorld') == -1) { // Ignoring threejs messages, add more || as discovered
       printLog(message+"\n("+url+" on line "+line+")", errorcolor);
     }
 

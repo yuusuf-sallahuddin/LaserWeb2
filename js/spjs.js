@@ -336,8 +336,9 @@ onWsMessage = function (msg) {
                   break;
                 case 'Grbl':
                   // Grbl fun stuff
-                  var messageType = grbl.parseData(data);
-                  if (messageType === 'statusReport') {
+                  var message = grbl.parseData(data);
+                  console.log(message);
+                  if (message.messageType === 'statusReport') {
                     setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
                   }
                   break;
