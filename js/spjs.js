@@ -338,9 +338,29 @@ onWsMessage = function (msg) {
                   // Grbl fun stuff
                   var message = grbl.parseData(data);
                   console.log(message);
-                  if (message.messageType === 'statusReport') {
-                    setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
+                  if (message) {
+                    switch (message.messageType) {
+                      case 'statusReport':
+                        setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
+                        break;
+                      case 'feedbackMessage' :
+                        printLog("<b>Grbl message: </b><i>" +message.message + "</i>",warncolor);
+                        break;
+                      case 'ok':
+                        printLog(message.message,successcolor);
+                        break;
+                      case 'error':
+                        printLog(data,errorcolor);
+                        break;
+                      case 'setting':
+                        printLog("<b>Grbl setting: </b> <i>"+ message.setting.command + '=> ' + message.setting.description + '= '+ message.setting.value + "</i>",msgcolor);
+                        break;
+                      case 'control':
+                        printLog("<b>Grbl control: </b> <i>" + message.control.description + "</i>",msgcolor);
+                        break;
+                    }
                   }
+                  
                   break;
                 default: break;
               }

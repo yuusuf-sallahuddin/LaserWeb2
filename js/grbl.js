@@ -87,7 +87,7 @@ Grbl.prototype = function () {
 							S     : rawMessageArray[10],
 							laserOff : rawMessageArray[12]
 						}
-						//$.extend(true,this,grblState);
+
 						for (var key in grblState) {
 							if (grblState.hasOwnProperty(key)) {
 								this[key] = grblState[key];
@@ -107,7 +107,6 @@ Grbl.prototype = function () {
 				case 'feedbackMessage' :
 	    			// get grblMessages between []
 					var grblFeedBackMessage = data.replace(/.*\[|\]/gi,'');
-//printLog("<b>Grbl message: </b><i>" +grblFeedBackMessage + "</i>",warncolor);
 					error = false;
 
 					message = {
@@ -116,7 +115,7 @@ Grbl.prototype = function () {
 					}
 					break;
 				case 'ok' :
-//printLog(data,successcolor);
+
 					error = false;
 					message = {
 						messageType: messageType,
@@ -124,7 +123,7 @@ Grbl.prototype = function () {
 					}
 					break;
 				case 'error' :
-//printLog(data,errorcolor);
+
 					error = false;
 					message = {
 						messageType: messageType,
@@ -148,7 +147,6 @@ Grbl.prototype = function () {
 							command: command
 						}
 						this.settings[setting] = settings
-//printLog("<b>Grbl setting: </b> <i>"+ command + '=> ' + description + '= '+ value + "</i>",msgcolor);
 					}
 					error = false;
 
@@ -171,12 +169,10 @@ Grbl.prototype = function () {
 			    		}
 			    	}
 
-//printLog("<b>Grbl control: </b> <i>" + data + "</i>",msgcolor);
 					error = false;
 
 					break;
 				default:
-//printLog(data,msgcolor);
 					error = true;
 			}
 		} else {
