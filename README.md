@@ -16,16 +16,6 @@ Let the Dev begin!
 
 (Note readme / wiki here will stay very quiet!   If you are a user, head over to https://github.com/openhardwarecoza/LaserWeb  - if you are a developer, talk to @openhardwarecoza or view the commit log!)
 
-## Internal module development
-It would be more maintainable if we could develop more functional modules, that are tested.
-
-<i>Example</i>: grbl.js has test code. It is a stand alone module that parses messages from a grbl device and stores all data in the grbl object, created by ` var grbl = new Grbl()` 
-### how to test
-``` 
-npm install // installs mocha and chai
-npm test // runs test code on grbl.js
-```
-
 ## Sponsors
 Have a look at companies and individuals that support us financially or with parts donations, or if you would like to get involved by sponsoring us in any way, please see the Sponsors Page on the wiki: https://github.com/openhardwarecoza/LaserWeb/wiki/SPONSORS
 
@@ -45,3 +35,13 @@ By using this software, the user accepts complete responsibility for each and ev
 #Testing
 
 You can test drive it live from [http://openhardwarecoza.github.io/LaserWeb2/](http://openhardwarecoza.github.io/LaserWeb2/)
+
+## Internal module development
+It would be more maintainable if we could develop more functional modules, that are tested.
+
+<i>Example</i>: grbl.js has test code. It is a stand alone module that parses messages from a grbl device and stores all data in the grbl object, created by ` var grbl = new Grbl()` 
+### how to test
+``` 
+npm install // installs mocha and chai
+npm test // runs test code on grbl.js
+```
