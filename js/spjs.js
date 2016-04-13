@@ -337,7 +337,6 @@ onWsMessage = function (msg) {
                 case 'Grbl':
                   // Grbl fun stuff
                   var message = grbl.parseData(data);
-                  console.log(message);
                   if (message) {
                     switch (message.messageType) {
                       case 'statusReport':
@@ -353,14 +352,16 @@ onWsMessage = function (msg) {
                         printLog(data,errorcolor);
                         break;
                       case 'setting':
-                        printLog("<b>Grbl setting: </b> <i>"+ message.setting.command + '=> ' + message.setting.description + '= '+ message.setting.value + "</i>",msgcolor);
+                        printLog("<b>Grbl setting: </b> <i>"+ message.setting.command + ' => ' + message.setting.description + '= '+ message.setting.value + "</i>",msgcolor);
                         break;
                       case 'control':
-                        printLog("<b>Grbl control: </b> <i>" + message.control.description + "</i>",msgcolor);
+                        printLog("<b>Grbl control: </b> <i>" + message.control.command + ' => ' + message.control.description + "</i>",msgcolor);
+                        break;
+                      case 'alarm':
+                        printLog(data,errorcolor);
                         break;
                     }
                   }
-                  
                   break;
                 default: break;
               }
