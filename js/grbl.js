@@ -4,26 +4,26 @@
 var Grbl = function () {
 	this.initiated = false;
 	this.controls = {
-		'$$': {description: 'view Grbl settings'},
-		'$#': {description: 'view # parameters', parameter:'#'},
-		'$G': {description: 'view parser state'},
-		'$I': {description: 'view build info'},
-		'$N': {description: 'view startup blocks'},
-		'$#=': {parameter: '#', description:'save Grbl setting', value: ''},
-		'$N#':{parameter: '#', description: 'save startup block', value: ''},
-		'$C': {description: 'check gcode mode'},
-		'$X': {description: 'kill alarm lock'},
-		'$H': {description: 'run homing cycle'},
-		'~' : {description: 'cycle start'},
-		'!' : {description: 'feed hold'},
-		'?' : {description: 'current status'},
-		'ctrl-x' : {description: 'reset Grbl'}
+		'$$': {description: 'view Grbl settings', command: '$$'},
+		'$#': {description: 'view # parameters', parameter:'#', command: '$#'},
+		'$G': {description: 'view parser state', command: '$G'},
+		'$I': {description: 'view build info', command: '$I'},
+		'$N': {description: 'view startup blocks', command: '$N'},
+		'$#=': {parameter: '#', description:'save Grbl setting', value: '', command: '$#='},
+		'$N#':{parameter: '#', description: 'save startup block', value: '', command: '$N#'},
+		'$C': {description: 'check gcode mode', command: '$C'},
+		'$X': {description: 'kill alarm lock', command: '$X'},
+		'$H': {description: 'run homing cycle', command: '$H'},
+		'~' : {description: 'cycle start', command: '~'},
+		'!' : {description: 'feed hold', command: '!'},
+		'?' : {description: 'current status', command: '?'},
+		'ctrl-x' : {description: 'reset Grbl', command: 'ctrl-x'}
 	};
 	this.settings = {}
 }
 
 Grbl.prototype = function () {
-	var checkStatusReportForError = function (rawMessageArray) {
+	var _checkStatusReportForError = function (rawMessageArray) {
 		var messageArray = rawMessageArray
 		var messageError = false;
 
@@ -39,19 +39,15 @@ Grbl.prototype = function () {
 
 	    return messageError
 	}
-	var setVersion= function (version) {
-		this.initiated = true;
-		this.version = version;
-		return this.version
-	}
-	var detectMessageType = function (data, grbl) {
+	var _detectMessageType = function (data, grbl) {
 		var messageType = null;
 
 		messageType = (messageType === null && data[0] === '<' && data.indexOf('>') > -1)? 'statusReport':messageType;
 		messageType = (messageType === null && data.indexOf('[') > -1 && data.indexOf(']') > -1)? 'feedbackMessage': messageType;
 		messageType = (messageType === null && data.indexOf('ok') > -1)? 'ok':messageType;
 		messageType = (messageType === null && data.indexOf('error:') > -1)? 'error':messageType;
-		messageType = (messageType === null || messageType === 'feedbackMessage' && data[0] === '$')? 'setting':messageType;
+		messageType = ((messageType === null || messageType === 'feedbackMessage') && data.indexOf('ALARM:') > -1)? 'alarm':messageType;
+		messageType = (messageType === null && data[0] === '$')? 'setting':messageType;
 
 		if (messageType === null || messageType === 'setting') {
 			for (var key in grbl.controls) {
@@ -67,9 +63,15 @@ Grbl.prototype = function () {
 
 		return messageType;
 	}
+	var setVersion= function (version) {
+		this.initiated = true;
+		this.version = version;
+		return this.version
+	}
 	var parseData = function (data) {
+		data = data.replace(/[\r\n]/g, '');
 		var error;
-		var messageType = detectMessageType(data,this);
+		var messageType = _detectMessageType(data,this);
 		var grblState = {};
 		var message = {}
 
@@ -79,7 +81,7 @@ Grbl.prototype = function () {
 					// remove first < and last > and split on , and :
 					var rawMessageArray = data.substr(data.indexOf('<')+1,data.indexOf('>')-1).split(/,|:/);
 
-					if (!checkStatusReportForError(rawMessageArray)) {
+					if (!_checkStatusReportForError(rawMessageArray)) {
 						grblState = {
 							state : rawMessageArray[0],
 							MPos  : [rawMessageArray[2],rawMessageArray[3],rawMessageArray[4]],
@@ -123,13 +125,19 @@ Grbl.prototype = function () {
 					}
 					break;
 				case 'error' :
-
 					error = false;
 					message = {
 						messageType: messageType,
 						message: data
 					}
 					break;
+				case 'alarm' : 
+					error = false;
+					message = {
+						messageType: messageType,
+						message: data
+					}
+					break
 				case 'setting' :
 					var isSetting = function (setting) {
 						var suffix = parseInt(setting.substring(1,setting.length));
@@ -180,18 +188,22 @@ Grbl.prototype = function () {
 		}
 		return error? 0:message;
 	}
-	var homeCycle = function () {
+	var homingSequence = function () {
 		return "$H";
 	}
-	var zeroOut = function () {
-		return "G92 X0 Y0 Z0"
+	var laserOn = function () {
+		return "M3"
+	}
+	var laserOff = function () {
+		return "M3"
 	}
 
 	return {
 		parseData : parseData, // parses incoming data and returns parsed messageType
 		setVersion: setVersion,
-		homeCycle: homeCycle,
-		zeroOut: zeroOut
+		homingSequence: homingSequence,
+		laserOn: laserOn,
+		laserOff: laserOff
 	}
 } ();
 
