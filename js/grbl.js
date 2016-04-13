@@ -1,4 +1,5 @@
-// Grbl is build with the revealing prototype patern.
+"use strict";
+// Grbl is build with the revealing prototype pattern.
 
 var Grbl = function () {
 	this.initiated = false;
@@ -8,7 +9,7 @@ var Grbl = function () {
 		'$G': {description: 'view parser state'},
 		'$I': {description: 'view build info'},
 		'$N': {description: 'view startup blocks'},
-		'$#': {parameter: '#', description:'save Grbl setting', value: ''},
+		'$#=': {parameter: '#', description:'save Grbl setting', value: ''},
 		'$N#':{parameter: '#', description: 'save startup block', value: ''},
 		'$C': {description: 'check gcode mode'},
 		'$X': {description: 'kill alarm lock'},
@@ -32,7 +33,7 @@ Grbl.prototype = function () {
 	    messageError = messageArray[9] === "S" && !messageError? false:true;
 	    messageError = messageArray[11] === "laser off" && !messageError? false:true;
 
-	    if (messageError && debug) {
+	    if (messageError) {
 	    	console.warn(messageArray);
 	    }
 
@@ -46,11 +47,11 @@ Grbl.prototype = function () {
 	var detectMessageType = function (data, grbl) {
 		var messageType = null;
 
-		messageType = (messageType === null && data[0] === '<' && data[data.length-2] === '>')? 'statusReport':messageType;
+		messageType = (messageType === null && data[0] === '<' && data.indexOf('>') > -1)? 'statusReport':messageType;
 		messageType = (messageType === null && data.indexOf('[') > -1 && data.indexOf(']') > -1)? 'feedbackMessage': messageType;
 		messageType = (messageType === null && data.indexOf('ok') > -1)? 'ok':messageType;
 		messageType = (messageType === null && data.indexOf('error:') > -1)? 'error':messageType;
-		messageType = (messageType === null && data[0] === '$')? 'setting':messageType;
+		messageType = (messageType === null || messageType === 'feedbackMessage' && data[0] === '$')? 'setting':messageType;
 
 		if (messageType === null || messageType === 'setting') {
 			for (var key in grbl.controls) {
@@ -70,12 +71,13 @@ Grbl.prototype = function () {
 		var error;
 		var messageType = detectMessageType(data,this);
 		var grblState = {};
+		var message = {}
 
 		if (messageType) {
 			switch (messageType) {
 				case 'statusReport' :
 					// remove first < and last > and split on , and :
-					var rawMessageArray = data.substr(1,data.length-2).split(/,|:/);
+					var rawMessageArray = data.substr(data.indexOf('<')+1,data.indexOf('>')-1).split(/,|:/);
 
 					if (!checkStatusReportForError(rawMessageArray)) {
 						grblState = {
@@ -85,8 +87,18 @@ Grbl.prototype = function () {
 							S     : rawMessageArray[10],
 							laserOff : rawMessageArray[12]
 						}
-						$.extend(true,this,grblState);
+
+						for (var key in grblState) {
+							if (grblState.hasOwnProperty(key)) {
+								this[key] = grblState[key];
+							}
+						}
 						error = false;
+
+						message = {
+							messageType: messageType,
+							state: grblState
+						}
 
 					} else {
 						error = true;
@@ -95,16 +107,28 @@ Grbl.prototype = function () {
 				case 'feedbackMessage' :
 	    			// get grblMessages between []
 					var grblFeedBackMessage = data.replace(/.*\[|\]/gi,'');
-					printLog("<b>Grbl message: </b><i>" +grblFeedBackMessage + "</i>",warncolor);
 					error = false;
+
+					message = {
+						messageType: messageType,
+						message: grblFeedBackMessage
+					}
 					break;
 				case 'ok' :
-					printLog(data,successcolor);
+
 					error = false;
+					message = {
+						messageType: messageType,
+						message: data
+					}
 					break;
 				case 'error' :
-					printLog(data,errorcolor);
+
 					error = false;
+					message = {
+						messageType: messageType,
+						message: data
+					}
 					break;
 				case 'setting' :
 					var isSetting = function (setting) {
@@ -116,28 +140,45 @@ Grbl.prototype = function () {
 					if (isSetting(setting)) {
 						var command = data.split('=')[0];
 						var value = data.split('=')[1].split(' ')[0];
-						var description = data.replace(/.*\(|\)/gi,'').slice(0, -1);
-						this.settings[setting] = {
+						var description = data.replace(/.*\(|\)/gi,'');
+						var settings = {
 							value: value,
 							description: description,
 							command: command
 						}
-						printLog("<b>Grbl setting: </b> <i>"+ command + '=> ' + description + '= '+ value + "</i>",msgcolor);
+						this.settings[setting] = settings
 					}
 					error = false;
+
+					message = {
+						messageType: messageType,
+						setting: settings
+					}
 					break;
 				case 'control' :
-					printLog("<b>Grbl control: </b> <i>" + data + "</i>",msgcolor);
+					for (var key in this.controls) {
+			    		if (this.controls.hasOwnProperty(key)) {
+			    			var control = this.controls[key];
+				    		if (data.indexOf(control.description) > -1) {
+				    			message = {
+									messageType: messageType,
+									control: this.controls[key]
+								}
+								break;
+				    		}
+			    		}
+			    	}
+
 					error = false;
+
 					break;
 				default:
-					printLog(data,msgcolor);
 					error = true;
 			}
 		} else {
 			error = true;
 		}
-		return error? 0:messageType;
+		return error? 0:message;
 	}
 	var homeCycle = function () {
 		return "$H";
@@ -153,3 +194,12 @@ Grbl.prototype = function () {
 		zeroOut: zeroOut
 	}
 } ();
+
+
+// export code
+if (typeof exports !== 'undefined') {
+    if (typeof module !== 'undefined' && module.exports) {
+      exports = module.exports = Grbl;
+    }
+    exports.Grbl = Grbl;
+} 

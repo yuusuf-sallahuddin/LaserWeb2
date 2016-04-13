@@ -51,7 +51,7 @@ function spjsInit() {
   });
   window.onbeforeunload = function() {
       if (isConnected) {
-        return "STOP: you still have a connected device. If you refresh or reconnect the running job will stop!.";
+        return "Whow, you still have a connected device. First disconnect, before you leave or refresh your page.";
       }
     }
 };
@@ -199,8 +199,6 @@ serialConnect = function (portname, baud, buf) {
   if ($('#connect').html() == 'Connect') {
     // pause queue on server
       //$('#connect').html('Disconnect'); // Letting onPortOpen do this instead
-      console.log('Closing ', portname, ' before reconnecting')
-      wsSend("close " + portname);
       console.log('Connecting ', portname, ' at ', baud, ' using ', buf)
       wsSend("open " + portname + " " + baud + " " + buf);
       localStorage.setItem("lastUsedPort", portname);
@@ -252,7 +250,6 @@ onWsMessage = function (msg) {
          onPortOpenFail(data);
      } else if (data && data.Cmd && data.Cmd == "Open") {
          // the port was opened, possibly by other browser or even locally from sys tray
-         console.log('onPortOpen Will Get', data)
          onPortOpen(data);
      } else if (data && data.Cmd && data.Cmd == "Close") {
          // the port was closed, possibly by other browser or even locally from sys tray
@@ -339,10 +336,31 @@ onWsMessage = function (msg) {
                   break;
                 case 'Grbl':
                   // Grbl fun stuff
-                  var messageType = grbl.parseData(data);
-                  if (messageType === 'statusReport') {
-                    setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
+                  var message = grbl.parseData(data);
+                  console.log(message);
+                  if (message) {
+                    switch (message.messageType) {
+                      case 'statusReport':
+                        setBullseyePosition(grbl.WPos[0],grbl.WPos[1],grbl.WPos[2]);
+                        break;
+                      case 'feedbackMessage' :
+                        printLog("<b>Grbl message: </b><i>" +message.message + "</i>",warncolor);
+                        break;
+                      case 'ok':
+                        printLog(message.message,successcolor);
+                        break;
+                      case 'error':
+                        printLog(data,errorcolor);
+                        break;
+                      case 'setting':
+                        printLog("<b>Grbl setting: </b> <i>"+ message.setting.command + '=> ' + message.setting.description + '= '+ message.setting.value + "</i>",msgcolor);
+                        break;
+                      case 'control':
+                        printLog("<b>Grbl control: </b> <i>" + message.control.description + "</i>",msgcolor);
+                        break;
+                    }
                   }
+                  
                   break;
                 default: break;
               }
@@ -479,7 +497,7 @@ onPortList = function (portlist) {
 
   if (portlist.length > 0) {
     $.each(portlist, function (portlistIndex, item) {
-      console.log("looping thru ports. item:", item);
+      //console.log("looping thru ports. item:", item);
 
       // see if this is deleted
       if (item.isDeleted) {
@@ -493,11 +511,8 @@ onPortList = function (portlist) {
 
       //console.log('Name: ', item.DisplayPort)
       options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
-
-      // Handle situation where port is already open and we refresh the browser
       if ('IsOpen' in item && item.IsOpen == true) {
-        printLog('Port ' + item.DisplayPort + ' is already open', successcolor);
-        //onPortOpen(data);
+        //console.log('Port ', item.DisplayPort, ' is already open');
       };
 
 
