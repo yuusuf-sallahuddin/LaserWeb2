@@ -248,6 +248,7 @@ function readFile(evt) {
               $('#stlopt').hide();
               $('#prepopt').show();
               $('#prepopt').click();
+              attachTransformWidget();
             };
 
       } else if (f.name.match(/.svg$/i)) {
@@ -268,6 +269,7 @@ function readFile(evt) {
               $('#stlopt').show();
               $('#prepopt').show();
               $('#prepopt').click();
+              attachTransformWidget();
             };
 
       } else if (f.name.match(/.gcode$/i)) {

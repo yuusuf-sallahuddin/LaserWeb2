@@ -4,7 +4,7 @@ var geometry, material, mesh, helper, axes, axesgrp, light, bullseye;
 
 // Global Vars
 var container, stats;
-var camera, controls, scene, renderer;
+var camera, controls, control, scene, renderer;
 var clock = new THREE.Clock();
 var raycaster = new THREE.Raycaster();
  raycaster.linePrecision = 0.1;
@@ -23,6 +23,11 @@ var marker;
 var laserxmax;
 var laserymax;
 var lineincrement = 50
+
+function attachTransformWidget() {
+  control.attach(fileParentGroup);
+  control.addEventListener('change', currentWorld);
+};
 
 function init3D() {
 
@@ -111,6 +116,13 @@ controls.enableZoom = true; // optional
 controls.noKeys = true; // Disable Keyboard on canvas
 //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
 // /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
+
+control = new THREE.TransformControls(camera, renderer.domElement);
+	//control.addEventListener('change', currentWorld);
+	// control.addEventListener('objectChange', cancelAnimation);
+	//control.attach(model);
+	scene.add(control);
+	control.setMode("translate");
 
 
 // LaserWEB UI Grids

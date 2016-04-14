@@ -72,6 +72,7 @@ function currentWorld() {
   $('#xpos').val(parseInt(fileParentGroup.position.x) + (laserxmax / 2) );
   $('#ypos').val(parseInt(fileParentGroup.position.y) + (laserymax / 2) );
   $('#scaleFactor').val((fileParentGroup.scale.x) * 100);
+  fileParentGroup.position.z = 0.001;
 }
 
 function putFileObjectAtZero() {
