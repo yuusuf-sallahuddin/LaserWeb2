@@ -146,22 +146,7 @@ $(document).ready(function() {
   // Viewer
 
   var viewer = document.getElementById('renderArea');
-  viewer.addEventListener('click', function (evt) {
-    // The user has clicked; let's note this event
-    // and the click's coordinates so that we can
-    // react to it in the render loop
-    clickInfo.userHasClicked = true;
-    clickInfo.x = evt.clientX;
-    clickInfo.y = evt.clientY;
-  }, false);
-  // we just do the following to hide the event from controls
-  // and disable moving via mouse buttons
-  var stopEvent = function (evt) {
-    evt.preventDefault();
-    evt.stopPropagation();
-  };
-  //viewer.addEventListener('mousedown', stopEvent, false);
-  //viewer.addEventListener('mouseup', stopEvent, false);
+ 
 
   // Progressbar
   //NProgress.configure({ parent: '#consolemodule' });
