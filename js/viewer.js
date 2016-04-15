@@ -503,7 +503,7 @@ $(window).on('resize', function() {
 
 function onMouseMove( e ) {
 
-event.preventDefault();
+//event.preventDefault();
 
   	mouseVector.x = ( e.clientX / window.innerWidth ) * 2 - 1;
   	mouseVector.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
