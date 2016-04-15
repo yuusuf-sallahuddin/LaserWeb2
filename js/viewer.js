@@ -1,28 +1,20 @@
 var scene, camera, renderer;
 var geometry, material, mesh, helper, axes, axesgrp, light, bullseye;
-
+var projector, mouseVector, containerWidth, containerHeight;
+var raycaster = new THREE.Raycaster();
 
 // Global Vars
 var container, stats;
 var camera, controls, control, scene, renderer;
 var clock = new THREE.Clock();
-var raycaster = new THREE.Raycaster();
- raycaster.linePrecision = 0.1;
-var projector = new THREE.Projector();
-var directionVector = new THREE.Vector3();
-var SCREEN_HEIGHT = window.innerHeight;
-var SCREEN_WIDTH = window.innerWidth;
- var INTERSECTED;
-var clickInfo = {
-  x: 0,
-  y: 0,
-  userHasClicked: false
-};
-//var statsNode = document.getElementById('stats');
+
 var marker;
 var laserxmax;
 var laserymax;
 var lineincrement = 50
+
+containerWidth = window.innerWidth;
+containerHeight = window.innerHeight;
 
 function attachTransformWidget() {
   control.attach(fileParentGroup);
@@ -30,6 +22,8 @@ function attachTransformWidget() {
 };
 
 function init3D() {
+	
+window.addEventListener( 'mousedown', onMouseMove, false );
 
 // ThreeJS Render/Control/Camera
 scene = new THREE.Scene();
@@ -124,6 +118,13 @@ control = new THREE.TransformControls(camera, renderer.domElement);
 	scene.add(control);
 	control.setMode("translate");
 
+var light = new THREE.DirectionalLight( 0xffffff );
+light.position.set( -500, -500, 1 ).normalize();
+scene.add(light);
+
+var light2 = new THREE.DirectionalLight( 0xffffff );
+light.position.set( 1, 0, 1 ).normalize();
+scene.add(light2);
 
 // LaserWEB UI Grids
 if (helper) {
@@ -294,51 +295,24 @@ axesgrp.translateY(laserymax /2 * -1);
 //console.log('[VIEWER] - added Axesgrp');
 scene.add(axesgrp);
 
+// Picking stuff
+
+	projector = new THREE.Projector();
+	mouseVector = new THREE.Vector3();
+
+
 }
 
 function animate() {
 
   requestAnimationFrame( animate );
 
-  checkIntersects();
 
       // mesh.rotation.x += 0.01;
       // mesh.rotation.y += 0.02;
       renderer.render( scene, camera );
 }
 
-checkIntersects = function () {
-  if (clickInfo.userHasClicked) {
-    // /console.log('Had a click');
-    clickInfo.userHasClicked = false;
-    //statsNode.innerHTML = '';
-    // The following will translate the mouse coordinates into a number
-    // ranging from -1 to 1, where
-    //      x == -1 && y == -1 means top-left, and
-    //      x ==  1 && y ==  1 means bottom right
-    var x = ( clickInfo.x / SCREEN_WIDTH ) * 2 - 1;
-    var y = -( clickInfo.y / SCREEN_HEIGHT ) * 2 + 1;
-    console.log('clicked on ',x, ' ', y)
-    // Now we set our direction vector to those initial values
-    //directionVector.set(x, y, 1);
-    // Unproject the vector
-    projector.unprojectVector(directionVector, camera);
-    // Substract the vector representing the camera position
-    directionVector.sub(camera.position);
-    // Normalize the vector, to avoid large numbers from the
-    // projection and substraction
-    directionVector.normalize();
-    // Now our direction vector holds the right numbers!
-    raycaster.set(camera.position, directionVector);
-    // Ask the raycaster for intersects with all objects in the scene:
-    // (The second arguments means "recursive")
-    var intersects = raycaster.intersectObjects(scene.children, true);
-    if (intersects.length) {
-       var target = intersects[0].object;
-       console.log('Name: ' + target.name + '<br>' + 'ID: ' + target.id);
-    };
-  };
-};
 
 
 viewExtents = function (objecttosee) {
@@ -439,6 +413,8 @@ viewExtents = function (objecttosee) {
   //this.camera.rotateX(90);
 
   controls.object.updateProjectionMatrix();
+  containerWidth = window.innerWidth;
+  containerHeight = window.innerHeight;
   //this.controls.enabled = true;
   //this.scaleInView();
   //this.controls.rotateCamera(0.5);
@@ -524,3 +500,31 @@ $(window).on('resize', function() {
   $('#viewReset').click();
 
 });
+
+function onMouseMove( e ) {
+
+event.preventDefault();
+
+  	mouseVector.x = ( e.clientX / window.innerWidth ) * 2 - 1;
+  	mouseVector.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+
+
+
+
+    // var vector = mouseVector.clone().unproject( camera );
+    // var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
+    // raycaster.set( vector, direction );
+    	raycaster.setFromCamera( mouseVector, camera );
+    var intersects = raycaster.intersectObjects( scene.children, true )
+
+		for( var i = 0; i < intersects.length; i++ ) {
+			var intersection = intersects[ i ],
+				obj = intersection.object;
+        printLog('Object: '+ obj.name, successcolor)
+			  obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
+        bullseye.position.set(intersects[i].point.x,intersects[i].point.y,intersects[i].point.z);
+
+		}
+
+
+	}
