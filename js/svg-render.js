@@ -16,7 +16,7 @@ drawSvg = function(file) {
     var error = this.extractSvgPathsFromSVGFile(file);
     if (error) {
         // do nothing
-        console.warn("there was an error with svg file");
+        printLog("There was an error with svg file", warncolor);
     } else {
         fileObject = this.svgParentGroup;
         //this.sceneReAddMySceneGroup();
@@ -76,8 +76,8 @@ extractSvgPathsFromSVGFile = function(file) {
     console.log("groups:", groups);
 
     if (groups.length > 1) {
-        printLog("Too many groups in svg. We need a flattened svg file with only one Group", errorcolor);
-        return true;
+        printLog("Too many groups in svg. Found " + groups.length + " We need a flattened svg file with only one Group", errorcolor);
+        //return true;
     }
 
 
