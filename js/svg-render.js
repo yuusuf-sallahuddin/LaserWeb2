@@ -8,7 +8,7 @@ drawSvg = function(file) {
     yflip = true;
     // Remove the UI elements from last run
     cleanupThree();
-    
+
 
     // see if file is valid
     if (file.length == 0) return;
@@ -63,25 +63,23 @@ extractSvgPathsFromSVGFile = function(file) {
         var pathSet = fragment.selectAll("path");
         if (pathSet == null) {
 
-            $('#' + this.id + " .error-parse").removeClass("hidden");
+            printLog('Error Parsing SVG!', errorcolor)
             return true;
 
         } else {
-            console.log("no groups, but we have some paths so proceed to code below.");
+            console.log("No groups, but we have some paths so proceeding");
         }
 
     }
-    $('#' + this.id + " .error-parse").addClass("hidden");
 
     var groups = fragment.selectAll("g");
     console.log("groups:", groups);
 
     if (groups.length > 1) {
-        console.warn("too many groups in svg. need a flattened svg file.");
-        $('#' + this.id + " .error-flattened").removeClass("hidden");
+        printLog("Too many groups in svg. We need a flattened svg file with only one Group", errorcolor);
         return true;
     }
-    $('#' + this.id + " .error-flattened").addClass("hidden");
+
 
     var svgGroup = new THREE.Group();
     svgGroup.name = "svgpath";
@@ -100,23 +98,23 @@ extractSvgPathsFromSVGFile = function(file) {
         // handle transforms
         //var path = p1.transform(path.matrix);
 
-        console.log("working on path:", path);
-        console.log("len:", path.getTotalLength());
-        // console.log("path.parent:", path.parent());
+        printLog("working on path:" + path, successcolor);
+        printLog("length:" + path.getTotalLength(), successcolor);
+        //("path.parent:", path.parent());
 
         // if the parent path is a clipPath, then toss it
         if (path.parent().type.match(/clippath/i)) {
-            console.warn("found a clippath. skipping. path:", path);
+            printLog("found a clippath. skipping. path:" + path, errorcolor);
             return;
         }
 
         // use Snap.svg to translate path to a global set of coordinates
         // so the xy values we get are in global values, not local
-        console.log("path.transform:", path.transform());
+        printLog("path.transform:" + path.transform(), successcolor);
         path = path.transform(path.transform().global);
         // see if there is a parent transform
         if (path.parent()) {
-            console.log("there is a parent. see if transform. path.parent().transform()", path.parent().transform());
+            printLog("there is a parent. see if transform. path.parent().transform()" + path.parent().transform());
             //path = path.transform(path.parent().transform().global);
         }
 
@@ -126,12 +124,12 @@ extractSvgPathsFromSVGFile = function(file) {
 
 
         // use transformSVGPath
-        console.log("working on path:", path);
+        printLog("Transform working on path: " + path, successcolor);
         //debugger;
         var paths = that.transformSVGPath(path.realPath);
         // var paths = that.transformSVGPath(path.attr('d'));
         //for (var pathindex in paths) {
-        console.log('Number of Paths', paths.length)
+        printLog('Number of Paths ' + paths.length, successcolor)
         for (pathindex = 0; pathindex < paths.length; pathindex++ ) {
 
             var shape = paths[pathindex];
@@ -141,12 +139,12 @@ extractSvgPathsFromSVGFile = function(file) {
 
           				// solid line
           if (shape.curves.length != 0) {
-            console.log('Generating Shape', shape)
+            printLog('Generating Shape' + shape, successcolor)
             var geometry = new THREE.ShapeGeometry( shape );
             var lineSvg = new THREE.Line( geometry, material );
       			svgGroup.add(lineSvg);
           } else {
-            console.log('Skipped path: ', shape)
+            printLog('Skipped path: ' + shape, errorcolor)
           }
 
     			// var particles = new THREE.Points( geometry, new THREE.PointsMaterial( {
