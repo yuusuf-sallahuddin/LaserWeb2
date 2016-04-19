@@ -91,6 +91,8 @@ extractSvgPathsFromSVGFile = function(file) {
 
     var pathSet = fragment.selectAll("path");
 
+    console.log('Path Set: ', pathSet)
+
     pathSet.forEach( function(path, i) {
 
         //if (i > 4) return;
