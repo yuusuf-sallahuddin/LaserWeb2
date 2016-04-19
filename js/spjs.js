@@ -51,7 +51,7 @@ function spjsInit() {
   });
   window.onbeforeunload = function() {
       if (isConnected) {
-        return "Whow, you still have a connected device. First disconnect, before you leave or refresh your page.";
+         return "STOP: you still have a connected device. If you refresh or reconnect the running job will stop!.";
       }
     }
 };
@@ -199,6 +199,9 @@ serialConnect = function (portname, baud, buf) {
   if ($('#connect').html() == 'Connect') {
     // pause queue on server
       //$('#connect').html('Disconnect'); // Letting onPortOpen do this instead
+      console.log('Closing ', portname, ' before reconnecting')
+      wsSend("close " + portname);
+
       console.log('Connecting ', portname, ' at ', baud, ' using ', buf)
       wsSend("open " + portname + " " + baud + " " + buf);
       localStorage.setItem("lastUsedPort", portname);
@@ -514,6 +517,7 @@ onPortList = function (portlist) {
       options.append($("<option />").val(item.DisplayPort).text(item.DisplayPort));
       if ('IsOpen' in item && item.IsOpen == true) {
         //console.log('Port ', item.DisplayPort, ' is already open');
+         printLog('Port ' + item.DisplayPort + ' is already open', successcolor);
       };
 
 
