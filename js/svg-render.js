@@ -96,6 +96,7 @@ extractSvgPathsFromSVGFile = function(file) {
     pathSet.forEach( function(path, i) {
 
         //if (i > 4) return;
+        console.log('Doing Path: ', path)
 
         // handle transforms
         //var path = p1.transform(path.matrix);
@@ -112,11 +113,14 @@ extractSvgPathsFromSVGFile = function(file) {
 
         // use Snap.svg to translate path to a global set of coordinates
         // so the xy values we get are in global values, not local
-        printLog("path.transform:" + path.transform(), successcolor);
-        path = path.transform(path.transform().global);
         // see if there is a parent transform
+        printLog("path.transform:" + path.transform(), successcolor);
+        console.log("path.transform:" + path.transform());
+
+        path = path.transform(path.transform().global);
+        console.log("Transformed Path: ", path )
         if (path.parent()) {
-            printLog("there is a parent. see if transform. path.parent().transform()" + path.parent().transform());
+            console.log("there is a parent. see if transform. path.parent().transform()");
             //path = path.transform(path.parent().transform().global);
         }
 
@@ -129,6 +133,7 @@ extractSvgPathsFromSVGFile = function(file) {
         printLog("Transform working on path: " + path, successcolor);
         //debugger;
         var paths = that.transformSVGPath(path.realPath);
+        console.log("Path after transformSVGPath", paths)
         // var paths = that.transformSVGPath(path.attr('d'));
         //for (var pathindex in paths) {
         printLog('Number of Paths ' + paths.length, successcolor)
