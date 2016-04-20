@@ -252,6 +252,8 @@ bullseye = new THREE.Object3D();
         liney.position = (0, 0, 0)
         bullseye.add( liney );
 
+        bullseye.name="Bullseye";
+
 scene.add(bullseye);
 bullseye.position.x = -(laserxmax / 2) + 50 ;
 bullseye.position.y = -(laserymax / 2) + 50 ;
@@ -571,11 +573,14 @@ function onMouseMove( e ) {
 		for( var i = 0; i < intersects.length; i++ ) {
 			var intersection = intersects[ i ],
 				obj = intersection.object;
-        if (obj.name) {
+        if (obj.name & obj.name != "bullseye") {
           printLog('Clicked on : '+ obj.name, successcolor)
         }
 			  obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
         bullseye.position.set(intersects[i].point.x,intersects[i].point.y,intersects[i].point.z);
+        bullseye.children[0].material.color.setRGB( 1, 0, 0 );
+        bullseye.children[1].material.color.setRGB( 1, 0, 0 );
+        bullseye.children[2].material.color.setRGB( 1, 0, 0 );
 
 		}
 
