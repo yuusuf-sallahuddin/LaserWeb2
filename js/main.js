@@ -340,6 +340,25 @@ function readFile(evt) {
             $('#stlopt').hide();
             $('#prepopt').hide();
             $("#transformcontrols").hide();
+
+            //tbfleming's threejs texture code
+            var img = document.getElementById('origImage');
+            var imgwidth = img.naturalWidth;
+            var imgheight = img.naturalHeight;
+
+            var geometry = new THREE.PlaneBufferGeometry( imgwidth, imgheight, 1 );
+
+            var material = new THREE.MeshBasicMaterial( {
+					         map: new THREE.TextureLoader().load( event.target.result )
+				    } );
+
+				    rastermesh = new THREE.Mesh( geometry, material );
+
+            rastermesh.position.x = -(laserxmax / 2) + (imgwidth / 2);
+            rastermesh.position.y = -(laserymax / 2) + (imgheight / 2);;
+
+            scene.add(rastermesh);
+
           };
       }
     }
@@ -350,6 +369,11 @@ function cleanupThree() {
     if (typeof(fileObject) !== 'undefined') {
       scene.remove(fileObject);
       fileObject = null;
+    };
+
+    if (typeof(rastermesh) !== 'undefined') {
+      scene.remove(rastermesh);
+      rastermesh = null;
     };
 
     if ( typeof(inflateGrp) != 'undefined' ) {

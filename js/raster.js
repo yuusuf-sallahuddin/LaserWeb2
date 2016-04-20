@@ -10,6 +10,8 @@ var boundingBox;
 var BBmaterial;
 var BBgeometry;
 var intensity;
+var rastermesh; // see main.js - image shown on three canvas of raster
+
 
 // add MAP function to the Numbers function
 Number.prototype.map = function (in_min, in_max, out_min, out_max) {
@@ -190,6 +192,23 @@ function setImgDims() {
 	boundingBox.translateX(laserxmax /2 * -1);
 	boundingBox.translateY(laserymax /2 * -1);
  	scene.add( boundingBox );
+
+  if (rastermesh) {
+    rastermesh.scale.x  = spotSizeMul;
+    rastermesh.scale.y  = spotSizeMul;
+
+    var bbox2 = new THREE.Box3().setFromObject(rastermesh);
+    console.log('bbox for rastermesh: Min X: ', (bbox2.min.x + (laserxmax / 2) ), '  Max X:', (bbox2.max.x + (laserxmax / 2) ), 'Min Y: ', (bbox2.min.y + (laserymax / 2) ), '  Max Y:', (bbox2.max.y + (laserymax / 2) ) );
+    var Xtofix = - (bbox2.min.x + (laserxmax / 2) );
+    console.log('ImagePosition', imagePosition)
+    var Ytofix = - (bbox2.min.y + (laserymax / 2) );
+    console.log('X Offset', Xtofix)
+    console.log('Y Offset', Ytofix)
+    rastermesh.translateX(Xtofix);
+    rastermesh.translateY(Ytofix);
+    currentWorld();
+
+  }
 	};
 
 function gcodereceived() {
