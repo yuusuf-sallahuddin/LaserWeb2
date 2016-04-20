@@ -6,7 +6,6 @@ var warncolor = '#ff6600';
 
 var debug = false;
 
-
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
 $(document).ready(function() {
 

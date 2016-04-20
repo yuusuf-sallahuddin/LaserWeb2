@@ -57,6 +57,24 @@ $('#resizeBtn').on('click', function() {
     scene.add(control);
   } });
 
+  $('#linkAspectBtn').on('click', function() {
+      if ($( "#linkAspect" ).hasClass( "fa-link" )) {
+      // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+      // $( "#linkAspectBtn" ).addClass( "btn-default" )
+      $('#linkAspect').removeClass('fa-link');
+      $('#linkAspect').addClass('fa-unlink');
+    } else {
+      // $( "#linkAspectBtn" ).removeClass( "btn-default" )
+      // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+      // $( "#linkAspectBtn" ).addClass( "btn-default" )
+      // $( "#linkAspectBtn" ).addClass( "btn-primary" )
+      $('#linkAspect').removeClass('fa-unlink');
+      $('#linkAspect').addClass('fa-link');
+    } });
+
+
+
+
 
 // ThreeJS Render/Control/Camera
 scene = new THREE.Scene();

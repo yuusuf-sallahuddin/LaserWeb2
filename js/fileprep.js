@@ -1,6 +1,7 @@
 var Xtofix;
 var Ytofix;
-
+var oldxscale = 0;
+var oldyscale = 0;
 
 function filePrepInit() {
 
@@ -70,10 +71,22 @@ function resetView() {
 // in which case we want to update the textboxes to match what we did from some other function'
 function currentWorld() {
   if (fileParentGroup) {
+    if ($( "#linkAspect" ).hasClass( "fa-link" )) {
+      if (oldyscale != fileParentGroup.scale.y) {
+        fileParentGroup.scale.x = fileParentGroup.scale.y;
+      };
+      if (oldxscale != fileParentGroup.scale.x) {
+          fileParentGroup.scale.y = fileParentGroup.scale.x;
+      };
+    }
+
     $('#xpos').val(parseInt(fileParentGroup.position.x) + (laserxmax / 2) );
     $('#ypos').val(parseInt(fileParentGroup.position.y) + (laserymax / 2) );
     $('#scaleFactor').val((fileParentGroup.scale.x) * 100);
-    fileParentGroup.position.z = 0.001;  
+    fileParentGroup.position.z = 0.001;
+
+    oldscalex = fileParentGroup.scale.x;
+    oldyscale = fileParentGroup.scale.y;
   }
 
 }

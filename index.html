@@ -337,8 +337,11 @@
       <div class="col-sm-5"><!-- Start of Main Window -->
 
 
-        <div class="btn-group" role="group" id="transformcontrols" style="display: none;"><button type="button" data-title="Move Object" class="btn btn-primary" id="translateBtn"><i id="playicon" class="fa fa-arrows fa-lg"></i></button>
-        <button type="button" data-title="Resize Object" class="btn btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button></div>
+        <div class="btn-group" role="group" id="transformcontrols" style="display: none;">
+          <button type="button" data-title="Move Object" class="btn btn-primary" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
+          <button type="button" data-title="Resize Object" class="btn btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button>
+          <button type="button" data-title="Link Aspect" class="btn btn-default" id="linkAspectBtn"><i id='linkAspect' class="fa fa-link fa-lg"></i></button>
+      </div>
 
 
      </div> <!-- End of Main Window -->
@@ -460,12 +463,12 @@
                       <div class="input-group">
                         <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
                         <span class="input-group-addon"  >%</span>
-                        <span class="input-group-btn">
+                        <!-- <span class="input-group-btn">
                           <button id="dpi96" class="btn btn-default btn-sm" type="button">96dpi</button>
                         </span>
                         <span class="input-group-btn">
                           <button id="dpi90" class="btn btn-default btn-sm" type="button">90dpi</button>
-                        </span>
+                        </span> -->
                       </div>
                     </div>
                     <p>
