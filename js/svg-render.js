@@ -101,8 +101,8 @@ extractSvgPathsFromSVGFile = function(file) {
         // handle transforms
         //var path = p1.transform(path.matrix);
 
-        printLog("working on path:" + path, successcolor);
-        printLog("length:" + path.getTotalLength(), successcolor);
+        //printLog("working on path:" + path, successcolor);
+        //printLog("length:" + path.getTotalLength(), successcolor);
         //("path.parent:", path.parent());
 
         // if the parent path is a clipPath, then toss it
@@ -114,14 +114,14 @@ extractSvgPathsFromSVGFile = function(file) {
         // use Snap.svg to translate path to a global set of coordinates
         // so the xy values we get are in global values, not local
         // see if there is a parent transform
-        printLog("path.transform:" + path.transform(), successcolor);
+        //printLog("path.transform:" + path.transform(), successcolor);
         console.log("path.transform:" + path.transform());
 
         path = path.transform(path.transform().global);
         console.log("Transformed Path: ", path )
-        if (path.parent()) {
-            console.log("there is a parent. see if transform. path.parent().transform()");
-            //path = path.transform(path.parent().transform().global);
+        if (path.parent().type == "g") {
+            console.log("there is a parent. see if transform. path.parent().transform()", path);
+            path = path.transform(path.parent().transform().global);
         }
 
         var material = new THREE.LineBasicMaterial({
@@ -130,13 +130,13 @@ extractSvgPathsFromSVGFile = function(file) {
 
 
         // use transformSVGPath
-        printLog("Transform working on path: " + path, successcolor);
+        //printLog("Transform working on path: " + path, successcolor);
         //debugger;
         var paths = that.transformSVGPath(path.realPath);
         console.log("Path after transformSVGPath", paths)
         // var paths = that.transformSVGPath(path.attr('d'));
         //for (var pathindex in paths) {
-        printLog('Number of Paths ' + paths.length, successcolor)
+        //printLog('Number of Paths ' + paths.length, successcolor)
         for (pathindex = 0; pathindex < paths.length; pathindex++ ) {
 
             var shape = paths[pathindex];
@@ -146,7 +146,7 @@ extractSvgPathsFromSVGFile = function(file) {
 
           				// solid line
           if (shape.curves.length != 0) {
-            printLog('Generating Shape' + shape, successcolor)
+            //printLog('Generating Shape' + shape, successcolor)
             var geometry = new THREE.ShapeGeometry( shape );
             var lineSvg = new THREE.Line( geometry, material );
       			svgGroup.add(lineSvg);

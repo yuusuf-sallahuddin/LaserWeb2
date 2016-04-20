@@ -146,7 +146,7 @@ $(document).ready(function() {
   // Viewer
 
   var viewer = document.getElementById('renderArea');
- 
+
 
   // Progressbar
   //NProgress.configure({ parent: '#consolemodule' });
@@ -271,6 +271,7 @@ function readFile(evt) {
                resetView()
                $('#stlopt').hide();
                $('#prepopt').hide();
+               $("#transformcontrols").hide();
              };
      } else if (f.name.match(/.stl$/i)) {
             //r.readAsText(evt.target.files[0]);
@@ -322,6 +323,7 @@ function readFile(evt) {
               $('#stlopt').show();
               $('#prepopt').hide();
               $('#stlopt').click();
+              $("#transformcontrols").hide();
         } else {
           console.log(f.name + " is probably a Raster");
           r.readAsDataURL(evt.target.files[0]);
@@ -338,6 +340,7 @@ function readFile(evt) {
             resetView()
             $('#stlopt').hide();
             $('#prepopt').hide();
+            $("#transformcontrols").hide();
           };
       }
     }

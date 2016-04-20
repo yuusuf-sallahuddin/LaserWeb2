@@ -17,13 +17,46 @@ containerWidth = window.innerWidth;
 containerHeight = window.innerHeight;
 
 function attachTransformWidget() {
+  $("#transformcontrols").show();
   control.attach(fileParentGroup);
   control.addEventListener('change', currentWorld);
+
 };
 
 function init3D() {
-	
+
 window.addEventListener( 'mousedown', onMouseMove, false );
+
+
+$('#translateBtn').on('click', function() {
+    if ($( "#translateBtn" ).hasClass( "btn-primary" )) {
+    $( "#translateBtn" ).removeClass( "btn-primary" )
+    $( "#translateBtn" ).addClass( "btn-default" )
+    scene.remove(control);
+    } else {
+    $( "#translateBtn" ).removeClass( "btn-default" )
+    $( "#resizeBtn" ).removeClass( "btn-primary" )
+    $( "#resizeBtn" ).addClass( "btn-default" )
+    $( "#translateBtn" ).addClass( "btn-primary" )
+    control.setMode("translate");
+    scene.add(control);
+  };
+});
+
+$('#resizeBtn').on('click', function() {
+    if ($( "#resizeBtn" ).hasClass( "btn-primary" )) {
+    $( "#resizeBtn" ).removeClass( "btn-primary" )
+    $( "#resizeBtn" ).addClass( "btn-default" )
+    scene.remove(control);
+  } else {
+    $( "#resizeBtn" ).removeClass( "btn-default" )
+    $( "#translateBtn" ).removeClass( "btn-primary" )
+    $( "#translateBtn" ).addClass( "btn-default" )
+    $( "#resizeBtn" ).addClass( "btn-primary" )
+    control.setMode("scale");
+    scene.add(control);
+  } });
+
 
 // ThreeJS Render/Control/Camera
 scene = new THREE.Scene();
@@ -520,7 +553,9 @@ function onMouseMove( e ) {
 		for( var i = 0; i < intersects.length; i++ ) {
 			var intersection = intersects[ i ],
 				obj = intersection.object;
-        printLog('Object: '+ obj.name, successcolor)
+        if (obj.name) {
+          printLog('Clicked on : '+ obj.name, successcolor)
+        }
 			  obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
         bullseye.position.set(intersects[i].point.x,intersects[i].point.y,intersects[i].point.z);
 
