@@ -56,7 +56,9 @@ $(document).ready(function() {
         g += 'G90\n';
       };
 
-      fileObject.updateMatrix();
+      if (fileObject) {
+        fileObject.updateMatrix();
+      }
       scene.updateMatrixWorld();
 
       pwr = [];
