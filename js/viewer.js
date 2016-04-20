@@ -18,7 +18,19 @@ containerHeight = window.innerHeight;
 
 function attachTransformWidget() {
   $("#transformcontrols").show();
-  control.attach(fileParentGroup);
+  if (rastermesh) {
+    control.attach(rastermesh);
+    control.setMode("translate");
+    $("#resizeBtn").hide();
+    $("#linkAspectBtn").hide();
+
+  } else {
+    control.attach(fileParentGroup);
+    control.setMode("translate");
+    $("#resizeBtn").show();
+    $("#linkAspectBtn").show();
+
+  }
   control.addEventListener('change', currentWorld);
 
 };
@@ -573,10 +585,11 @@ function onMouseMove( e ) {
 		for( var i = 0; i < intersects.length; i++ ) {
 			var intersection = intersects[ i ],
 				obj = intersection.object;
-        if (obj.name & obj.name != "bullseye") {
+        if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh" ) {
           printLog('Clicked on : '+ obj.name, successcolor)
+	        obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
         }
-			  obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
+
         bullseye.position.set(intersects[i].point.x,intersects[i].point.y,intersects[i].point.z);
         bullseye.children[0].material.color.setRGB( 1, 0, 0 );
         bullseye.children[1].material.color.setRGB( 1, 0, 0 );

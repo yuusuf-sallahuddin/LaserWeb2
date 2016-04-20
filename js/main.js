@@ -355,9 +355,11 @@ function readFile(evt) {
 				    rastermesh = new THREE.Mesh( geometry, material );
 
             rastermesh.position.x = -(laserxmax / 2) + (imgwidth / 2);
-            rastermesh.position.y = -(laserymax / 2) + (imgheight / 2);;
+            rastermesh.position.y = -(laserymax / 2) + (imgheight / 2);
+            rastermesh.name = "rastermesh"
 
             scene.add(rastermesh);
+          //  attachTransformWidget();
 
           };
       }
