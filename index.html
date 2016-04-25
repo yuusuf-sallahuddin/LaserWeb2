@@ -120,35 +120,38 @@
     <script src="js/main.js"></script>
 
 
+    <!-- Splash Screen -->
     <script type="text/javascript">
-                       $(function(){
-                           NProgress.configure({
-                               template: $('#splash-template').html()
-                           });
-                           NProgress.start();
-                       });
-                       $(window).load(function(){
-                           NProgress.done();
-                       })
-           </script>
+     $(function(){
+         NProgress.configure({
+             template: $('#splash-template').html()
+         });
+         NProgress.start();
+     });
+     $(window).load(function(){
+         NProgress.done();
+     })
+    </script>
 
   </head>
   <body>
-    <script type="text" id="splash-template">
-    <div class="splash card">
-           <div role="spinner">
-               <div class="spinner-icon"></div>
-           </div>
-           <p class="lead" style="text-align:center">Loading LaserWeb...</p>
-           <div class="progress">
-               <div class="mybar" role="bar">
-               </div>
-           </div>
-       </div>
-      </script>
-<div id="renderArea"></div> <!-- Note - background div - see CSS -->
+  <!-- Splash Screen -->
+  <script type="text" id="splash-template">
+  <div class="splash card">
+         <div role="spinner">
+             <div class="spinner-icon"></div>
+         </div>
+         <p class="lead" style="text-align:center">Loading LaserWeb...</p>
+         <div class="progress">
+             <div class="mybar" role="bar">
+             </div>
+         </div>
+     </div>
+  </script>
 
-    <nav id="navbar-bottom" class="navbar navbar-default navbar-static navbar-fixed-bottom" role="navigation">
+  <div id="renderArea"></div> <!-- Note - background div - see CSS -->
+
+  <nav id="navbar-bottom" class="navbar navbar-default navbar-static navbar-fixed-bottom" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#bottom-menu"> <span class="sr-only">Menu</span>
