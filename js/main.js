@@ -66,20 +66,113 @@ $(document).ready(function() {
   $('#macroEdit').editableTableWidget({ preventColumns: [1, 4] });
   //$('#macroEdit').editableTableWidget();
 
+  // // Show/Hide Macro Pad
+  // $('#togglemacro').on('click', function() {
+  //   printLog('Toggling Button Pad', msgcolor);
+  //   $('#macro_container').toggle();
+  //   $('#viewer_container').toggle();
+  //   $('#renderArea').toggle();
+  //   if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
+  //     $( "#togglemacro" ).removeClass( "btn-primary" )
+  //     $( "#togglemacro" ).addClass( "btn-default" )
+  //   } else {
+  //     $( "#togglemacro" ).removeClass( "btn-default" )
+  //     $( "#togglemacro" ).addClass( "btn-primary" )
+  //   }
+	// });
+
   // Show/Hide Macro Pad
   $('#togglemacro').on('click', function() {
-    printLog('Toggling Button Pad', msgcolor);
-    $('#macro_container').toggle();
-    $('#viewer_container').toggle();
-    $('#renderArea').toggle();
-    if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
-      $( "#togglemacro" ).removeClass( "btn-primary" )
-      $( "#togglemacro" ).addClass( "btn-default" )
-    } else {
-      $( "#togglemacro" ).removeClass( "btn-default" )
-      $( "#togglemacro" ).addClass( "btn-primary" )
-    }
+    $('#macro_container').show();
+    $('#viewer_container').hide();
+    $('#control_container').hide();
+    $('#file_container').hide();
+    $('#settings_container').hide();
+    $( "#toggleviewer" ).removeClass( "btn-primary" )
+    $( "#toggleviewer" ).addClass( "btn-default" )
+    $( "#togglemachine" ).removeClass( "btn-primary" )
+    $( "#togglemachine" ).addClass( "btn-default" )
+    $( "#togglemacro" ).addClass( "btn-primary" )
+    $( "#togglemacro" ).removeClass( "btn-default" )
+    $( "#togglesettings" ).removeClass( "btn-primary" )
+    $( "#togglesettings" ).addClass( "btn-default" )
+    $( "#togglefile" ).removeClass( "btn-primary" )
+    $( "#togglefile" ).addClass( "btn-default")
 	});
+
+  $('#toggleviewer').on('click', function() {
+    $('#macro_container').hide();
+    $('#viewer_container').show();
+    $('#control_container').hide();
+    $('#file_container').hide();
+    $('#settings_container').hide();
+    $( "#toggleviewer" ).addClass( "btn-primary" )
+    $( "#toggleviewer" ).removeClass( "btn-default" )
+    $( "#togglemachine" ).removeClass( "btn-primary" )
+    $( "#togglemachine" ).addClass( "btn-default" )
+    $( "#togglemacro" ).removeClass( "btn-primary" )
+    $( "#togglemacro" ).addClass( "btn-default" )
+    $( "#togglesettings" ).removeClass( "btn-primary" )
+    $( "#togglesettings" ).addClass( "btn-default" )
+    $( "#togglefile" ).removeClass( "btn-primary" )
+    $( "#togglefile" ).addClass( "btn-default" )
+  });
+
+  $('#togglemachine').on('click', function() {
+    $('#macro_container').hide();
+    $('#viewer_container').hide();
+    $('#control_container').show();
+    $('#file_container').hide();
+    $('#settings_container').hide();
+    $( "#toggleviewer" ).removeClass( "btn-primary" )
+    $( "#toggleviewer" ).addClass( "btn-default" )
+    $( "#togglemachine" ).addClass( "btn-primary" )
+    $( "#togglemachine" ).removeClass( "btn-default" )
+    $( "#togglemacro" ).removeClass( "btn-primary" )
+    $( "#togglemacro" ).addClass( "btn-default" )
+    $( "#togglesettings" ).removeClass( "btn-primary" )
+    $( "#togglesettings" ).addClass( "btn-default" )
+    $( "#togglefile" ).removeClass( "btn-primary" )
+    $( "#togglefile" ).addClass( "btn-default" )
+  });
+
+  $('#togglesettings').on('click', function() {
+    $('#macro_container').hide();
+    $('#viewer_container').hide();
+    $('#control_container').hide();
+    $('#file_container').hide();
+    $('#settings_container').show();
+    $( "#toggleviewer" ).removeClass( "btn-primary" )
+    $( "#toggleviewer" ).addClass( "btn-default" )
+    $( "#togglemachine" ).removeClass( "btn-primary" )
+    $( "#togglemachine" ).addClass( "btn-default" )
+    $( "#togglemacro" ).removeClass( "btn-primary" )
+    $( "#togglemacro" ).addClass( "btn-default" )
+    $( "#togglesettings" ).addClass( "btn-primary" )
+    $( "#togglesettings" ).removeClass( "btn-default" )
+    $( "#togglefile" ).removeClass( "btn-primary" )
+    $( "#togglefile" ).addClass( "btn-default")
+  });
+
+  $('#togglefile').on('click', function() {
+    $('#macro_container').hide();
+    $('#viewer_container').hide();
+    $('#control_container').hide();
+    $('#file_container').show();
+    $('#settings_container').hide();
+    $( "#toggleviewer" ).removeClass( "btn-primary" )
+    $( "#toggleviewer" ).addClass( "btn-default" )
+    $( "#togglemachine" ).removeClass( "btn-primary" )
+    $( "#togglemachine" ).addClass( "btn-default" )
+    $( "#togglemacro" ).removeClass( "btn-primary" )
+    $( "#togglemacro" ).addClass( "btn-default" )
+    $( "#togglesettings" ).removeClass( "btn-primary" )
+    $( "#togglesettings" ).addClass( "btn-default" )
+    $( "#togglefile" ).addClass( "btn-primary" )
+    $( "#togglefile" ).removeClass( "btn-default")
+  });
+
+
 
   // Show/Hide Macro Pad
   $('#editmacro').on('click', function() {
