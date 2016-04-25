@@ -120,9 +120,32 @@
     <script src="js/main.js"></script>
 
 
+    <script type="text/javascript">
+                       $(function(){
+                           NProgress.configure({
+                               template: $('#splash-template').html()
+                           });
+                           NProgress.start();
+                       });
+                       $(window).load(function(){
+                           NProgress.done();
+                       })
+           </script>
 
   </head>
   <body>
+    <script type="text" id="splash-template">
+    <div class="splash card">
+           <div role="spinner">
+               <div class="spinner-icon"></div>
+           </div>
+           <p class="lead" style="text-align:center">Loading LaserWeb...</p>
+           <div class="progress">
+               <div class="mybar" role="bar">
+               </div>
+           </div>
+       </div>
+      </script>
 <div id="renderArea"></div> <!-- Note - background div - see CSS -->
 
     <nav id="navbar-bottom" class="navbar navbar-default navbar-static navbar-fixed-bottom" role="navigation">
