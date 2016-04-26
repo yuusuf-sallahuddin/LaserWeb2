@@ -237,7 +237,7 @@
     <!-- /navbar-example -->
 
   <!-- Main Body -->
-  <div class="container-fluid" style="margin-top: 70px;">
+  <div class="container-fluid" style="margin-top: 70px; margin-bottom: 70px;">
 
     <div class="container" id="macro_container" style="display: none;">
       <div class="container" id="macro_settings" style="display: none;">
@@ -247,8 +247,6 @@
             <h4 class="list-group-item-heading">Edit Macro Buttons</h4>
             <p class="list-group-item-text">
               Configure Labels and G-Code commands for up to 24 buttons:
-            </p>
-          </a>
         </div>
         <div class="table-responsive">
           <table class="table" id="macroEdit">
@@ -288,55 +286,71 @@
         <div class="col-sm-4"><button type="button" class="btn btn-default" id="savemacro" style="width:100%; height:100%; display: none;"><i class="fa fa-w fa-floppy-o"></i>&nbsp;Save</button><button type="button" class="btn btn-default" id="editmacro" style="width:100%; height:100%;"><i class="fa fa-w fa-pencil-square-o"></i>&nbsp;Edit</button></div>
         <div class="col-sm-4"></div>
       </div>
+    </p>
+  </a>
     </div>
 
     <div class="container" id="viewer_container" style="display: none;">
-      <!-- <div id="renderArea"></div> <!-- Note - background div - see CSS --> -->
+      <!-- <div id="renderArea"></div> <!-- Note - background div - see CSS -->
+
     </div>
 
     <div class="container" id="control_container" style="display: none;">
-      <div class="list-group" id="dromodule">
-        <span class="list-group-item">
-          <h4 class="list-group-item-heading">Machine Control<a data-toggle="collapse" href="#droBody" aria-expanded="false" aria-controls="droBody"><span class="pull-right"><i class="fa fa-bars" style="color: #aaa;" title="Minimise"></i></span></a></h4>
-          <div class="collapse in" id="droBody">
-          <p class="list-group-item-text">
-            <div class="row">
-             <div class="col-sm-5">
-               <!-- Digital Position Readout -->
-               <div id="mPosition" >
-                 <div id="mX" class="dro">X: 0.000</div>
-                 <div id="mY" class="dro">Y: 0.000</div>
-                 <div id="mZ" class="dro">Z: 0.000</div>
-               </div>
-             </div>
-             <div class="col-sm-7">
-               <div class="btn-group input-group  btn-group-justified" role="group" id="jogp" aria-label="Positive Moves">
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="xp">X+</button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="yp">Y+</button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="zp">Z+</button></div>
-               </div>
-               <div class="btn-group input-group  btn-group-justified" role="group" id="jogm" aria-label="Negative Moves">
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="xm">X-</button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="ym">Y-</button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="zm">Z-</button></div>
-              </div>
-              <div class="input-group">
-                <span class="input-group-addon"><i class="fa fa-expand fa-lg"></i></span><input type="text" class="form-control" id="jogstp" value="10" style="text-align: right;"></input><span class="input-group-addon">mm</span>
-              </div>
-              <!-- <div class="btn-group input-group  btn-group-justified" role="group" id="jogstp" aria-label="Increment">
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
-                  <div class="btn-group" role="group"><label class="btn btn-default"><input type="radio" name="options" id="option1">0.1</label></div>
-                  <div class="btn-group" role="group"><label class="btn btn-default"><input type="radio" name="options" id="option2">1</label></div>
-                  <div class="btn-group" role="group"><label class="btn btn-default"><input type="radio" checked name="options" id="option3">10</label></div>
-                  <div class="btn-group" role="group"><label class="btn btn-default"><input type="radio" name="options" id="option4">100</label></div>
+      <div class="col-sm-5">
+        <div class="list-group" id="dromodule">
+          <span class="list-group-item">
+            <h4 class="list-group-item-heading">Machine Control<a data-toggle="collapse" href="#droBody" aria-expanded="false" aria-controls="droBody"><span class="pull-right"><i class="fa fa-bars" style="color: #aaa;" title="Minimise"></i></span></a></h4>
+            <div class="collapse in" id="droBody">
+            <p class="list-group-item-text">
+                <div id="mPosition" >
+                  <div id="mX" class="dro">X: 0.000</div>
+                  <div id="mY" class="dro">Y: 0.000</div>
+                  <div id="mZ" class="dro">Z: 0.000</div>
                 </div>
-              </div> -->
-            </div>
+              </span>
+              <span class="list-group-item">
+                <h4 class="list-group-item-heading">Console<span class="pull-right">
+                  <span class="badge badge-default badge-notify" title="Items in Queue" id="queueCnt">Queued: 0</span>
+                  <a data-toggle="collapse" href="#consoleBody" aria-expanded="false" aria-controls="consoleBody"><i class="fa fa-bars" style="color: #aaa;" title="Minimise"></i></a></span></h4>
+                <div class="collapse in" id="consoleBody">
+                  <p class="list-group-item-text">
+                    <!-- Command Console -->
+                    <div id="console"></div>
+                      <div class="input-group">
+                        <span class="input-group-addon"  style="width: 60px;"><i class="fa fa-terminal fa-lg"></i></span>
+                        <input type="text" autocomplete="on" class="form-control" id="command">
+                        <span class="input-group-btn">
+                          <button id="sendCommand" class="btn btn-default disabled" disabled="true" type="button"><i class="fa fa-play" style="margin-right: 10px;"></i>Send</button>
+                        </span>
+                      </div>
+                    </p>
+                </div>
+              </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+         <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X-0.1\nG90\n');">-0.1</button></div>
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X-1\nG90\n');">-1</button></div>
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X-10\nG90\n');">-10</button></div>
+           <div class="btn-group input-group  btn-group-vertical" role="group" id="jogy" aria-label="Y Moves">
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y10\nG90\n');">+10</button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y1\nG90\n');">+1</button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y0.1\nG90\n');">+0.1</button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" ><i class="fa fa-arrows" aria-hidden="true"></i></button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y-0.1\nG90\n');">-0.1</button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y-1\nG90\n');">-1</button></div>
+             <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 Y-10\nG90\n');">-10</button></div>
            </div>
-           <br>
-           <div class="row">
-             <div class="col-sm-12">
-               <div class="btn-group input-group  btn-group-justified" role="group" id="MacGrp" aria-label="Job Control">
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X10\nG90\n');">+10</button></div>
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X1\nG90\n');">+1</button></div>
+           <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" onclick="sendGcode('G91\nG0 X0.1\nG90\n');">+0.1</button></div>
+         </div>
+         <br>
+         <div class="row">
+          <div class="col-sm-12">
+            <div class="btn-group input-group  btn-group-justified" role="group" id="MacGrp" aria-label="Job Control">
                  <!-- span class="input-group-addon"><i class="fa fa-cube"></i></span -->
                  <div class="btn-group" role="group" id="unlockBtnGrp" style="display: none;"><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></div>
                  <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><i class="fa fa-home fa-lg"></i></button></div>
@@ -349,41 +363,31 @@
            </div>
           </p>
         </div>
+        <div class="col-sm-1">
+             <div class="btn-group input-group  btn-group-vertical" role="group" id="jogz" aria-label="Z Moves">
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z10\nG90\n');">Z+10</button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z1\nG90\n');">Z+1</button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z0.1\nG90\n');">Z+0.1</button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" ><i class="fa fa-arrows-v" aria-hidden="true"></i></button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z-0.1\nG90\n');">Z-0.1</button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z-1\nG90\n');">Z-1</button></div>
+               <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="xp" onclick="sendGcode('G91\nG0 Z-10\nG90\n');">Z-10</button></div>
+             </div>
         </span>
       </div>
       <!-- End Module DRO -->
-      <!-- Module Console -->
-      <div class="list-group" id="consolemodule">
-         <span class="list-group-item">
-           <h4 class="list-group-item-heading">Console<span class="pull-right">
-             <span class="badge badge-default badge-notify" title="Items in Queue" id="queueCnt">Queued: 0</span>
-             <a data-toggle="collapse" href="#consoleBody" aria-expanded="false" aria-controls="consoleBody"><i class="fa fa-bars" style="color: #aaa;" title="Minimise"></i></a></span></h4>
-           <div class="collapse in" id="consoleBody">
-             <p class="list-group-item-text">
-               <!-- Command Console -->
-               <div id="console"></div>
-                 <div class="input-group">
-                   <span class="input-group-addon"  style="width: 60px;"><i class="fa fa-terminal fa-lg"></i></span>
-                   <input type="text" autocomplete="on" class="form-control" id="command">
-                   <span class="input-group-btn">
-                     <button id="sendCommand" class="btn btn-default disabled" disabled="true" type="button"><i class="fa fa-play" style="margin-right: 10px;"></i>Send</button>
-                   </span>
-                 </div>
-               </p>
-           </div>
-         </span>
-     </div>
-     <!-- End Module Console -->
     </div>
 
     <div class="container" id="file_container" style="display: none;">
 
       <!-- Module CAM -->
       <div class="list-group" id="cammodule" >
+        <div class="col-xs-5">
         <span class="list-group-item">
           <h4 class="list-group-item-heading">Prepare Job<span class="pull-right"><a data-toggle="collapse" href="#camBody" aria-expanded="false" aria-controls="camBody"><i class="fa fa-bars" style="color: #aaa;" title="Minimise"></i></span></a></h4>
           <div class="collapse in" id="camBody">
           <p class="list-group-item-text">
+
 
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
@@ -570,11 +574,12 @@
          </span>
       </div>
       <!-- End Module Raster -->
+    </div><!-- End of col -->
     </div>
 
     <div class="container" id="settings_container" style="display: none;">
       <ul class="nav nav-tabs">
-        <li class="active"><a data-toggle="tab" href="#home">Downloads</a></li>
+        <li class="active"><a data-toggle="tab" href="#home">SPJS</a></li>
         <li><a data-toggle="tab" href="#menu1">Machine</a></li>
         <li><a data-toggle="tab" href="#menu2">G-Code</a></li>
         <li><a data-toggle="tab" href="#menu3">Application</a></li>
@@ -585,34 +590,34 @@
           <br>
           <div class="list-group">
             <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">Download</h4>
+              <h4 class="list-group-item-heading">SPJS</h4>
               <p class="list-group-item-text">
                 Download and run the SPJS Server to connect LaserWeb to your Machine:<br>
                 V1.88 Build date: Feb 6, 2015
-              </p>
-            </a>
-          </div>
 
-          <form class="form-horizontal">
-              <div class="form-group">
-                  <label for="laserXMax" class="control-label col-xs-3">IP Address</label>
-                  <div class="col-xs-9">
-                      <input type="text" class="form-control" id="spjsip" placeholder="127.0.0.1">
-                  </div>
-              </div>
-          </form>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label for="laserXMax" class="control-label col-xs-3">IP Address</label>
+                    <div class="col-xs-9">
+                        <input type="text" class="form-control" id="spjsip" placeholder="127.0.0.1">
+                    </div>
+                </div>
+            </form>
 
-          <div class="list-group">
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_386.zip">Windows x32</a>
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_amd64.zip">Windows x64</a>
-            <!--<a class="list-group-item" target="_blank" href="http://chilipeppr.com/downloads/v1.86/serial-port-json-server-1.86_darwin_amd64.zip">Mac OS X x64</a>-->
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_386.tar.gz">Linux x32</a>
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Linux x64</a>
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Raspberry Pi (Linux ARM)</a>
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Beagle Bone Black (Linux ARMv7)</a>
-            <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Intel Edison (Linux x64)</a>
-            <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server/releases">Github Release Page</a>
-            <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server">Compile from source (Github)</a>
+            <div class="list-group">
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_386.zip">Windows x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_windows_amd64.zip">Windows x64</a>
+              <!--<a class="list-group-item" target="_blank" href="http://chilipeppr.com/downloads/v1.86/serial-port-json-server-1.86_darwin_amd64.zip">Mac OS X x64</a>-->
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_386.tar.gz">Linux x32</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Linux x64</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Raspberry Pi (Linux ARM)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_arm.tar.gz">Beagle Bone Black (Linux ARMv7)</a>
+              <a class="list-group-item" href="https://github.com/chilipeppr/serial-port-json-server/releases/download/v1.88/serial-port-json-server-1.88_linux_amd64.tar.gz">Intel Edison (Linux x64)</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server/releases">Github Release Page</a>
+              <a class="list-group-item" target="_blank" href="http://github.com/chilipeppr/serial-port-json-server">Compile from source (Github)</a>
+            </div>
+          </p>
+        </a>
           </div>
         </div>
         <div id="menu1" class="tab-pane fade">
@@ -623,9 +628,6 @@
               <p class="list-group-item-text">
                 Configure LaserWeb 2.0 to your machine specifics:<br>
                 <i>(NB: Page needs a refresh for these settings to take effect!)</i>
-              </p>
-            </a>
-          </div>
           <form class="form-horizontal">
             <br>
               <div class="form-group">
@@ -642,6 +644,9 @@
               </div>
 
           </form>
+        </p>
+      </a>
+        </div>
         </div>
         <div id="menu2" class="tab-pane fade">
           <br>
@@ -651,9 +656,6 @@
               <h4 class="list-group-item-heading">G-Code Settings</h4>
               <p class="list-group-item-text">
                 Configure pre/post/control GCode commands:
-              </p>
-            </a>
-          </div>
           <div class="form-group">
               <label for="startgcode" class="control-label col-xs-3">Start G-Code</label>
               <div class="col-xs-9">
@@ -697,8 +699,10 @@
               </div>
           </div>
         </form>
-
-        </div>
+      </p>
+    </a>
+  </div>
+      </div>
 
 
         <div id="menu3" class="tab-pane fade">
@@ -709,31 +713,33 @@
               <h4 class="list-group-item-heading">Application Settings</h4>
               <p class="list-group-item-text">
                 Configure how the application works, turn on/off features:
-              </p>
-            </a>
-          </div>
-          <div class="form-group">
-              <label for="endgcode" class="control-label col-xs-3">Experimental: Tool Offset </label>
-              <div class="col-xs-9">
-              <select class="form-control" id="useOffset">
-                <option>Enable</option>
-                <option>Disable</option>
-              </select>
-              </div>
-          </div>
-          <div class="form-group">
-              <label for="imagePosition" class="control-label col-xs-3">Place uploaded image in quadrant</label>
-              <div class="col-xs-9">
-              <select class="form-control" id="imagePosition">
-                <option>BottomLeft</option>
-                <option>TopLeft</option>
-              </select>
-              </div>
-          </div>
-        </form>
-
+                <div class="form-group">
+                    <label for="endgcode" class="control-label col-xs-3">Experimental: Tool Offset </label>
+                    <div class="col-xs-9">
+                    <select class="form-control" id="useOffset">
+                      <option>Enable</option>
+                      <option>Disable</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="imagePosition" class="control-label col-xs-3">Place uploaded image in quadrant</label>
+                    <div class="col-xs-9">
+                    <select class="form-control" id="imagePosition">
+                      <option>BottomLeft</option>
+                      <option>TopLeft</option>
+                    </select>
+                    </div>
+                </div>
+              </form>
+            </p>
+          </a>
         </div>
-      </div>
+    </div>
+
       <button type="button" class="btn btn-default" data-dismiss="modal" id="savesettings">Save</button>
       <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
     </div>
+  </div>
+</body>
+</html>
