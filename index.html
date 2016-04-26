@@ -292,6 +292,11 @@
 
     <div class="container" id="viewer_container" style="display: none;">
       <!-- <div id="renderArea"></div> <!-- Note - background div - see CSS -->
+      <div class="btn-group" role="group" id="transformcontrols" style="display: none;">
+        <button type="button" data-title="Move Object" class="btn btn-primary" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
+        <button type="button" data-title="Resize Object" class="btn btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button>
+        <button type="button" data-title="Link Aspect" class="btn btn-default" id="linkAspectBtn"><i id='linkAspect' class="fa fa-link fa-lg"></i></button>
+    </div>
 
     </div>
 
@@ -353,11 +358,10 @@
             <div class="btn-group input-group  btn-group-justified" role="group" id="MacGrp" aria-label="Job Control">
                  <!-- span class="input-group-addon"><i class="fa fa-cube"></i></span -->
                  <div class="btn-group" role="group" id="unlockBtnGrp" style="display: none;"><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><i class="fa fa-home fa-lg"></i></button></div>
-                 <!-- <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="playBtn" onclick="playGcode();"><i class="fa fa-play fa-lg"></i></button></div> -->
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><i id="playicon" class="fa fa-play fa-lg"></i></button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><i class="fa fa-stop fa-lg"></i></button></div>
-                 <div class="btn-group" role="group"><button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><i class="fa fa-location-arrow fa-lg"></i></button></div>
+                 <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="homeBtn" onclick="homeMachine();"><i class="fa fa-home fa-lg"></i></button></div>
+                 <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="playBtn" onclick="playpauseMachine();"><i id="playicon" class="fa fa-play fa-lg"></i></button></div>
+                 <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="stopBtn" onclick="stopMachine();"><i class="fa fa-stop fa-lg"></i></button></div>
+                 <div class="btn-group" role="group"><button type="button" class="btn btn-lg btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><i class="fa fa-location-arrow fa-lg"></i></button></div>
                </div>
              </div>
            </div>
