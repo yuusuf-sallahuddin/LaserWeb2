@@ -429,7 +429,7 @@ function readFile(evt) {
             $('#cammodule').hide();
             $('#rastermodule').show();
             // putFileObjectAtZero();
-            resetView()
+
             $('#stlopt').hide();
             $('#prepopt').hide();
             $("#transformcontrols").hide();
@@ -453,6 +453,7 @@ function readFile(evt) {
 
             scene.add(rastermesh);
           //  attachTransformWidget();
+          resetView()
 
           };
       }
@@ -499,6 +500,12 @@ function cleanupThree() {
     if (boundingBox) {
        scene.remove( boundingBox );
        boundingBox = null;
+    }
+
+    if (control) {
+       scene.remove( control );
+       controls.reset();
+      //  boundingBox = null;
     }
   }
 

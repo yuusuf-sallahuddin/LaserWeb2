@@ -57,6 +57,8 @@ function filePrepInit() {
 function resetView() {
   if ( typeof(object) != 'undefined' ) {
     viewExtents(object);
+  } else if ( typeof(rastermesh) != 'undefined' ) {
+    viewExtents(rastermesh);
   } else if ( typeof(inflateGrp) != 'undefined' ) {
     viewExtents(inflateGrp);
   } else if ( typeof(fileParentGroup) != 'undefined' ) {
