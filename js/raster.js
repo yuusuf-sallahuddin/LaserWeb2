@@ -219,8 +219,8 @@ function setImgDims() {
         var Ytofix = -(bbox2.min.y + (laserymax / 2));
         console.log('X Offset', Xtofix)
         console.log('Y Offset', Ytofix)
-        rastermesh.translateX(Xtofix);
-        rastermesh.translateY(Ytofix);
+        rastermesh.translateX(Xtofix + spotSizeMul);
+        rastermesh.translateY(Ytofix + spotSizeMul);
         currentWorld();
 
     }
