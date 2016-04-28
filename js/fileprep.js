@@ -8,7 +8,7 @@ function filePrepInit() {
   $('#stepinfup').on('click', function() {
     var oldValue = parseFloat($('#inflateVal').val());
     var newVal = oldValue + 0.1;
-    var newVal = newVal.toFixed(2)
+    var newVal = newVal.toFixed(1)
     $("#inflateVal").val(newVal);
     onInflateChange();
   });
@@ -16,7 +16,7 @@ function filePrepInit() {
   $('#stepinfdn').on('click', function() {
     var oldValue = parseFloat($('#inflateVal').val());
     var newVal = oldValue - 0.1;
-    var newVal = newVal.toFixed(2)
+    var newVal = newVal.toFixed(1)
     $("#inflateVal").val(newVal);
     onInflateChange();
   });
@@ -24,16 +24,16 @@ function filePrepInit() {
   $('#stepscaleup').on('click', function() {
     var oldValue = $("#scaleFactor").val();
     var newVal = parseFloat(oldValue) + 1;
+    var newVal = newVal.toFixed(0)
     $("#scaleFactor").val(newVal);
-    var newVal = newVal.toFixed(1)
     scaleChange();
   });
 
   $('#stepscaledn').on('click', function() {
     var oldValue = $("#scaleFactor").val();
     var newVal = parseFloat(oldValue) - 1;
+    var newVal = newVal.toFixed(0)
     $("#scaleFactor").val(newVal);
-    var newVal = newVal.toFixed(1)
     scaleChange();
   });
 
