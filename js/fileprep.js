@@ -37,6 +37,34 @@ function filePrepInit() {
     scaleChange();
   });
 
+  $('#panleft').on('click', function() {
+    var oldValue = controls.target.x
+    var newVal = oldValue + 10;
+    controls.target.x = newVal
+    controls.update();
+  });
+
+  $('#panright').on('click', function() {
+    var oldValue = controls.target.x
+    var newVal = oldValue - 10;
+    controls.target.x = newVal
+    controls.update();
+  });
+
+  $('#panup').on('click', function() {
+    var oldValue = controls.target.y
+    var newVal = oldValue - 10;
+    controls.target.y = newVal
+    controls.update();
+  });
+
+  $('#pandown').on('click', function() {
+    var oldValue = controls.target.y
+    var newVal = oldValue + 10;
+    controls.target.y = newVal
+    controls.update();
+  });
+
 
     useOffset = $('#useOffset').val()
     if (useOffset.indexOf('Disable') == 0) {
