@@ -21,7 +21,7 @@ function macrosInit() {
       var nextNum = rowLength + 0; // (not +1 since rows.length includes the header anyway (; )
       $('#macroEdit > tbody:last-child').append('<tr><td></td><td>...Label...</td><td>G0 X100 (for example)</td><td><select id="colorselector'+ nextNum+'"><option value="#DC143C" data-color="#DC143C">crimson</option><option value="#FF8C00" data-color="#FF8C00">darkorange</option><option value="#FFD700" data-color="#FFD700">gold</option><option value="#6495ED" data-color="#6495ED">cornflowerblue</option><option value="#87CEFA" data-color="#87CEFA">lightskyblue</option><option value="#32CD32" data-color="#32CD32">limegreen</option></select></td><td><span id="colorValue'+nextNum+'">#DC143C</span></td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
       $('#macroEdit').editableTableWidget({
-          preventColumns: [1, 3, 4, 5]
+          preventColumns: [1, 4, 5, 6]
       });
        console.log('Setting button ', i)
        $('#colorselector'+nextNum).colorselector({
@@ -128,5 +128,8 @@ function readMacros() {
               }
             $('#macro_pad').append('</div>'); // close the last row
         };
+        $('#macroEdit').editableTableWidget({
+            preventColumns: [1, 4, 5, 6]
+        });
     };
 }

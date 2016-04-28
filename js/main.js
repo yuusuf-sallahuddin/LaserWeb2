@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     // Intialise
     loadSettingsLocal();
+    initLocalStorage();
     spjsInit();
     getPortList();
     init3D();

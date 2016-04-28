@@ -824,13 +824,36 @@
                 </div>
 
                 <div id="menu4" class="tab-pane fade">
-                    <br>
+
+                  <br>
                     <form class="form-horizontal">
-                        <div class="list-group" id="backupstorage">
+                        <div class="list-group">
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Backup/Restore your settings/macros</h4>
+                                <p class="list-group-item-text">
+                                    Download a backup or restore settings from a backup file:
+                                    <div class="form-group">
+                                        <label for="backup" class="control-label col-xs-7">Export all your custom machine/gcode/application settings as well as custom Macro buttons.  Please ensure you always have a backup at hand</label>
+                                        <div class="col-xs-5">
+                                          <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
+                                              <div class="btn-group" role="group">
+                                                <button id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()"><i class="fa fa-download fa-fw" aria-hidden="true"></i></i>Backup Settings/Macros</button>
+                                              </div>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="restore" class="control-label col-xs-7">  If you have a backed up laserweb-settings-backup.json file you can restore it to this instance of LaserWeb</label>
+                                        <div class="col-xs-5">
+                                          <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
+                                              <div class="btn-group" role="group">
+                                                <span id="restore" class="btn btn-lg btn-default btn-file" title="Open a backup settings file"><i class="fa fa-upload  fa-fw" aria-hidden="true"></i>Restore from file<input id="jsonFile" type="file" accept=".json" /></span>
+                                              </div>
+                                          </div>
+                                        </div>
+                                    </div>
 
-                          <button class="btn btn-lg btn-default btn-file" title="Export GCODE to a file" onclick="backupSettingsLocal()"><i class="fa fa-save fa-fw"></i>Backup Settings/Macros</span>
-
-
+                        </a>
                         </div>
                     </form>
                 </div>
