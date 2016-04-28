@@ -722,6 +722,7 @@ onSpjsName = function(spjsName) {
 
 onPortOpen = function(data) {
     connectedDevice = null;
+    $('#controlstatus').hide();
     $('#refreshPort').addClass('disabled');
     $('#sendCommand').removeClass('disabled').prop("disabled", false);;
     $('#connect').html('Disconnect'); // Update Button Text
@@ -772,6 +773,7 @@ onPortOpen = function(data) {
 };
 onPortClose = function(data) {
     connectedDevice = null;
+    $('#controlstatus').show();
     $('#refreshPort').removeClass('disabled');
     $('#sendCommand').addClass('disabled').prop("disabled", true);
     console.log("onPortClose Close a port: ", data, data.Port);

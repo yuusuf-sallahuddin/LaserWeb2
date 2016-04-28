@@ -20,7 +20,7 @@ $(document).ready(function() {
     errorHandlerJS();
     var paperscript = {};
     rasterInit();
-    readMacros();
+    macrosInit();
     grbl = new Grbl();
     //initRaster();
 
@@ -93,6 +93,9 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').hide();
+        $('#gcode_container').hide();
+        $("#togglegcode").removeClass("btn-primary")
+        $("#togglegcode").addClass("btn-default")
         $("#toggleviewer").removeClass("btn-primary")
         $("#toggleviewer").addClass("btn-default")
         $("#togglemachine").removeClass("btn-primary")
@@ -111,6 +114,9 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').hide();
+        $('#gcode_container').hide();
+        $("#togglegcode").removeClass("btn-primary")
+        $("#togglegcode").addClass("btn-default")
         $("#toggleviewer").addClass("btn-primary")
         $("#toggleviewer").removeClass("btn-default")
         $("#togglemachine").removeClass("btn-primary")
@@ -129,6 +135,9 @@ $(document).ready(function() {
         $('#control_container').show();
         $('#file_container').hide();
         $('#settings_container').hide();
+        $('#gcode_container').hide();
+        $("#togglegcode").removeClass("btn-primary")
+        $("#togglegcode").addClass("btn-default")
         $("#toggleviewer").removeClass("btn-primary")
         $("#toggleviewer").addClass("btn-default")
         $("#togglemachine").addClass("btn-primary")
@@ -147,6 +156,9 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').show();
+        $('#gcode_container').hide();
+        $("#togglegcode").removeClass("btn-primary")
+        $("#togglegcode").addClass("btn-default")
         $("#toggleviewer").removeClass("btn-primary")
         $("#toggleviewer").addClass("btn-default")
         $("#togglemachine").removeClass("btn-primary")
@@ -165,6 +177,9 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').show();
         $('#settings_container').hide();
+        $('#gcode_container').hide();
+        $("#togglegcode").removeClass("btn-primary")
+        $("#togglegcode").addClass("btn-default")
         $("#toggleviewer").removeClass("btn-primary")
         $("#toggleviewer").addClass("btn-default")
         $("#togglemachine").removeClass("btn-primary")
@@ -177,83 +192,29 @@ $(document).ready(function() {
         $("#togglefile").removeClass("btn-default")
     });
 
-
-
-    // Show/Hide Macro Pad
-    $('#editmacro').on('click', function() {
-
-        printLog('Editing Macros', msgcolor);
-        $("#macrostbody").empty();
-        readMacros();
-        $('#macro_pad').toggle();
-        $('#macro_settings').toggle();
-        $('#editmacro').hide();
-        $('#savemacro').show();
-        // $('#viewer_container').toggle();
-        // $('#renderArea').toggle();
+    $('#togglegcode').on('click', function() {
+        $('#macro_container').hide();
+        $('#viewer_container').hide();
+        $('#control_container').hide();
+        $('#file_container').hide();
+        $('#settings_container').hide();
+        $('#gcode_container').show();
+        $("#togglegcode").addClass("btn-primary")
+        $("#togglegcode").removeClass("btn-default")
+        $("#toggleviewer").removeClass("btn-primary")
+        $("#toggleviewer").addClass("btn-default")
+        $("#togglemachine").removeClass("btn-primary")
+        $("#togglemachine").addClass("btn-default")
+        $("#togglemacro").removeClass("btn-primary")
+        $("#togglemacro").addClass("btn-default")
+        $("#togglesettings").removeClass("btn-primary")
+        $("#togglesettings").addClass("btn-default")
+        $("#togglefile").removeClass("btn-primary")
+        $("#togglefile").addClass("btn-default")
     });
 
-    $('#addrow').on('click', function() {
-        var oTable = document.getElementById('macroEdit');
-        //gets rows of table
-        var rowLength = oTable.rows.length;
-        var nextNum = rowLength + 0; // (not +1 since rows.length includes the header anyway (; )
-        $('#macroEdit > tbody:last-child').append('<tr><td></td><td>...Label...</td><td>G0 X100 (for example)</td><td><select id="colorselector'+ nextNum+'"><option value="#DC143C" data-color="#DC143C">crimson</option><option value="#FF8C00" data-color="#FF8C00">darkorange</option><option value="#FFD700" data-color="#FFD700">gold</option><option value="#6495ED" data-color="#6495ED">cornflowerblue</option><option value="#87CEFA" data-color="#87CEFA">lightskyblue</option><option value="#32CD32" data-color="#32CD32">limegreen</option></select></td><td><span id="colorValue'+nextNum+'">#DC143C</span></td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
-        $('#macroEdit').editableTableWidget({
-            preventColumns: [1, 3, 4, 5]
-        });
-         console.log('Setting button ', i)
-         $('#colorselector'+nextNum).colorselector({
-         callback: function (value, color, title) {
-             console.log('Setting Color ', nextNum, value, color, title);
-             $("#colorValue"+nextNum).html(value);
-         }
-        });
-    });
 
-    $('#savemacro').on('click', function() {
-        printLog('Saving Macros', msgcolor);
-        $('#macro_pad').toggle();
-        $('#macro_settings').toggle();
-        $('#savemacro').hide();
-        $('#editmacro').show();
-        // Cleanup
-        for (i = 1; i < 24; i++) {
-            var name = 'macro' + i;
-            localStorage.removeItem(name);
-        };
-        //gets table
-        var oTable = document.getElementById('macroEdit');
 
-        //gets rows of table
-        var rowLength = oTable.rows.length;
-
-        //loops through rows
-        for (i = 1; i < rowLength; i++) {
-            var macro = [];
-            //gets cells of current row
-            var oCells = oTable.rows.item(i).cells;
-
-            //gets amount of cells of current row
-            var cellLength = oCells.length;
-
-            //loops through each cell in current row
-            for (var j = 0; j < 3; j++) {
-
-                // get your cell info here
-
-                var cellVal = oCells.item(j).innerHTML;
-                console.log(cellVal);
-                macro.push(cellVal);
-            };
-
-            var colorVal = $("#colorValue"+i).html();
-            macro.push(colorVal);
-            var name = 'macro' + i;
-            localStorage.setItem(name, macro);
-        };
-        readMacros();
-    });
 
 
     // Viewer
@@ -271,52 +232,6 @@ $(document).ready(function() {
 });
 // End of document.ready
 
-// Table Auto Numbering Helper from http://jsfiddle.net/DominikAngerer/yx275pyd/2/
-function runningFormatter(value, row, index) {
-    return index;
-}
-
-// Table Delete row with onclick="deleteRow(this)
-function deleteRow(t) {
-    var row = t.parentNode.parentNode;
-    document.getElementById("macroEdit").deleteRow(row.rowIndex);
-    console.log(row);
-}
-
-function readMacros() {
-    $("#macro_pad").empty();
-    $('#macro_pad').append('<div class="list-group"><a href="#" class="list-group-item"><h4 class="list-group-item-heading">Macro Buttons</h4><p class="list-group-item-text">Custom preset GCode commands:</p></a></div>');
-    for (i = 1; i < 24; i++) {
-        var name = 'macro' + i;
-        var val = localStorage.getItem(name);
-        if (val) {
-            var details = val.split(',');
-            var label = details[1];
-            var gcode = String(details[2]);
-            var color = String(details[3]);
-            console.log('Setting button ', i)
-            $('#macroEdit > tbody:last-child').append('<tr><td></td><td>' + details[1] + '</td><td>' + details[2] + '</td><td><select id="colorselector'+ i +'"><option value="#DC143C" data-color="#DC143C">crimson</option><option value="#FF8C00" data-color="#FF8C00">darkorange</option><option value="#FFD700" data-color="#FFD700">gold</option><option value="#6495ED" data-color="#6495ED">cornflowerblue</option><option value="#87CEFA" data-color="#87CEFA">lightskyblue</option><option value="#32CD32" data-color="#32CD32">limegreen</option></select></td><td><span id="colorValue'+i+'"></span></td><td><button type="button" class="btn btn-sm btn-default" onclick="deleteRow(this);"><i class="fa fa-times"></i></button></td></tr>');
-            $("#colorValue"+i).html(color);
-            var valname = '#colorValue' + i;
-            $('#colorselector'+i).colorselector({
-              callback: function (value, color, title) {
-                var va = 'macro' + i;
-                console.log('Setting Color ', valname, value, color, title);
-                $(valname).html(value);
-              }
-           });
-           $('#colorselector'+i).colorselector("setColor", color);
-              if (i == 0) {
-                  $('#macro_pad').append('<div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';" onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
-              } else if (i == 5 || i == 11 || i == 17) {
-                  $('#macro_pad').append('</div><div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
-              } else {
-                  $('#macro_pad').append('<div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
-              }
-            $('#macro_pad').append('</div>'); // close the last row
-        };
-    };
-}
 
 // From here down we can have the actual functions
 
@@ -487,10 +402,11 @@ function readFile(evt) {
                 scene.add(rastermesh);
                 //  attachTransformWidget();
                 resetView()
-
             };
         }
     }
+    $('#filestatus').hide();
+    $('#togglefile').click();
 };
 
 // Removed and null all object when a new file is loaded
@@ -545,52 +461,65 @@ function cleanupThree() {
 
 function saveFile() {
     var textToWrite = document.getElementById("gcodepreview").value;
-    var textFileAsBlob = new Blob([textToWrite], {
-        type: 'text/plain'
-    });
-    var fileNameToSaveAs = 'LaserWeb.gcode';
+    var blob = new Blob([textToWrite], {type: "text/plain"});
+    invokeSaveAsDialog(blob, 'file.gcode');
 
-    var downloadLink = document.createElement("a");
-    downloadLink.download = fileNameToSaveAs;
-    downloadLink.innerHTML = "Download File";
-    if (window.webkitURL != null) {
-        // Chrome allows the link to be clicked
-        // without actually adding it to the DOM.
-        downloadLink.href = window.webkitURL.createObjectURL(textFileAsBlob);
-    } else {
-        // Firefox requires the link to be added to the DOM
-        // before it can be clicked.
-        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
-        downloadLink.onclick = destroyClickedElement;
-        downloadLink.style.display = "none";
-        document.body.appendChild(downloadLink);
-    };
 };
 
-function destroyClickedElement(event) {
-    document.body.removeChild(event.target);
-}
 
-localParams = ['spjsip', 'laserXMax', 'laserYMax', 'startgcode', 'laseron', 'laseroff', 'lasermultiply', 'homingseq', 'endgcode', 'useOffset', 'imagePosition'];
+/**
+ * @param {Blob} file - File or Blob object. This parameter is required.
+ * @param {string} fileName - Optional file name e.g. "image.png"
+ */
+function invokeSaveAsDialog(file, fileName) {
+    if (!file) {
+        throw 'Blob object is required.';
+    }
 
-function saveSettingsLocal() {
-    for (i = 0; i < localParams.length; i++) {
-        var val = $('#' + localParams[i]).val(); // Read the value from form
-        console.log('Saving: ', localParams[i], ' : ', val);
-        localStorage.setItem(localParams[i], val);
-    };
-};
+    if (!file.type) {
+        file.type = 'text/plain';
+    }
 
-function loadSettingsLocal() {
-    for (i = 0; i < localParams.length; i++) {
-        var val = localStorage.getItem(localParams[i]);
-        if (val) {
-            console.log('Loading: ', localParams[i], ' : ', val);
-            $('#' + localParams[i]).val(val) // Set the value to Form from Storage
+    var fileExtension = file.type.split('/')[1];
+
+    if (fileName && fileName.indexOf('.') !== -1) {
+        var splitted = fileName.split('.');
+        fileName = splitted[0];
+        fileExtension = splitted[1];
+    }
+
+    var fileFullName = (fileName || (Math.round(Math.random() * 9999999999) + 888888888)) + '.' + fileExtension;
+
+    if (typeof navigator.msSaveOrOpenBlob !== 'undefined') {
+        return navigator.msSaveOrOpenBlob(file, fileFullName);
+    } else if (typeof navigator.msSaveBlob !== 'undefined') {
+        return navigator.msSaveBlob(file, fileFullName);
+    }
+
+    var hyperlink = document.createElement('a');
+    hyperlink.href = URL.createObjectURL(file);
+    hyperlink.target = '_blank';
+    hyperlink.download = fileFullName;
+
+    if (!!navigator.mozGetUserMedia) {
+        hyperlink.onclick = function() {
+            (document.body || document.documentElement).removeChild(hyperlink);
         };
-    };
-};
+        (document.body || document.documentElement).appendChild(hyperlink);
+    }
 
+    var evt = new MouseEvent('click', {
+        view: window,
+        bubbles: true,
+        cancelable: true
+    });
+
+    hyperlink.dispatchEvent(evt);
+
+    if (!navigator.mozGetUserMedia) {
+        URL.revokeObjectURL(hyperlink.href);
+    }
+}
 function printLog(text, color) {
     $('#console').append('<p class="pf" style="color: ' + color + ';">' + text);
     $('#console').scrollTop($("#console")[0].scrollHeight - $("#console").height());
