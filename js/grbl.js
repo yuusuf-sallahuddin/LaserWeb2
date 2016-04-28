@@ -1,5 +1,5 @@
 "use strict";
-// Grbl is build with the revealing prototype pattern.
+// Grbl is built with the revealing prototype pattern.
 
 var Grbl = function() {
     this.initiated = false;
