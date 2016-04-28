@@ -165,8 +165,15 @@ function setImgDims() {
     $('#canvas-1').prop('height', (height * 2));
     //$('#canvas-1').prop('width', laserxmax);
     //$('#canvas-1').prop('height', laserymax);
-    var physwidth = spotSizeMul * (width + 1);
-    var physheight = spotSizeMul * (height);
+    if (spotSizeMul > 1 ) {
+      var physwidth = (spotSizeMul * width) + (spotSizeMul / 100);
+      var physheight = (spotSizeMul * height) +  (spotSizeMul / 100);
+    } else {
+      var physwidth = (spotSizeMul * width) - (spotSizeMul / 100);
+      var physheight = (spotSizeMul * height) - (spotSizeMul / 100);
+    }
+
+
     $("#physdims").text(physwidth.toFixed(1) + 'mm x ' + physheight.toFixed(1) + 'mm');
     $('#spotsize').html(($("#spotsizeslider").slider("values", 0) / 100) + 'mm (distance between dots )');
     //$('#spotsize').html( ($( "#spotsizeslider" ).slider( "values", 0 ) / 100) + 'mm (distance between dots )<br>Resultant Job Size: '+ physwidth.toFixed(1)+'mm x '+physheight.toFixed(1)+'mm' );
@@ -196,8 +203,14 @@ function setImgDims() {
     scene.add(boundingBox);
 
     if (rastermesh) {
-        rastermesh.scale.x = spotSizeMul;
-        rastermesh.scale.y = spotSizeMul;
+
+        if (spotSizeMul > 1 ) {
+          rastermesh.scale.x = spotSizeMul + (spotSizeMul / 100);
+          rastermesh.scale.y = spotSizeMul + (spotSizeMul / 100);
+        } else {
+          rastermesh.scale.x = spotSizeMul - (spotSizeMul / 100);
+          rastermesh.scale.y = spotSizeMul - (spotSizeMul / 100);
+        }
 
         var bbox2 = new THREE.Box3().setFromObject(rastermesh);
         console.log('bbox for rastermesh: Min X: ', (bbox2.min.x + (laserxmax / 2)), '  Max X:', (bbox2.max.x + (laserxmax / 2)), 'Min Y: ', (bbox2.min.y + (laserymax / 2)), '  Max Y:', (bbox2.max.y + (laserymax / 2)));

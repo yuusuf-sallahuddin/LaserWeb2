@@ -125,7 +125,8 @@ function init3D() {
     if (webgl) {
         printLog('<h5>WebGL Support found!</h5><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
         renderer = new THREE.WebGLRenderer({
-            autoClearColor: true
+            autoClearColor: true,
+            antialias: false
         });
 
     } else if (canvas) {

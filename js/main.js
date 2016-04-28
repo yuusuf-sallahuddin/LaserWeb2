@@ -391,7 +391,8 @@ function readFile(evt) {
                 var geometry = new THREE.PlaneBufferGeometry(imgwidth, imgheight, 1);
 
                 var material = new THREE.MeshBasicMaterial({
-                    map: new THREE.TextureLoader().load(event.target.result)
+                    map: new THREE.TextureLoader().load(event.target.result),
+                    transparent: true
                 });
 
                 rastermesh = new THREE.Mesh(geometry, material);
