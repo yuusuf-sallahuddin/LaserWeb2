@@ -89,6 +89,9 @@ $(document).ready(function() {
 
     // Show/Hide Macro Pad
     $('#togglemacro').on('click', function() {
+      if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').show();
         $('#viewer_container').hide();
         $('#control_container').hide();
@@ -107,9 +110,13 @@ $(document).ready(function() {
         $("#togglesettings").addClass("btn-default")
         $("#togglefile").removeClass("btn-primary")
         $("#togglefile").addClass("btn-default")
+      }
     });
 
     $('#toggleviewer').on('click', function() {
+      if ($( "#toggleviewer" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').hide();
         $('#viewer_container').show();
         $('#control_container').hide();
@@ -128,9 +135,13 @@ $(document).ready(function() {
         $("#togglesettings").addClass("btn-default")
         $("#togglefile").removeClass("btn-primary")
         $("#togglefile").addClass("btn-default")
+      }
     });
 
     $('#togglemachine').on('click', function() {
+      if ($( "#togglemachine" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').hide();
         $('#viewer_container').hide();
         $('#control_container').show();
@@ -149,9 +160,13 @@ $(document).ready(function() {
         $("#togglesettings").addClass("btn-default")
         $("#togglefile").removeClass("btn-primary")
         $("#togglefile").addClass("btn-default")
+      }
     });
 
     $('#togglesettings').on('click', function() {
+      if ($( "#togglesettings" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').hide();
         $('#viewer_container').hide();
         $('#control_container').hide();
@@ -170,9 +185,13 @@ $(document).ready(function() {
         $("#togglesettings").removeClass("btn-default")
         $("#togglefile").removeClass("btn-primary")
         $("#togglefile").addClass("btn-default")
+      }
     });
 
     $('#togglefile').on('click', function() {
+      if ($( "#togglefile" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').hide();
         $('#viewer_container').hide();
         $('#control_container').hide();
@@ -191,9 +210,13 @@ $(document).ready(function() {
         $("#togglesettings").addClass("btn-default")
         $("#togglefile").addClass("btn-primary")
         $("#togglefile").removeClass("btn-default")
+      }
     });
 
     $('#togglegcode').on('click', function() {
+      if ($( "#togglegcode" ).hasClass( "btn-primary" )) {
+        $( "#toggleviewer" ).click();
+      } else {
         $('#macro_container').hide();
         $('#viewer_container').hide();
         $('#control_container').hide();
@@ -212,6 +235,7 @@ $(document).ready(function() {
         $("#togglesettings").addClass("btn-default")
         $("#togglefile").removeClass("btn-primary")
         $("#togglefile").addClass("btn-default")
+      }
     });
 
 
