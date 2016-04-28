@@ -205,11 +205,11 @@ function setImgDims() {
     if (rastermesh) {
 
         if (spotSizeMul > 1 ) {
-          rastermesh.scale.x = spotSizeMul + (spotSizeMul / 100);
-          rastermesh.scale.y = spotSizeMul + (spotSizeMul / 100);
+          rastermesh.scale.x = spotSizeMul;
+          rastermesh.scale.y = spotSizeMul;
         } else {
-          rastermesh.scale.x = spotSizeMul - (spotSizeMul / 100);
-          rastermesh.scale.y = spotSizeMul - (spotSizeMul / 100);
+          rastermesh.scale.x = spotSizeMul;
+          rastermesh.scale.y = spotSizeMul;
         }
 
         var bbox2 = new THREE.Box3().setFromObject(rastermesh);
@@ -219,8 +219,8 @@ function setImgDims() {
         var Ytofix = -(bbox2.min.y + (laserymax / 2));
         console.log('X Offset', Xtofix)
         console.log('Y Offset', Ytofix)
-        rastermesh.translateX(Xtofix + spotSizeMul);
-        rastermesh.translateY(Ytofix + spotSizeMul);
+        rastermesh.translateX(Xtofix);
+        rastermesh.translateY(Ytofix);
         currentWorld();
 
     }
@@ -246,4 +246,5 @@ function gcodereceived() {
     //$('#sendCommand').removeClass('disabled');
     //$('#sendToLaser').removeClass('disabled');
     $('#viewReset').click();
+
 };

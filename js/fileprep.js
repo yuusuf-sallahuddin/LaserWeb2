@@ -5,27 +5,61 @@ var oldyscale = 0;
 
 function filePrepInit() {
 
+  $('#stepinfup').on('click', function() {
+    var oldValue = parseFloat($('#inflateVal').val());
+    var newVal = oldValue + 0.1;
+    var newVal = newVal.toFixed(2)
+    $("#inflateVal").val(newVal);
+    onInflateChange();
+  });
+
+  $('#stepinfdn').on('click', function() {
+    var oldValue = parseFloat($('#inflateVal').val());
+    var newVal = oldValue - 0.1;
+    var newVal = newVal.toFixed(2)
+    $("#inflateVal").val(newVal);
+    onInflateChange();
+  });
+
+  $('#stepscaleup').on('click', function() {
+    var oldValue = $("#scaleFactor").val();
+    var newVal = parseFloat(oldValue) + 1;
+    $("#scaleFactor").val(newVal);
+    var newVal = newVal.toFixed(1)
+    scaleChange();
+  });
+
+  $('#stepscaledn').on('click', function() {
+    var oldValue = $("#scaleFactor").val();
+    var newVal = parseFloat(oldValue) - 1;
+    $("#scaleFactor").val(newVal);
+    var newVal = newVal.toFixed(1)
+    scaleChange();
+  });
+
 
     useOffset = $('#useOffset').val()
     if (useOffset.indexOf('Disable') == 0) {
         $('#inflateFeature').hide();
     }
 
+function scaleChange() {
+  if (typeof(object) != 'undefined') {
+      scene.remove(object);
+  }
+  var hScale = ($("#scaleFactor").val() / 100);
+  console.log('Scaling to ', hScale);
+  fileParentGroup.scale.x = hScale;
+  fileParentGroup.scale.y = hScale;
+  fileParentGroup.updateMatrix();
+  fileParentGroup.updateMatrixWorld();
+  putFileObjectAtZero();
+  currentWorld();
+}
 
 
     $("#scaleFactor").change(function() {
-        if (typeof(object) != 'undefined') {
-            scene.remove(object);
-        }
-        var hScale = ($(this).val() / 100);
-        console.log('Scaling to ', hScale);
-        fileParentGroup.scale.x = hScale;
-        fileParentGroup.scale.y = hScale;
-        fileParentGroup.updateMatrix();
-        fileParentGroup.updateMatrixWorld();
-        putFileObjectAtZero();
-        currentWorld();
-
+      scaleChange();
     });
 
     $("#xpos").change(function() {
@@ -50,6 +84,7 @@ function filePrepInit() {
 
     $('#removeInflateGrp').on('click', function() {
         scene.remove(inflateGrp);
+        inflateGrp = null;
     });
 
 }

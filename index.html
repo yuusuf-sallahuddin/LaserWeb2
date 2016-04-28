@@ -151,7 +151,6 @@
             <div class="collapse navbar-collapse bs-js-navbar-collapse" id="top-menu">
                 <form class="navbar-form navbar-left" role="form">
                     <span class="btn btn-lg btn-default btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .svg, .dxf, or .stl file"><i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf,.stl" /></span>
-                    <a class="btn btn-lg btn-default" id="viewReset" href="#" title="Reset Zoom/View"><i class="fa fa-search fa-fw"></i>Reset</a>
                 </form>
 
                 <form class="navbar-form navbar-left" role="form">
@@ -302,10 +301,11 @@
 
         <div class="container" id="viewer_container" style="display: none;">
             <!-- <div id="renderArea"></div>  -->
-            <div class="btn-group" role="group" id="transformcontrols" style="display: none;">
-                <button type="button" data-title="Move Object" class="btn btn-primary" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
-                <button type="button" data-title="Resize Object" class="btn btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button>
-                <button type="button" data-title="Link Aspect" class="btn btn-default" id="linkAspectBtn"><i id='linkAspect' class="fa fa-link fa-lg"></i></button>
+            <div class="btn-group" role="group" id="transformcontrols">
+                <button type="button" data-title="Move Object" class="btn btn-lg btn-primary" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
+                <button type="button" data-title="Resize Object" class="btn btn-lg btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button>
+                <button type="button" data-title="Link Aspect" class="btn btn-lg btn-default" id="linkAspectBtn"><i id='linkAspect' class="fa fa-link fa-lg"></i></button>
+                <button type="button" data-title="Reset Camera" class="btn btn-lg btn-default" id="viewReset"><i class="fa fa-search fa-fw"></i>Reset</button>
             </div>
 
         </div>
@@ -351,7 +351,7 @@
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #9f9f9f;" onclick="sendGcode('G91\nG0 Y10\nG90\n');">+10</button>
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #bebebe;" onclick="sendGcode('G91\nG0 Y1\nG90\n');">+1</button>
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #cacaca;" onclick="sendGcode('G91\nG0 Y0.1\nG90\n');">+0.1</button>
-                                        <button type="button" class="btn btn-lg btn-default disabled" style="background-color: #dedbdb;"><i class="fa fa-arrows" aria-hidden="true"></i></button>
+                                        <button type="button" class="btn btn-lg btn-default" style="background-color: #dedbdb;"><i class="fa fa-arrows" aria-hidden="true"></i></button>
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #cacaca;" onclick="sendGcode('G91\nG0 Y-0.1\nG90\n');">-0.1</button>
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #bebebe;" onclick="sendGcode('G91\nG0 Y-1\nG90\n');">-1</button>
                                         <button type="button" class="btn btn-lg btn-default" style="background-color: #9f9f9f;" onclick="sendGcode('G91\nG0 Y-10\nG90\n');">-10</button>
@@ -376,7 +376,7 @@
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #9f9f9f;" onclick="sendGcode('G91\nG0 Z10\nG90\n');">Z+10</button>
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #bebebe;" onclick="sendGcode('G91\nG0 Z1\nG90\n');">Z+1</button>
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #cacaca;" onclick="sendGcode('G91\nG0 Z0.1\nG90\n');">Z+0.1</button>
-                                    <button type="button" class="btn btn-lg btn-default disabled" style="background-color: #dedbdb;"><i class="fa fa-arrows-v" aria-hidden="true"></i></button>
+                                    <button type="button" class="btn btn-lg btn-default" style="background-color: #dedbdb;"><i class="fa fa-arrows-v" aria-hidden="true"></i></button>
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #cacaca;" onclick="sendGcode('G91\nG0 Z-0.1\nG90\n');">Z-0.1</button>
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #bebebe;" onclick="sendGcode('G91\nG0 Z-1\nG90\n');">Z-1</button>
                                     <button type="button" class="btn btn-lg btn-default" style="background-color: #9f9f9f;" onclick="sendGcode('G91\nG0 Z-10\nG90\n');">Z-10</button>
@@ -487,8 +487,10 @@
                                                     <span class="input-group-addon">mm</span>
                                                 </div>
                                                 <span class="input-group-btn">
-                        <button id="removeInflateGrp" class="btn btn-default btn-sm" type="button"><i class="fa fa-times"></i></button>
-                      </span>
+                                                  <button id="stepinfup" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-up"></i></button>
+                                                  <button id="stepinfdn" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-down"></i></button>
+                                                  <button id="removeInflateGrp" class="btn btn-default btn-sm" type="button"><i class="fa fa-times"></i></button>
+                                                </span>
                                             </div>
                                             <p>
                                                 <div class="input-group" style="width: 100%;">
@@ -496,6 +498,11 @@
                                                     <div class="input-group">
                                                         <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
                                                         <span class="input-group-addon">%</span>
+                                                        <span class="input-group-btn">
+                                                          <button id="stepscaleup" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-up"></i></button>
+                                                          <button id="stepscaledn" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-down"></i></button>
+                                                        </span>
+
                                                         <!-- <span class="input-group-btn">
                           <button id="dpi96" class="btn btn-default btn-sm" type="button">96dpi</button>
                         </span>

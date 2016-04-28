@@ -432,7 +432,10 @@ function readFile(evt) {
         }
     }
     $('#filestatus').hide();
-    $('#togglefile').click();
+    if ($( "#togglefile" ).hasClass( "btn-default" )) {
+      $('#togglefile').click();
+    }
+
 };
 
 // Removed and null all object when a new file is loaded
