@@ -17,561 +17,570 @@ containerWidth = window.innerWidth;
 containerHeight = window.innerHeight;
 
 function attachTransformWidget() {
-  $("#transformcontrols").show();
-  if (rastermesh) {
-    control.attach(rastermesh);
-    control.setMode("translate");
-    $("#resizeBtn").hide();
-    $("#linkAspectBtn").hide();
+    $("#transformcontrols").show();
+    if (rastermesh) {
+        control.attach(rastermesh);
+        control.setMode("translate");
+        $("#resizeBtn").hide();
+        $("#linkAspectBtn").hide();
 
-  } else {
-    control.attach(fileParentGroup);
-    control.setMode("translate");
-    $("#resizeBtn").show();
-    $("#linkAspectBtn").show();
+    } else {
+        control.attach(fileParentGroup);
+        control.setMode("translate");
+        $("#resizeBtn").show();
+        $("#linkAspectBtn").show();
 
-  }
-  control.addEventListener('change', currentWorld);
+    }
+    control.addEventListener('change', currentWorld);
 
 };
 
 function init3D() {
 
-window.addEventListener( 'mousedown', onMouseMove, false );
+    window.addEventListener('mousedown', onMouseMove, false);
 
 
-$('#translateBtn').on('click', function() {
-    if ($( "#translateBtn" ).hasClass( "btn-primary" )) {
-    $( "#translateBtn" ).removeClass( "btn-primary" )
-    $( "#translateBtn" ).addClass( "btn-default" )
-    scene.remove(control);
-    } else {
-    $( "#translateBtn" ).removeClass( "btn-default" )
-    $( "#resizeBtn" ).removeClass( "btn-primary" )
-    $( "#resizeBtn" ).addClass( "btn-default" )
-    $( "#translateBtn" ).addClass( "btn-primary" )
-    control.setMode("translate");
-    scene.add(control);
-  };
-});
-
-$('#resizeBtn').on('click', function() {
-    if ($( "#resizeBtn" ).hasClass( "btn-primary" )) {
-    $( "#resizeBtn" ).removeClass( "btn-primary" )
-    $( "#resizeBtn" ).addClass( "btn-default" )
-    scene.remove(control);
-  } else {
-    $( "#resizeBtn" ).removeClass( "btn-default" )
-    $( "#translateBtn" ).removeClass( "btn-primary" )
-    $( "#translateBtn" ).addClass( "btn-default" )
-    $( "#resizeBtn" ).addClass( "btn-primary" )
-    control.setMode("scale");
-    scene.add(control);
-  } });
-
-  $('#linkAspectBtn').on('click', function() {
-      if ($( "#linkAspect" ).hasClass( "fa-link" )) {
-      // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
-      // $( "#linkAspectBtn" ).addClass( "btn-default" )
-      $('#linkAspect').removeClass('fa-link');
-      $('#linkAspect').addClass('fa-unlink');
-    } else {
-      // $( "#linkAspectBtn" ).removeClass( "btn-default" )
-      // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
-      // $( "#linkAspectBtn" ).addClass( "btn-default" )
-      // $( "#linkAspectBtn" ).addClass( "btn-primary" )
-      $('#linkAspect').removeClass('fa-unlink');
-      $('#linkAspect').addClass('fa-link');
-    } });
-
-
-
-
-
-// ThreeJS Render/Control/Camera
-scene = new THREE.Scene();
-camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
-camera.position.z = 295;
-
-// var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-//
-// if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
-// {
-//       console.log('Running on iOS');
-//       renderer = new THREE.WebGLRenderer();
-// }
-//     else if( userAgent.match( /Android/i ) )
-// {
-//     console.log('Running on Android');
-//     renderer = new THREE.CanvasRenderer();
-// }
-//   else
-// {
-//     console.log('Running on unknown/Desktop');
-//     renderer = new THREE.WebGLRenderer();
-// }
-
-var canvas = !! window.CanvasRenderingContext2D;
-var webgl = ( function () { try { return !! window.WebGLRenderingContext && !! document.createElement( 'canvas' ).getContext( 'experimental-webgl' ); } catch( e ) { return false; } } )();
-
-if (webgl) {
-    printLog('<h5>WebGL Support found!</h5><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
-    renderer = new THREE.WebGLRenderer({
-        autoClearColor: true
+    $('#translateBtn').on('click', function() {
+        if ($("#translateBtn").hasClass("btn-primary")) {
+            $("#translateBtn").removeClass("btn-primary")
+            $("#translateBtn").addClass("btn-default")
+            scene.remove(control);
+        } else {
+            $("#translateBtn").removeClass("btn-default")
+            $("#resizeBtn").removeClass("btn-primary")
+            $("#resizeBtn").addClass("btn-default")
+            $("#translateBtn").addClass("btn-primary")
+            control.setMode("translate");
+            scene.add(control);
+        };
     });
 
-} else if (canvas) {
-    printLog('<h5>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
-    renderer = new THREE.CanvasRenderer();
-};
+    $('#resizeBtn').on('click', function() {
+        if ($("#resizeBtn").hasClass("btn-primary")) {
+            $("#resizeBtn").removeClass("btn-primary")
+            $("#resizeBtn").addClass("btn-default")
+            scene.remove(control);
+        } else {
+            $("#resizeBtn").removeClass("btn-default")
+            $("#translateBtn").removeClass("btn-primary")
+            $("#translateBtn").addClass("btn-default")
+            $("#resizeBtn").addClass("btn-primary")
+            control.setMode("scale");
+            scene.add(control);
+        }
+    });
+
+    $('#linkAspectBtn').on('click', function() {
+        if ($("#linkAspect").hasClass("fa-link")) {
+            // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+            // $( "#linkAspectBtn" ).addClass( "btn-default" )
+            $('#linkAspect').removeClass('fa-link');
+            $('#linkAspect').addClass('fa-unlink');
+        } else {
+            // $( "#linkAspectBtn" ).removeClass( "btn-default" )
+            // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+            // $( "#linkAspectBtn" ).addClass( "btn-default" )
+            // $( "#linkAspectBtn" ).addClass( "btn-primary" )
+            $('#linkAspect').removeClass('fa-unlink');
+            $('#linkAspect').addClass('fa-link');
+        }
+    });
 
 
 
-var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-
-if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
-{
-      console.log('Running on iOS');
-      $('#viewermodule').show();
-      $('#mobileRenderArea').append(renderer.domElement);
-      renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-      renderer.setSize( 1000 , 1000 );
-      renderer.clear();
-      camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
-      camera.updateProjectionMatrix();
-
-}
-    else if( userAgent.match( /Android/i ) )
-{
-    console.log('Running on Android');
-    $('#viewermodule').show();
-    $('#mobileRenderArea').append(renderer.domElement);
-    renderer.setClearColor(0xffffff, 1);  // Background color of viewer
-    renderer.setSize($('#mobileRenderArea').width(), $('#mobileRenderArea').height());
-    renderer.clear();
-    camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
-    camera.updateProjectionMatrix();
-
-}
-  else
-{
-    console.log('Running on unknown/Desktop');
-    $('#viewermodule').hide();
-    $('#renderArea').append(renderer.domElement);
-    renderer.setClearColor(0xffffff, 1);  // Background color of viewer = transparent
-    renderer.setSize( window.innerWidth -10, window.innerHeight -10 );
-    renderer.clear();
-
-}
 
 
+    // ThreeJS Render/Control/Camera
+    scene = new THREE.Scene();
+    camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 10000);
+    camera.position.z = 295;
 
-controls = new THREE.OrbitControls( camera, renderer.domElement );
-controls.target.set( 0, 0, 0 ); // view direction perpendicular to XY-plane
-//controls.enableRotate = false;
-controls.enableZoom = true; // optional
-controls.noKeys = true; // Disable Keyboard on canvas
-//controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
-// /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
+    // var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    //
+    // if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
+    // {
+    //       console.log('Running on iOS');
+    //       renderer = new THREE.WebGLRenderer();
+    // }
+    //     else if( userAgent.match( /Android/i ) )
+    // {
+    //     console.log('Running on Android');
+    //     renderer = new THREE.CanvasRenderer();
+    // }
+    //   else
+    // {
+    //     console.log('Running on unknown/Desktop');
+    //     renderer = new THREE.WebGLRenderer();
+    // }
 
-control = new THREE.TransformControls(camera, renderer.domElement);
-	//control.addEventListener('change', currentWorld);
-	// control.addEventListener('objectChange', cancelAnimation);
-	//control.attach(model);
-	scene.add(control);
-	control.setMode("translate");
+    var canvas = !!window.CanvasRenderingContext2D;
+    var webgl = (function() {
+        try {
+            return !!window.WebGLRenderingContext && !!document.createElement('canvas').getContext('experimental-webgl');
+        } catch (e) {
+            return false;
+        }
+    })();
 
-var light = new THREE.DirectionalLight( 0xffffff );
-light.position.set( -500, -500, 1 ).normalize();
-scene.add(light);
-
-var light2 = new THREE.DirectionalLight( 0xffffff );
-light.position.set( 1, 0, 1 ).normalize();
-scene.add(light2);
-
-// LaserWEB UI Grids
-if (helper) {
-        scene.remove(helper);
-}
-
-laserxmax = $('#laserXMax').val();
-laserymax = $('#laserYMax').val();
-
-if (!laserxmax) {
-    laserxmax = 200;
-};
-
-if (!laserymax) {
-    laserymax = 200;
-};
-
-helper = new THREE.GridHelper(laserxmax, laserymax, 10);
-              helper.setColors(0x0000ff, 0x707070);
-              helper.position.y = 0;
-              helper.position.x = 0;
-              helper.position.z = 0;
-              //helper.rotation.x = 90 * Math.PI / 180;
-              helper.material.opacity = 0.15;
-              helper.material.transparent = true;
-              helper.receiveShadow = false;
-              //console.log("helper grid:", helper);
-              this.grid = helper;
-              //this.sceneAdd(this.grid);
-  //console.log('[VIEWER] - added Helpert');
-scene.add(helper);
-
-// particleLight = new THREE.Mesh( new THREE.SphereBufferGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
-// 				scene.add( particleLight );
-//
-// scene.add( new THREE.AmbientLight( 0x222222 ) );
-// 				var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
-// 				directionalLight.position.set( 1, 1, 1 ).normalize();
-// 				scene.add( directionalLight );
-// 				var pointLight = new THREE.PointLight( 0xffffff, 2, 800 );
-// 				particleLight.add( pointLight );
-
-
-if (bullseye) {
-    scene.remove(bullseye);
-}
-bullseye = new THREE.Object3D();
-
-        var material = new THREE.MeshBasicMaterial({
-        	color: 0xFF0000
+    if (webgl) {
+        printLog('<h5>WebGL Support found!</h5><b>success:</b><br> Laserweb will work optimally on this device!', '#000000');
+        renderer = new THREE.WebGLRenderer({
+            autoClearColor: true
         });
 
-        var radius = 3.5;
-        var segments = 32;
-        var circleGeometry = new THREE.CircleGeometry( radius, segments );
-        var circle = new THREE.Line( circleGeometry, material );
-        bullseye.add( circle );
-
-        var geometryx = new THREE.Geometry();
-        geometryx.vertices.push(
-        	new THREE.Vector3( -6, 0, 0 ),
-          new THREE.Vector3( 6, 0, 0 )
-        );
-        var linex = new THREE.Line( geometryx, material );
-        linex.position = (0, 0, 0)
-        bullseye.add( linex );
-
-        var geometryy = new THREE.Geometry();
-        geometryy.vertices.push(
-        	new THREE.Vector3( 0, -6, 0 ),
-          new THREE.Vector3( 0, 6, 0 )
-        );
-        var liney = new THREE.Line( geometryy, material );
-        liney.position = (0, 0, 0)
-        bullseye.add( liney );
-
-        bullseye.name="Bullseye";
-
-scene.add(bullseye);
-bullseye.position.x = -(laserxmax / 2) + 50 ;
-bullseye.position.y = -(laserymax / 2) + 50 ;
+    } else if (canvas) {
+        printLog('<h5>No WebGL Support found!</h5><b>CRITICAL ERROR:</b><br> Laserweb may not work optimally on this device! <br>Try another device with WebGL support</p><br><u>Try the following:</u><br><ul><li>In the Chrome address bar, type: <b>chrome://flags</b> [Enter]</li><li>Enable the <b>Override software Rendering</b></li><li>Restart Chrome and try again</li></ul>Sorry! :(<hr>', '#000000');
+        renderer = new THREE.CanvasRenderer();
+    };
 
 
 
+    var userAgent = navigator.userAgent || navigator.vendor || window.opera;
 
-if (axesgrp) {
-    scene.remove(axesgrp);
-}
-axesgrp = new THREE.Object3D();
+    if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
+        console.log('Running on iOS');
+        $('#viewermodule').show();
+        $('#mobileRenderArea').append(renderer.domElement);
+        renderer.setClearColor(0xffffff, 1); // Background color of viewer
+        renderer.setSize(1000, 1000);
+        renderer.clear();
+        camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+        camera.updateProjectionMatrix();
 
-var x = [];
-var y = [];
-for (var i = 0; i <= laserxmax ; i+=lineincrement) {
-     x[i] = this.makeSprite(this.scene, "webgl", {
-       x: i,
-       y: -14,
-       z: 0,
-       text: i,
-       color: "#ff0000"
-     });
-     axesgrp.add(x[i]);
-}
+    } else if (userAgent.match(/Android/i)) {
+        console.log('Running on Android');
+        $('#viewermodule').show();
+        $('#mobileRenderArea').append(renderer.domElement);
+        renderer.setClearColor(0xffffff, 1); // Background color of viewer
+        renderer.setSize($('#mobileRenderArea').width(), $('#mobileRenderArea').height());
+        renderer.clear();
+        camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+        camera.updateProjectionMatrix();
 
-for (var i = 0; i <= laserymax ; i+=lineincrement) {
+    } else {
+        console.log('Running on unknown/Desktop');
+        $('#viewermodule').hide();
+        $('#renderArea').append(renderer.domElement);
+        renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
+        renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+        renderer.clear();
 
-   y[i] = this.makeSprite(this.scene, "webgl", {
-     x: -14,
-     y: i,
-     z: 0,
-     text: i,
-     color: "#006600"
-   });
-   axesgrp.add(y[i]);
-}
-   // add axes labels
-var xlbl = this.makeSprite(this.scene, "webgl", {
-     x: laserxmax,
-     y: 0,
-     z: 0,
-     text: "X",
-     color: "#ff0000"
-});
-var ylbl = this.makeSprite(this.scene, "webgl", {
-     x: 0,
-     y: laserymax,
-     z: 0,
-     text: "Y",
-     color: "#006600"
-});
-var zlbl = this.makeSprite(this.scene, "webgl", {
-     x: 0,
-     y: 0,
-     z: 125,
-     text: "Z",
-     color: "#0000ff"
-});
+    }
 
 
-axesgrp.add(xlbl);
-axesgrp.add(ylbl);
-//axesgrp.add(zlbl); Laser don't have Z - but CNCs do
 
-var materialX = new THREE.LineBasicMaterial({
-	color: 0xcc0000
-});
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.target.set(0, 0, 0); // view direction perpendicular to XY-plane
+    //controls.enableRotate = false;
+    controls.enableZoom = true; // optional
+    controls.noKeys = true; // Disable Keyboard on canvas
+    //controls.mouseButtons = { PAN: THREE.MOUSE.LEFT, ZOOM: THREE.MOUSE.MIDDLE, ORBIT: THREE.MOUSE.RIGHT }; // swapping left and right buttons
+    // /var STATE = { NONE : - 1, ROTATE : 0, DOLLY : 1, PAN : 2, TOUCH_ROTATE : 3, TOUCH_DOLLY : 4, TOUCH_PAN : 5 };
 
-var materialY = new THREE.LineBasicMaterial({
-  color: 0x00cc00
-});
+    control = new THREE.TransformControls(camera, renderer.domElement);
+    //control.addEventListener('change', currentWorld);
+    // control.addEventListener('objectChange', cancelAnimation);
+    //control.attach(model);
+    scene.add(control);
+    control.setMode("translate");
 
-var geometryX = new THREE.Geometry();
-geometryX.vertices.push(
-	   new THREE.Vector3( -0.1, 0, 0 ),
-	   new THREE.Vector3( -0.1, (laserymax - 5), 0 )
-);
+    var light = new THREE.DirectionalLight(0xffffff);
+    light.position.set(-500, -500, 1).normalize();
+    scene.add(light);
 
-var geometryY = new THREE.Geometry();
-geometryY.vertices.push(
-	   new THREE.Vector3( 0, -0.1, 0 ),
-	   new THREE.Vector3( (laserxmax -5), -0.1, 0 )
-);
+    var light2 = new THREE.DirectionalLight(0xffffff);
+    light.position.set(1, 0, 1).normalize();
+    scene.add(light2);
 
-var line1 = new THREE.Line( geometryX, materialY );
-var line2 = new THREE.Line( geometryY, materialX );
-axesgrp.add( line1 );
-axesgrp.add( line2 );
+    // LaserWEB UI Grids
+    if (helper) {
+        scene.remove(helper);
+    }
 
-axesgrp.translateX(laserxmax /2 * -1);
-axesgrp.translateY(laserymax /2 * -1);
-//console.log('[VIEWER] - added Axesgrp');
-scene.add(axesgrp);
+    laserxmax = $('#laserXMax').val();
+    laserymax = $('#laserYMax').val();
 
-// Picking stuff
+    if (!laserxmax) {
+        laserxmax = 200;
+    };
 
-	projector = new THREE.Projector();
-	mouseVector = new THREE.Vector3();
+    if (!laserymax) {
+        laserymax = 200;
+    };
+
+    helper = new THREE.GridHelper(laserxmax, laserymax, 10);
+    helper.setColors(0x0000ff, 0x707070);
+    helper.position.y = 0;
+    helper.position.x = 0;
+    helper.position.z = 0;
+    //helper.rotation.x = 90 * Math.PI / 180;
+    helper.material.opacity = 0.15;
+    helper.material.transparent = true;
+    helper.receiveShadow = false;
+    //console.log("helper grid:", helper);
+    this.grid = helper;
+    //this.sceneAdd(this.grid);
+    //console.log('[VIEWER] - added Helpert');
+    scene.add(helper);
+
+    // particleLight = new THREE.Mesh( new THREE.SphereBufferGeometry( 4, 8, 8 ), new THREE.MeshBasicMaterial( { color: 0xffffff } ) );
+    // 				scene.add( particleLight );
+    //
+    // scene.add( new THREE.AmbientLight( 0x222222 ) );
+    // 				var directionalLight = new THREE.DirectionalLight( 0xffffff, 1 );
+    // 				directionalLight.position.set( 1, 1, 1 ).normalize();
+    // 				scene.add( directionalLight );
+    // 				var pointLight = new THREE.PointLight( 0xffffff, 2, 800 );
+    // 				particleLight.add( pointLight );
+
+
+    if (bullseye) {
+        scene.remove(bullseye);
+    }
+    bullseye = new THREE.Object3D();
+
+    var material = new THREE.MeshBasicMaterial({
+        color: 0xFF0000
+    });
+
+    var radius = 3.5;
+    var segments = 32;
+    var circleGeometry = new THREE.CircleGeometry(radius, segments);
+    var circle = new THREE.Line(circleGeometry, material);
+    bullseye.add(circle);
+
+    var geometryx = new THREE.Geometry();
+    geometryx.vertices.push(
+        new THREE.Vector3(-6, 0, 0),
+        new THREE.Vector3(6, 0, 0)
+    );
+    var linex = new THREE.Line(geometryx, material);
+    linex.position = (0, 0, 0)
+    bullseye.add(linex);
+
+    var geometryy = new THREE.Geometry();
+    geometryy.vertices.push(
+        new THREE.Vector3(0, -6, 0),
+        new THREE.Vector3(0, 6, 0)
+    );
+    var liney = new THREE.Line(geometryy, material);
+    liney.position = (0, 0, 0)
+    bullseye.add(liney);
+
+    bullseye.name = "Bullseye";
+
+    scene.add(bullseye);
+    bullseye.position.x = -(laserxmax / 2) + 50;
+    bullseye.position.y = -(laserymax / 2) + 50;
+
+
+
+
+    if (axesgrp) {
+        scene.remove(axesgrp);
+    }
+    axesgrp = new THREE.Object3D();
+
+    var x = [];
+    var y = [];
+    for (var i = 0; i <= laserxmax; i += lineincrement) {
+        x[i] = this.makeSprite(this.scene, "webgl", {
+            x: i,
+            y: -14,
+            z: 0,
+            text: i,
+            color: "#ff0000"
+        });
+        axesgrp.add(x[i]);
+    }
+
+    for (var i = 0; i <= laserymax; i += lineincrement) {
+
+        y[i] = this.makeSprite(this.scene, "webgl", {
+            x: -14,
+            y: i,
+            z: 0,
+            text: i,
+            color: "#006600"
+        });
+        axesgrp.add(y[i]);
+    }
+    // add axes labels
+    var xlbl = this.makeSprite(this.scene, "webgl", {
+        x: laserxmax,
+        y: 0,
+        z: 0,
+        text: "X",
+        color: "#ff0000"
+    });
+    var ylbl = this.makeSprite(this.scene, "webgl", {
+        x: 0,
+        y: laserymax,
+        z: 0,
+        text: "Y",
+        color: "#006600"
+    });
+    var zlbl = this.makeSprite(this.scene, "webgl", {
+        x: 0,
+        y: 0,
+        z: 125,
+        text: "Z",
+        color: "#0000ff"
+    });
+
+
+    axesgrp.add(xlbl);
+    axesgrp.add(ylbl);
+    //axesgrp.add(zlbl); Laser don't have Z - but CNCs do
+
+    var materialX = new THREE.LineBasicMaterial({
+        color: 0xcc0000
+    });
+
+    var materialY = new THREE.LineBasicMaterial({
+        color: 0x00cc00
+    });
+
+    var geometryX = new THREE.Geometry();
+    geometryX.vertices.push(
+        new THREE.Vector3(-0.1, 0, 0),
+        new THREE.Vector3(-0.1, (laserymax - 5), 0)
+    );
+
+    var geometryY = new THREE.Geometry();
+    geometryY.vertices.push(
+        new THREE.Vector3(0, -0.1, 0),
+        new THREE.Vector3((laserxmax - 5), -0.1, 0)
+    );
+
+    var line1 = new THREE.Line(geometryX, materialY);
+    var line2 = new THREE.Line(geometryY, materialX);
+    axesgrp.add(line1);
+    axesgrp.add(line2);
+
+    axesgrp.translateX(laserxmax / 2 * -1);
+    axesgrp.translateY(laserymax / 2 * -1);
+    //console.log('[VIEWER] - added Axesgrp');
+    scene.add(axesgrp);
+
+    // Picking stuff
+
+    projector = new THREE.Projector();
+    mouseVector = new THREE.Vector3();
 
 
 }
 
 function animate() {
 
-  requestAnimationFrame( animate );
+    requestAnimationFrame(animate);
 
 
-      // mesh.rotation.x += 0.01;
-      // mesh.rotation.y += 0.02;
-      renderer.render( scene, camera );
+    // mesh.rotation.x += 0.01;
+    // mesh.rotation.y += 0.02;
+    renderer.render(scene, camera);
 }
 
 
 
-viewExtents = function (objecttosee) {
-  //console.log("viewExtents. object.userData:", this.object.userData);
-  console.log("controls:", controls);
-  //wakeAnimate();
+viewExtents = function(objecttosee) {
+    //console.log("viewExtents. object.userData:", this.object.userData);
+    console.log("controls:", controls);
+    //wakeAnimate();
 
-  // lets override the bounding box with a newly
-  // generated one
-  // get its bounding box
-  var helper = new THREE.BoundingBoxHelper(objecttosee, 0xff0000);
-  helper.update();
-  //if (this.bboxHelper)
-  //    this.scene.remove(this.bboxHelper);
-  bboxHelper = helper;
-  // If you want a visible bounding box
-  //this.scene.add(this.bboxHelper);
-  console.log("helper bbox:", helper);
+    // lets override the bounding box with a newly
+    // generated one
+    // get its bounding box
+    var helper = new THREE.BoundingBoxHelper(objecttosee, 0xff0000);
+    helper.update();
+    //if (this.bboxHelper)
+    //    this.scene.remove(this.bboxHelper);
+    bboxHelper = helper;
+    // If you want a visible bounding box
+    //this.scene.add(this.bboxHelper);
+    console.log("helper bbox:", helper);
 
-  var minx = helper.box.min.x;
-  var miny = helper.box.min.y;
-  var maxx = helper.box.max.x;
-  var maxy = helper.box.max.y;
-  var minz = helper.box.min.z;
-  var maxz = helper.box.max.z;
+    var minx = helper.box.min.x;
+    var miny = helper.box.min.y;
+    var maxx = helper.box.max.x;
+    var maxy = helper.box.max.y;
+    var minz = helper.box.min.z;
+    var maxz = helper.box.max.z;
 
-  // var ud = [];
-  // ud.bbox2 = helper.box;
-  // ud.center2.x = minx + ((maxx - minx) / 2);
-  // ud.center2.y = miny + ((maxy - miny) / 2);
-  // ud.center2.z = minz + ((maxz - minz) / 2);
+    // var ud = [];
+    // ud.bbox2 = helper.box;
+    // ud.center2.x = minx + ((maxx - minx) / 2);
+    // ud.center2.y = miny + ((maxy - miny) / 2);
+    // ud.center2.z = minz + ((maxz - minz) / 2);
 
-  //this.controls.enabled = false;
-  controls.reset();
-  //this.controls.object.rotation._x = 0.5;
-  //this.controls.object.rotation._y = 0.5;
-  //this.controls.object.rotation._z = 0.5;
-  //this.controls.object.rotation = THREE.Euler(0.5, 0.5, 0.5);
-  //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
+    //this.controls.enabled = false;
+    controls.reset();
+    //this.controls.object.rotation._x = 0.5;
+    //this.controls.object.rotation._y = 0.5;
+    //this.controls.object.rotation._z = 0.5;
+    //this.controls.object.rotation = THREE.Euler(0.5, 0.5, 0.5);
+    //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
 
-  // get max of any of the 3 axes to use as max extent
-  //var lenx = Math.abs(ud.bbbox2.min.x) + ud.bbbox2.max.x;
-  //var leny = Math.abs(ud.bbbox2.min.y) + ud.bbbox2.max.y;
-  //var lenz = Math.abs(ud.bbbox2.min.z) + ud.bbbox2.max.z;
-  var lenx = maxx - minx;
-  var leny = maxy - miny;
-  var lenz = maxz - minz;
-  var centerx = minx + (lenx / 2);
-  var centery = miny + (leny / 2);
-  var centerz = minz + (lenz / 2);
+    // get max of any of the 3 axes to use as max extent
+    //var lenx = Math.abs(ud.bbbox2.min.x) + ud.bbbox2.max.x;
+    //var leny = Math.abs(ud.bbbox2.min.y) + ud.bbbox2.max.y;
+    //var lenz = Math.abs(ud.bbbox2.min.z) + ud.bbbox2.max.z;
+    var lenx = maxx - minx;
+    var leny = maxy - miny;
+    var lenz = maxz - minz;
+    var centerx = minx + (lenx / 2);
+    var centery = miny + (leny / 2);
+    var centerz = minz + (lenz / 2);
 
 
-  console.log("lenx:", lenx, "leny:", leny, "lenz:", lenz);
-  var maxlen = Math.max(lenx, leny, lenz);
-  var dist = 2 * maxlen;
-  // center camera on gcode objects center pos, but twice the maxlen
-  controls.object.position.x = centerx;
-  controls.object.position.y = centery;
-  controls.object.position.z = centerz + dist;
-  controls.target.x = centerx;
-  controls.target.y = centery;
-  controls.target.z = centerz;
-  console.log("maxlen:", maxlen, "dist:", dist);
-  var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
-  console.log("new fov:", fov, " old fov:", controls.object.fov);
-  if (isNaN(fov)) {
-      console.log("giving up on viewing extents because fov could not be calculated");
-      return;
-  }
-  controls.object.fov = fov;
-  //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
-  //this.controls.object.rotation.set(0.5,0.5,0.5,"XYZ");
-  //this.controls.object.rotateX(2);
-  //this.controls.object.rotateY(0.5);
+    console.log("lenx:", lenx, "leny:", leny, "lenz:", lenz);
+    var maxlen = Math.max(lenx, leny, lenz);
+    var dist = 2 * maxlen;
+    // center camera on gcode objects center pos, but twice the maxlen
+    controls.object.position.x = centerx;
+    controls.object.position.y = centery;
+    controls.object.position.z = centerz + dist;
+    controls.target.x = centerx;
+    controls.target.y = centery;
+    controls.target.z = centerz;
+    console.log("maxlen:", maxlen, "dist:", dist);
+    var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
+    console.log("new fov:", fov, " old fov:", controls.object.fov);
+    if (isNaN(fov)) {
+        console.log("giving up on viewing extents because fov could not be calculated");
+        return;
+    }
+    controls.object.fov = fov;
+    //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
+    //this.controls.object.rotation.set(0.5,0.5,0.5,"XYZ");
+    //this.controls.object.rotateX(2);
+    //this.controls.object.rotateY(0.5);
 
-  var L = dist;
-  var camera = controls.object;
-  var vector = controls.target.clone();
-  var l = (new THREE.Vector3()).subVectors(camera.position, vector).length();
-  var up = camera.up.clone();
-  var quaternion = new THREE.Quaternion();
+    var L = dist;
+    var camera = controls.object;
+    var vector = controls.target.clone();
+    var l = (new THREE.Vector3()).subVectors(camera.position, vector).length();
+    var up = camera.up.clone();
+    var quaternion = new THREE.Quaternion();
 
-  // Zoom correction
-  camera.translateZ(L - l);
-  console.log("up:", up);
-  up.y = 1; up.x = 0; up.z = 0;
-  quaternion.setFromAxisAngle(up, 0);
-  //camera.position.applyQuaternion(quaternion);
-  up.y = 0; up.x = 1; up.z = 0;
-  quaternion.setFromAxisAngle(up, 0);
-  camera.position.applyQuaternion(quaternion);
-  up.y = 0; up.x = 0; up.z = 1;
-  quaternion.setFromAxisAngle(up, 0);
-  //camera.position.applyQuaternion(quaternion);
+    // Zoom correction
+    camera.translateZ(L - l);
+    console.log("up:", up);
+    up.y = 1;
+    up.x = 0;
+    up.z = 0;
+    quaternion.setFromAxisAngle(up, 0);
+    //camera.position.applyQuaternion(quaternion);
+    up.y = 0;
+    up.x = 1;
+    up.z = 0;
+    quaternion.setFromAxisAngle(up, 0);
+    camera.position.applyQuaternion(quaternion);
+    up.y = 0;
+    up.x = 0;
+    up.z = 1;
+    quaternion.setFromAxisAngle(up, 0);
+    //camera.position.applyQuaternion(quaternion);
 
-  camera.lookAt(vector);
+    camera.lookAt(vector);
 
-  //this.camera.rotateX(90);
+    //this.camera.rotateX(90);
 
-  controls.object.updateProjectionMatrix();
-  containerWidth = window.innerWidth;
-  containerHeight = window.innerHeight;
-  //this.controls.enabled = true;
-  //this.scaleInView();
-  //this.controls.rotateCamera(0.5);
-  //this.controls.noRoll = true;
-  //this.controls.noRotate = true;
+    controls.object.updateProjectionMatrix();
+    containerWidth = window.innerWidth;
+    containerHeight = window.innerHeight;
+    //this.controls.enabled = true;
+    //this.scaleInView();
+    //this.controls.rotateCamera(0.5);
+    //this.controls.noRoll = true;
+    //this.controls.noRotate = true;
 };
 
 function colorobj(name) {
-  var object = scene.getObjectByName( name, true );
-  console.log(object)
-  // for (i=0; i<dxfObject.children.length; i++) {
-  //     dxfObject.children[i].material.color.setHex(0x000000);
-  //     dxfObject.children[i].material.opacity = 0.3;
-  // }
-  object.material.color.setHex(0xFF0000);
-  object.material.needsUpdate = true;
+    var object = scene.getObjectByName(name, true);
+    console.log(object)
+        // for (i=0; i<dxfObject.children.length; i++) {
+        //     dxfObject.children[i].material.color.setHex(0x000000);
+        //     dxfObject.children[i].material.opacity = 0.3;
+        // }
+    object.material.color.setHex(0xFF0000);
+    object.material.needsUpdate = true;
 }
 
 
 function makeSprite(scene, rendererType, vals) {
-  var canvas = document.createElement('canvas'),
-      context = canvas.getContext('2d'),
-      metrics = null,
-      textHeight = 100,
-      textWidth = 0,
-      actualFontSize = 10;
-  var txt = vals.text;
-  if (vals.size) actualFontSize = vals.size;
+    var canvas = document.createElement('canvas'),
+        context = canvas.getContext('2d'),
+        metrics = null,
+        textHeight = 100,
+        textWidth = 0,
+        actualFontSize = 10;
+    var txt = vals.text;
+    if (vals.size) actualFontSize = vals.size;
 
-  context.font = "normal " + textHeight + "px Arial";
-  metrics = context.measureText(txt);
-  var textWidth = metrics.width;
+    context.font = "normal " + textHeight + "px Arial";
+    metrics = context.measureText(txt);
+    var textWidth = metrics.width;
 
-  canvas.width = textWidth;
-  canvas.height = textHeight;
-  context.font = "normal " + textHeight + "px Arial";
-  context.textAlign = "center";
-  context.textBaseline = "middle";
-  //context.fillStyle = "#ff0000";
-  context.fillStyle = vals.color;
+    canvas.width = textWidth;
+    canvas.height = textHeight;
+    context.font = "normal " + textHeight + "px Arial";
+    context.textAlign = "center";
+    context.textBaseline = "middle";
+    //context.fillStyle = "#ff0000";
+    context.fillStyle = vals.color;
 
-  context.fillText(txt, textWidth / 2, textHeight / 2);
+    context.fillText(txt, textWidth / 2, textHeight / 2);
 
-  var texture = new THREE.Texture(canvas);
-  texture.needsUpdate = true;
-	texture.minFilter = THREE.LinearFilter;
+    var texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true;
+    texture.minFilter = THREE.LinearFilter;
 
-  var material = new THREE.SpriteMaterial({
-      map: texture,
-      useScreenCoordinates: false,
-      transparent: true,
-      opacity: 0.6
-  });
-  material.transparent = true;
-  //var textObject = new THREE.Sprite(material);
-  var textObject = new THREE.Object3D();
-  textObject.position.x = vals.x;
-  textObject.position.y = vals.y;
-  textObject.position.z = vals.z;
-  var sprite = new THREE.Sprite(material);
-  textObject.textHeight = actualFontSize;
-  textObject.textWidth = (textWidth / textHeight) * textObject.textHeight;
-  if (rendererType == "2d") {
-      sprite.scale.set(textObject.textWidth / textWidth, textObject.textHeight / textHeight, 1);
-  } else {
-      sprite.scale.set(textWidth / textHeight * actualFontSize, actualFontSize, 1);
-  }
+    var material = new THREE.SpriteMaterial({
+        map: texture,
+        useScreenCoordinates: false,
+        transparent: true,
+        opacity: 0.6
+    });
+    material.transparent = true;
+    //var textObject = new THREE.Sprite(material);
+    var textObject = new THREE.Object3D();
+    textObject.position.x = vals.x;
+    textObject.position.y = vals.y;
+    textObject.position.z = vals.z;
+    var sprite = new THREE.Sprite(material);
+    textObject.textHeight = actualFontSize;
+    textObject.textWidth = (textWidth / textHeight) * textObject.textHeight;
+    if (rendererType == "2d") {
+        sprite.scale.set(textObject.textWidth / textWidth, textObject.textHeight / textHeight, 1);
+    } else {
+        sprite.scale.set(textWidth / textHeight * actualFontSize, actualFontSize, 1);
+    }
 
-  textObject.add(sprite);
+    textObject.add(sprite);
 
-  //scene.add(textObject);
-  return textObject;
+    //scene.add(textObject);
+    return textObject;
 }
 
 
 // Global Function to keep three fullscreen
 $(window).on('resize', function() {
-  //renderer.setSize(element.width(), element.height());
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  controls.reset();
-  $('#viewReset').click();
+    //renderer.setSize(element.width(), element.height());
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    controls.reset();
+    $('#viewReset').click();
 
 });
 
-function onMouseMove( e ) {
+function onMouseMove(e) {
 
-//event.preventDefault();
+    //event.preventDefault();
 
-  	mouseVector.x = ( e.clientX / window.innerWidth ) * 2 - 1;
-  	mouseVector.y = - ( e.clientY / window.innerHeight ) * 2 + 1;
+    mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+    mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
 
 
@@ -579,23 +588,23 @@ function onMouseMove( e ) {
     // var vector = mouseVector.clone().unproject( camera );
     // var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
     // raycaster.set( vector, direction );
-    	raycaster.setFromCamera( mouseVector, camera );
-    var intersects = raycaster.intersectObjects( scene.children, true )
+    raycaster.setFromCamera(mouseVector, camera);
+    var intersects = raycaster.intersectObjects(scene.children, true)
 
-		for( var i = 0; i < intersects.length; i++ ) {
-			var intersection = intersects[ i ],
-				obj = intersection.object;
-        if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh" ) {
-          printLog('Clicked on : '+ obj.name, successcolor)
-	        obj.material.color.setRGB( Math.random(), Math.random(), Math.random() );
+    for (var i = 0; i < intersects.length; i++) {
+        var intersection = intersects[i],
+            obj = intersection.object;
+        if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh") {
+            printLog('Clicked on : ' + obj.name, successcolor)
+            obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
         }
 
-        bullseye.position.set(intersects[i].point.x,intersects[i].point.y,intersects[i].point.z);
-        bullseye.children[0].material.color.setRGB( 1, 0, 0 );
-        bullseye.children[1].material.color.setRGB( 1, 0, 0 );
-        bullseye.children[2].material.color.setRGB( 1, 0, 0 );
+        bullseye.position.set(intersects[i].point.x, intersects[i].point.y, intersects[i].point.z);
+        bullseye.children[0].material.color.setRGB(1, 0, 0);
+        bullseye.children[1].material.color.setRGB(1, 0, 0);
+        bullseye.children[2].material.color.setRGB(1, 0, 0);
 
-		}
+    }
 
 
-	}
+}
