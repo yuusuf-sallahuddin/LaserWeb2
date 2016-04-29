@@ -3,7 +3,82 @@ var Ytofix;
 var oldxscale = 0;
 var oldyscale = 0;
 
+function attachTransformWidget() {
+    $("#transformcontrols").show();
+    if (rastermesh) {
+        control.attach(rastermesh);
+        control.setMode("translate");
+        $("#resizeBtn").hide();
+        $("#linkAspectBtn").hide();
+    } else {
+        control.attach(fileParentGroup);
+        control.setMode("translate");
+        $("#resizeBtn").show();
+        $("#linkAspectBtn").show();
+    }
+    control.addEventListener('change', currentWorld);
+
+};
+
 function filePrepInit() {
+
+  $('#translateBtn').on('click', function() {
+      if ($("#translateBtn").hasClass("btn-primary")) {
+          $("#translateBtn").removeClass("btn-primary")
+          $("#translateBtn").addClass("btn-default")
+          scene.remove(control);
+          controls.enableZoom = true; // optional
+          controls.enablePan = true;
+          controls.enableRotate = true;
+      } else {
+          $("#translateBtn").removeClass("btn-default")
+          $("#resizeBtn").removeClass("btn-primary")
+          $("#resizeBtn").addClass("btn-default")
+          $("#translateBtn").addClass("btn-primary")
+          control.setMode("translate");
+          scene.add(control);
+          controls.enableZoom = false; // optional
+          controls.enablePan = false;
+          controls.enableRotate = false;
+      };
+  });
+
+  $('#resizeBtn').on('click', function() {
+      if ($("#resizeBtn").hasClass("btn-primary")) {
+          $("#resizeBtn").removeClass("btn-primary")
+          $("#resizeBtn").addClass("btn-default")
+          scene.remove(control);
+          controls.enableZoom = true; // optional
+          controls.enablePan = true;
+          controls.enableRotate = true;
+      } else {
+          $("#resizeBtn").removeClass("btn-default")
+          $("#translateBtn").removeClass("btn-primary")
+          $("#translateBtn").addClass("btn-default")
+          $("#resizeBtn").addClass("btn-primary")
+          control.setMode("scale");
+          scene.add(control);
+          controls.enableZoom = false; // optional
+          controls.enablePan = false;
+          controls.enableRotate = false;
+      }
+  });
+
+  $('#linkAspectBtn').on('click', function() {
+      if ($("#linkAspect").hasClass("fa-link")) {
+          // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+          // $( "#linkAspectBtn" ).addClass( "btn-default" )
+          $('#linkAspect').removeClass('fa-link');
+          $('#linkAspect').addClass('fa-unlink');
+      } else {
+          // $( "#linkAspectBtn" ).removeClass( "btn-default" )
+          // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
+          // $( "#linkAspectBtn" ).addClass( "btn-default" )
+          // $( "#linkAspectBtn" ).addClass( "btn-primary" )
+          $('#linkAspect').removeClass('fa-unlink');
+          $('#linkAspect').addClass('fa-link');
+      }
+  });
 
   $('#stepinfup').on('click', function() {
     var oldValue = parseFloat($('#inflateVal').val());
@@ -39,28 +114,28 @@ function filePrepInit() {
 
   $('#panleft').on('click', function() {
     var oldValue = controls.target.x
-    var newVal = oldValue + 10;
+    var newVal = oldValue + 20;
     controls.target.x = newVal
     controls.update();
   });
 
   $('#panright').on('click', function() {
     var oldValue = controls.target.x
-    var newVal = oldValue - 10;
+    var newVal = oldValue - 20;
     controls.target.x = newVal
     controls.update();
   });
 
   $('#panup').on('click', function() {
     var oldValue = controls.target.y
-    var newVal = oldValue - 10;
+    var newVal = oldValue - 20;
     controls.target.y = newVal
     controls.update();
   });
 
   $('#pandown').on('click', function() {
     var oldValue = controls.target.y
-    var newVal = oldValue + 10;
+    var newVal = oldValue + 20;
     controls.target.y = newVal
     controls.update();
   });

@@ -16,79 +16,9 @@ var lineincrement = 50
 containerWidth = window.innerWidth;
 containerHeight = window.innerHeight;
 
-function attachTransformWidget() {
-    $("#transformcontrols").show();
-    if (rastermesh) {
-        control.attach(rastermesh);
-        control.setMode("translate");
-        $("#resizeBtn").hide();
-        $("#linkAspectBtn").hide();
-
-    } else {
-        control.attach(fileParentGroup);
-        control.setMode("translate");
-        $("#resizeBtn").show();
-        $("#linkAspectBtn").show();
-
-    }
-    control.addEventListener('change', currentWorld);
-
-};
-
 function init3D() {
 
     window.addEventListener('mousedown', onMouseMove, false);
-
-
-    $('#translateBtn').on('click', function() {
-        if ($("#translateBtn").hasClass("btn-primary")) {
-            $("#translateBtn").removeClass("btn-primary")
-            $("#translateBtn").addClass("btn-default")
-            scene.remove(control);
-        } else {
-            $("#translateBtn").removeClass("btn-default")
-            $("#resizeBtn").removeClass("btn-primary")
-            $("#resizeBtn").addClass("btn-default")
-            $("#translateBtn").addClass("btn-primary")
-            control.setMode("translate");
-            scene.add(control);
-        };
-    });
-
-    $('#resizeBtn').on('click', function() {
-        if ($("#resizeBtn").hasClass("btn-primary")) {
-            $("#resizeBtn").removeClass("btn-primary")
-            $("#resizeBtn").addClass("btn-default")
-            scene.remove(control);
-        } else {
-            $("#resizeBtn").removeClass("btn-default")
-            $("#translateBtn").removeClass("btn-primary")
-            $("#translateBtn").addClass("btn-default")
-            $("#resizeBtn").addClass("btn-primary")
-            control.setMode("scale");
-            scene.add(control);
-        }
-    });
-
-    $('#linkAspectBtn').on('click', function() {
-        if ($("#linkAspect").hasClass("fa-link")) {
-            // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
-            // $( "#linkAspectBtn" ).addClass( "btn-default" )
-            $('#linkAspect').removeClass('fa-link');
-            $('#linkAspect').addClass('fa-unlink');
-        } else {
-            // $( "#linkAspectBtn" ).removeClass( "btn-default" )
-            // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
-            // $( "#linkAspectBtn" ).addClass( "btn-default" )
-            // $( "#linkAspectBtn" ).addClass( "btn-primary" )
-            $('#linkAspect').removeClass('fa-unlink');
-            $('#linkAspect').addClass('fa-link');
-        }
-    });
-
-
-
-
 
     // ThreeJS Render/Control/Camera
     scene = new THREE.Scene();
