@@ -82,7 +82,12 @@ function Rasterizer(config) {
     startgcode = $('#startgcode').val();
     laseron = $('#laseron').val();
     laseroff = $('#laseroff').val();
-    lasermultiply = $('#lasermultiply').val();
+    if ($('#lasermultiply').val()) {
+      lasermultiply = $('#lasermultiply').val();
+    } else {
+      lasermultiply = 100;
+      printLog('NB - generated with default value of S100 since you have not yet configured LaserWeb for your machine.  Click that settings button and configure the Max PWM S Value (and all the other settings please).... ', errorcolor)
+    }
     homingseq = $('#homingseq').val();
     endgcode = $('#endgcode').val();
 
