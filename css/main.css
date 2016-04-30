@@ -72,10 +72,13 @@
     height: 200px;
     width: auto;
     overflow-y: auto;
+    overflow-x: none;
     text-align: left;
     background-color: #fff;
     padding: 10px;
     font-size: 10px;
+    word-break: break-all;
+    white-space:normal;
 }
 .pf {
     white-space: pre;
