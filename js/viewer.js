@@ -18,7 +18,8 @@ containerHeight = window.innerHeight;
 
 function init3D() {
 
-    window.addEventListener('mousedown', onMouseMove, false);
+    window.addEventListener('mousedown', onMouseClick, false);
+    window.addEventListener('mousemove', onMouseMove, false);
 
     // ThreeJS Render/Control/Camera
     scene = new THREE.Scene();
@@ -521,12 +522,17 @@ $(window).on('resize', function() {
 
 });
 
-function onMouseMove(e) {
+function onMouseClick(e) {
 
     //event.preventDefault();
+    sceneWidth = document.getElementById("renderArea").offsetWidth;
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    offset = $('#renderArea').offset();
+    mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+    mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
 
-    mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
-    mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    // mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+    // mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
 
 
@@ -551,6 +557,43 @@ function onMouseMove(e) {
         bullseye.children[2].material.color.setRGB(1, 0, 0);
 
     }
+
+}
+    function onMouseMove(e) {
+
+        //event.preventDefault();
+        sceneWidth = document.getElementById("renderArea").offsetWidth;
+        sceneHeight = document.getElementById("renderArea").offsetHeight;
+        offset = $('#renderArea').offset();
+        mouseVector.x = ( ( e.clientX - offset.left ) / sceneWidth ) * 2 - 1;
+        mouseVector.y = - ( ( e.clientY - offset.top ) / sceneHeight ) * 2 + 1
+
+        // mouseVector.x = (e.clientX / window.innerWidth) * 2 - 1;
+        // mouseVector.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+
+
+
+        // var vector = mouseVector.clone().unproject( camera );
+        // var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
+        // raycaster.set( vector, direction );
+        raycaster.setFromCamera(mouseVector, camera);
+        var intersects = raycaster.intersectObjects(scene.children, true)
+
+        for (var i = 0; i < intersects.length; i++) {
+            var intersection = intersects[i],
+                obj = intersection.object;
+            if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh") {
+                // printLog('Clicked on : ' + obj.name, successcolor)
+                // obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
+            }
+
+            bullseye.position.set(intersects[i].point.x, intersects[i].point.y, intersects[i].point.z);
+            bullseye.children[0].material.color.setRGB(1, 0, 0);
+            bullseye.children[1].material.color.setRGB(1, 0, 0);
+            bullseye.children[2].material.color.setRGB(1, 0, 0);
+
+        }
 
 
 }
