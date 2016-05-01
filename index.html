@@ -97,7 +97,8 @@
     <script src="js/main.js"></script>
 
     <!--Google Sign-in-->
-    <script src="https://apis.google.com/js/platform.js"></script>
+    <!-- <script src="https://apis.google.com/js/platform.js"></script> -->
+    <script src="https://apis.google.com/js/client.js"></script>
     <script src="js/googlesignin.js"></script>
     <meta name="google-signin-client_id" content="1086441811451-4nmidqbqq8tve1qqa592uq1hs04kl5sl.apps.googleusercontent.com">
     <link rel="stylesheet" href="css/googlesignin.css" />
@@ -172,18 +173,26 @@
 
 
             <ul class="nav nav-sidebar">
-              <h4 id="fullname">Please Sign In:</h4>
               <center>
               <a class="user-link" href=""><img id="userpic" class="media-object img-thumbnail user-img" alt="User Picture" src="css/user64.gif" height="64" width="64"></a>
+              <h4 id="fullname">Please Sign In:</h4>
                 <div id="gSignInWrapper">
-                  <button class="btn btn-success customGPlusSignIn" id="g-login"><i class="fa fa-fw fa-sign-in" aria-hidden="true"></i>Login<i class="fa fa-fw fa-google" aria-hidden="true"></i></button>
-                  <button class="btn btn-danger customGPlusSignIn" id="g-logout" onclick="signOut();" style="display:none;"><i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>Logout<i class="fa  fa-fw fa-google" aria-hidden="true"></i></button>
+                  <button class="btn btn-success customGPlusSignIn" id="g-login"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Login<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></button>
+                  <button class="btn btn-danger customGPlusSignIn" id="g-logout" onclick="signOut();" style="display:none;"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Logout<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i></button>
                 </div>
               </center>
+              <div id="authorize-div" style="display: none">
+     <span>Authorize access to Drive API</span>
+     <!--Button for the user to click to initiate auth sequence -->
+     <button id="authorize-button" onclick="handleAuthClick(event)">
+       Authorize
+     </button>
+   </div>
+   <pre id="output"></pre>
             </ul>
 
 
-            <ul class="nav nav-sidebar">
+            <!-- <ul class="nav nav-sidebar">
                 <li class="active" id="toggleviewer"><a href="#">Home <span class="sr-only">(current)</span></a></li>
                 <li id="togglemachine"><a href="#" >Prepare Machine</a></li>
                 <li id="togglefile"><a href="#" >Prepare Job</a></li>
@@ -196,7 +205,7 @@
             <ul class="nav nav-sidebar">
                 <li id="togglemacro"><a href="#" >Macros</a></li>
 
-            </ul>
+            </ul> -->
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
@@ -238,6 +247,10 @@
 
 
                 <div class="row flex-row">
+
+                        <div class="row" id="wizard">
+
+                        </div>
 
                         <div class="row" id="macro_container" style="display: none;">
                             <div class="bs-callout bs-callout-danger" id="macrostatus">
