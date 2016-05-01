@@ -93,8 +93,16 @@ function init3D() {
         $('#viewermodule').hide();
         $('#renderArea').append(renderer.domElement);
         renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
-        renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+        // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
         renderer.clear();
+
+        sceneWidth = document.getElementById("renderArea").offsetWidth,
+        sceneHeight = document.getElementById("renderArea").offsetHeight;
+        camera.aspect = sceneWidth / sceneHeight;
+        renderer.setSize(sceneWidth, sceneHeight)
+        camera.updateProjectionMatrix();
+        // controls.reset();
+        // $('#viewReset').click();
 
     }
 
@@ -310,6 +318,9 @@ function animate() {
     // mesh.rotation.x += 0.01;
     // mesh.rotation.y += 0.02;
     renderer.render(scene, camera);
+    sceneWidth = document.getElementById("renderArea").offsetWidth,
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    camera.aspect = sceneWidth / sceneHeight;
 }
 
 
@@ -371,8 +382,8 @@ viewExtents = function(objecttosee) {
     controls.object.position.x = centerx;
     controls.object.position.y = centery;
     controls.object.position.z = centerz + dist;
-    controls.target.x = centerx;
-    controls.target.y = centery;
+    controls.target.x = centerx - 70 ;
+    controls.target.y = centery + 50;
     controls.target.z = centerz;
     console.log("maxlen:", maxlen, "dist:", dist);
     var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
@@ -498,8 +509,12 @@ function makeSprite(scene, rendererType, vals) {
 // Global Function to keep three fullscreen
 $(window).on('resize', function() {
     //renderer.setSize(element.width(), element.height());
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth / window.innerHeight;
+
+    sceneWidth = document.getElementById("renderArea").offsetWidth,
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    renderer.setSize(sceneWidth, sceneHeight)
+    //renderer.setSize(window.innerWidth, window.innerHeight);
+    camera.aspect = sceneWidth / sceneHeight;
     camera.updateProjectionMatrix();
     controls.reset();
     $('#viewReset').click();

@@ -1,6 +1,6 @@
 #renderArea {
     /*background-color: #ffffff;*/
-    position: absolute;
+    /*position: relative;
     top: 0;
     left: 0;
     right: 0;
@@ -8,7 +8,12 @@
     border: 1px #000;
     float: left;
     margin-right: 1%;
-    z-index: -3;
+    z-index: -3;*/
+    display:inline-block;
+	  min-height: 100% !important;
+}
+
+
 }
 #rasterArea {
     background-color: #ffffff;
@@ -64,12 +69,14 @@
     padding-left: 15px;
     margin-bottom: 5px;
     font-size: 20px;
-    width: 100%;
+    width: 98%;
     border: 1px solid #aaa;
     font-weight: bold;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 #console {
-    height: 200px;
+    height: 220px;
     width: auto;
     overflow-y: auto;
     overflow-x: none;
@@ -105,4 +112,16 @@ table tr td:first-child::before {
     /*position:relative;
    top: -6px;
    left: -30px;*/
+}
+@media only screen and (min-width : 768px) {
+   .flex-row.row {
+	 display: flex;
+	 flex-wrap: wrap;
+   align-items: stretch;
+   }
+   .flex-row.row > [class*='col-'] {
+	 display: flex;
+	 flex-direction: column;
+   align-items: stretch;
+   }
 }

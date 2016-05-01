@@ -89,7 +89,7 @@ $(document).ready(function() {
 
     // Show/Hide Macro Pad
     $('#togglemacro').on('click', function() {
-      if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
+      if ($( "#togglemacro" ).hasClass( "active" )) {
         $( "#toggleviewer" ).click();
       } else {
         $('#macro_container').show();
@@ -98,24 +98,21 @@ $(document).ready(function() {
         $('#file_container').hide();
         $('#settings_container').hide();
         $('#gcode_container').hide();
-        $("#togglegcode").removeClass("btn-primary")
-        $("#togglegcode").addClass("btn-default")
-        $("#toggleviewer").removeClass("btn-primary")
-        $("#toggleviewer").addClass("btn-default")
-        $("#togglemachine").removeClass("btn-primary")
-        $("#togglemachine").addClass("btn-default")
-        $("#togglemacro").addClass("btn-primary")
-        $("#togglemacro").removeClass("btn-default")
-        $("#togglesettings").removeClass("btn-primary")
-        $("#togglesettings").addClass("btn-default")
-        $("#togglefile").removeClass("btn-primary")
-        $("#togglefile").addClass("btn-default")
+        $("#togglegcode").removeClass("active");
+        $("#toggleviewer").removeClass("active");
+        $("#togglemachine").removeClass("active");
+        $("#togglemacro").addClass("active");
+        $("#togglesettings").removeClass("active");
+        $("#togglefile").removeClass("active");
       }
     });
 
     $('#toggleviewer').on('click', function() {
-      if ($( "#toggleviewer" ).hasClass( "btn-primary" )) {
-        $( "#toggleviewer" ).click();
+      if ($( "#toggleviewer" ).hasClass( "active" )) {
+        //$( "#toggleviewer" ).click();
+          $('#viewer_container').hide();
+          $("#toggleviewer").removeClass("active")
+
       } else {
         $('#macro_container').hide();
         $('#viewer_container').show();
@@ -123,18 +120,13 @@ $(document).ready(function() {
         $('#file_container').hide();
         $('#settings_container').hide();
         $('#gcode_container').hide();
-        $("#togglegcode").removeClass("btn-primary")
-        $("#togglegcode").addClass("btn-default")
-        $("#toggleviewer").addClass("btn-primary")
-        $("#toggleviewer").removeClass("btn-default")
-        $("#togglemachine").removeClass("btn-primary")
-        $("#togglemachine").addClass("btn-default")
-        $("#togglemacro").removeClass("btn-primary")
-        $("#togglemacro").addClass("btn-default")
-        $("#togglesettings").removeClass("btn-primary")
-        $("#togglesettings").addClass("btn-default")
-        $("#togglefile").removeClass("btn-primary")
-        $("#togglefile").addClass("btn-default")
+        $("#togglegcode").removeClass("active");
+        $("#toggleviewer").addClass("active");
+        $("#togglemachine").removeClass("active");
+        $("#togglemacro").removeClass("active");
+        $("#togglesettings").removeClass("active");
+        $("#togglefile").removeClass("active");
+
       }
     });
 
@@ -148,18 +140,12 @@ $(document).ready(function() {
         $('#file_container').hide();
         $('#settings_container').hide();
         $('#gcode_container').hide();
-        $("#togglegcode").removeClass("btn-primary")
-        $("#togglegcode").addClass("btn-default")
-        $("#toggleviewer").removeClass("btn-primary")
-        $("#toggleviewer").addClass("btn-default")
-        $("#togglemachine").addClass("btn-primary")
-        $("#togglemachine").removeClass("btn-default")
-        $("#togglemacro").removeClass("btn-primary")
-        $("#togglemacro").addClass("btn-default")
-        $("#togglesettings").removeClass("btn-primary")
-        $("#togglesettings").addClass("btn-default")
-        $("#togglefile").removeClass("btn-primary")
-        $("#togglefile").addClass("btn-default")
+        $("#togglegcode").removeClass("active");
+        $("#toggleviewer").removeClass("active");
+        $("#togglemachine").addClass("active");
+        $("#togglemacro").removeClass("active");
+        $("#togglesettings").removeClass("active");
+        $("#togglefile").removeClass("active");
       }
     });
 
@@ -173,18 +159,12 @@ $(document).ready(function() {
         $('#file_container').hide();
         $('#settings_container').show();
         $('#gcode_container').hide();
-        $("#togglegcode").removeClass("btn-primary")
-        $("#togglegcode").addClass("btn-default")
-        $("#toggleviewer").removeClass("btn-primary")
-        $("#toggleviewer").addClass("btn-default")
-        $("#togglemachine").removeClass("btn-primary")
-        $("#togglemachine").addClass("btn-default")
-        $("#togglemacro").removeClass("btn-primary")
-        $("#togglemacro").addClass("btn-default")
-        $("#togglesettings").addClass("btn-primary")
-        $("#togglesettings").removeClass("btn-default")
-        $("#togglefile").removeClass("btn-primary")
-        $("#togglefile").addClass("btn-default")
+        $("#togglegcode").removeClass("active");
+        $("#toggleviewer").removeClass("active");
+        $("#togglemachine").removeClass("active");
+        $("#togglemacro").removeClass("active");
+        $("#togglesettings").addClass("active");
+        $("#togglefile").removeClass("active");
       }
     });
 
@@ -198,18 +178,12 @@ $(document).ready(function() {
         $('#file_container').show();
         $('#settings_container').hide();
         $('#gcode_container').hide();
-        $("#togglegcode").removeClass("btn-primary")
-        $("#togglegcode").addClass("btn-default")
-        $("#toggleviewer").removeClass("btn-primary")
-        $("#toggleviewer").addClass("btn-default")
-        $("#togglemachine").removeClass("btn-primary")
-        $("#togglemachine").addClass("btn-default")
-        $("#togglemacro").removeClass("btn-primary")
-        $("#togglemacro").addClass("btn-default")
-        $("#togglesettings").removeClass("btn-primary")
-        $("#togglesettings").addClass("btn-default")
-        $("#togglefile").addClass("btn-primary")
-        $("#togglefile").removeClass("btn-default")
+        $("#togglegcode").removeClass("active");
+        $("#toggleviewer").removeClass("active");
+        $("#togglemachine").removeClass("active");
+        $("#togglemacro").removeClass("active");
+        $("#togglesettings").removeClass("active");
+        $("#togglefile").addClass("active");
       }
     });
 
@@ -223,18 +197,12 @@ $(document).ready(function() {
         $('#file_container').hide();
         $('#settings_container').hide();
         $('#gcode_container').show();
-        $("#togglegcode").addClass("btn-primary")
-        $("#togglegcode").removeClass("btn-default")
-        $("#toggleviewer").removeClass("btn-primary")
-        $("#toggleviewer").addClass("btn-default")
-        $("#togglemachine").removeClass("btn-primary")
-        $("#togglemachine").addClass("btn-default")
-        $("#togglemacro").removeClass("btn-primary")
-        $("#togglemacro").addClass("btn-default")
-        $("#togglesettings").removeClass("btn-primary")
-        $("#togglesettings").addClass("btn-default")
-        $("#togglefile").removeClass("btn-primary")
-        $("#togglefile").addClass("btn-default")
+        $("#togglegcode").addClass("active");
+        $("#toggleviewer").removeClass("active");
+        $("#togglemachine").removeClass("active");
+        $("#togglemacro").removeClass("active");
+        $("#togglesettings").removeClass("active");
+        $("#togglefile").removeClass("active");
       }
     });
 
