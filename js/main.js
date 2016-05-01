@@ -242,7 +242,10 @@ errorHandlerJS = function() {
 };
 
 // Function to execute when opening file (triggered by fileOpen.addEventListener('change', readFile, false); )
+
+
 function readFile(evt) {
+  console.log(evt);
     // Close the menu
     $("#drop1").dropdown("toggle");
     // Filereader
@@ -405,6 +408,7 @@ function readFile(evt) {
     }
 
 };
+
 
 // Removed and null all object when a new file is loaded
 function cleanupThree() {
