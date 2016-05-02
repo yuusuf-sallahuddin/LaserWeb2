@@ -311,6 +311,8 @@ function init3D() {
 
 }
 
+
+
 function animate() {
 
     requestAnimationFrame(animate);
@@ -339,6 +341,7 @@ viewExtents = function(objecttosee) {
     //if (this.bboxHelper)
     //    this.scene.remove(this.bboxHelper);
     bboxHelper = helper;
+
     // If you want a visible bounding box
     //this.scene.add(this.bboxHelper);
     console.log("helper bbox:", helper);
@@ -350,24 +353,9 @@ viewExtents = function(objecttosee) {
     var minz = helper.box.min.z;
     var maxz = helper.box.max.z;
 
-    // var ud = [];
-    // ud.bbox2 = helper.box;
-    // ud.center2.x = minx + ((maxx - minx) / 2);
-    // ud.center2.y = miny + ((maxy - miny) / 2);
-    // ud.center2.z = minz + ((maxz - minz) / 2);
 
-    //this.controls.enabled = false;
     controls.reset();
-    //this.controls.object.rotation._x = 0.5;
-    //this.controls.object.rotation._y = 0.5;
-    //this.controls.object.rotation._z = 0.5;
-    //this.controls.object.rotation = THREE.Euler(0.5, 0.5, 0.5);
-    //this.controls.object.setRotationFromEuler(THREE.Euler(0.5,0.5,0.5));
 
-    // get max of any of the 3 axes to use as max extent
-    //var lenx = Math.abs(ud.bbbox2.min.x) + ud.bbbox2.max.x;
-    //var leny = Math.abs(ud.bbbox2.min.y) + ud.bbbox2.max.y;
-    //var lenz = Math.abs(ud.bbbox2.min.z) + ud.bbbox2.max.z;
     var lenx = maxx - minx;
     var leny = maxy - miny;
     var lenz = maxz - minz;
@@ -383,8 +371,8 @@ viewExtents = function(objecttosee) {
     controls.object.position.x = centerx;
     controls.object.position.y = centery;
     controls.object.position.z = centerz + dist;
-    controls.target.x = centerx - 70 ;
-    controls.target.y = centery + 50;
+    controls.target.x = centerx;
+    controls.target.y = centery;
     controls.target.z = centerz;
     console.log("maxlen:", maxlen, "dist:", dist);
     var fov = 2.2 * Math.atan(maxlen / (2 * dist)) * (180 / Math.PI);
@@ -589,9 +577,7 @@ function onMouseClick(e) {
             }
 
             bullseye.position.set(intersects[i].point.x, intersects[i].point.y, intersects[i].point.z);
-            bullseye.children[0].material.color.setRGB(1, 0, 0);
-            bullseye.children[1].material.color.setRGB(1, 0, 0);
-            bullseye.children[2].material.color.setRGB(1, 0, 0);
+
 
         }
 

@@ -11,6 +11,7 @@
     z-index: -3;*/
     display:inline-block;
 	  min-height: 100% !important;
+    cursor: none;
 }
 
 

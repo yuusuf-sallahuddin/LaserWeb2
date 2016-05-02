@@ -27,10 +27,12 @@ $(document).ready(function() {
 
     // Responsive Sidebar width
     if ( screen.width < 800) {
-      $('#maincolumn').addClass('col-md-10 col-md-offset-3');
+      $('#maincolumn').addClass('col-md-offset-3');
+      $('#maincolumn').addClass('col-md-10');
       $('#sidebarcolumn').addClass('col-md-2');
     } else
-      $('#maincolumn').addClass('col-md-9 col-md-offset-3');
+      $('#maincolumn').addClass('col-md-offset-3');
+      $('#maincolumn').addClass('col-md-9');
       $('#sidebarcolumn').addClass('col-md-3');
 
 
@@ -125,6 +127,8 @@ $(document).ready(function() {
       $("#jogtabbtn").removeClass("active");
       $("#gcodetabbtn").addClass("active");
     });
+
+
     // Show/Hide Macro Pad
     $('#togglemacro').on('click', function() {
       if ($( "#togglemacro" ).hasClass( "active" )) {
@@ -135,8 +139,6 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').hide();
-        $('#gcode_container').hide();
-        $("#togglegcode").removeClass("active");
         $("#toggleviewer").removeClass("active");
         $("#togglemachine").removeClass("active");
         $("#togglemacro").addClass("active");
@@ -157,8 +159,6 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').hide();
-        $('#gcode_container').hide();
-        $("#togglegcode").removeClass("active");
         $("#toggleviewer").addClass("active");
         $("#togglemachine").removeClass("active");
         $("#togglemacro").removeClass("active");
@@ -177,8 +177,6 @@ $(document).ready(function() {
         $('#control_container').show();
         $('#file_container').hide();
         $('#settings_container').hide();
-        $('#gcode_container').hide();
-        $("#togglegcode").removeClass("active");
         $("#toggleviewer").removeClass("active");
         $("#togglemachine").addClass("active");
         $("#togglemacro").removeClass("active");
@@ -196,8 +194,6 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').hide();
         $('#settings_container').show();
-        $('#gcode_container').hide();
-        $("#togglegcode").removeClass("active");
         $("#toggleviewer").removeClass("active");
         $("#togglemachine").removeClass("active");
         $("#togglemacro").removeClass("active");
@@ -215,8 +211,6 @@ $(document).ready(function() {
         $('#control_container').hide();
         $('#file_container').show();
         $('#settings_container').hide();
-        $('#gcode_container').hide();
-        $("#togglegcode").removeClass("active");
         $("#toggleviewer").removeClass("active");
         $("#togglemachine").removeClass("active");
         $("#togglemacro").removeClass("active");
@@ -225,24 +219,6 @@ $(document).ready(function() {
       }
     });
 
-    $('#togglegcode').on('click', function() {
-      if ($( "#togglegcode" ).hasClass( "btn-primary" )) {
-        $( "#toggleviewer" ).click();
-      } else {
-        $('#macro_container').hide();
-        $('#viewer_container').hide();
-        $('#control_container').hide();
-        $('#file_container').hide();
-        $('#settings_container').hide();
-        $('#gcode_container').show();
-        $("#togglegcode").addClass("active");
-        $("#toggleviewer").removeClass("active");
-        $("#togglemachine").removeClass("active");
-        $("#togglemacro").removeClass("active");
-        $("#togglesettings").removeClass("active");
-        $("#togglefile").removeClass("active");
-      }
-    });
 
 
 

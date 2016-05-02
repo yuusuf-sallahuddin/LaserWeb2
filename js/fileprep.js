@@ -115,28 +115,64 @@ function filePrepInit() {
   $('#panleft').on('click', function() {
     var oldValue = controls.target.x
     var newVal = oldValue + 20;
-    controls.target.x = newVal
-    controls.update();
+    TweenMax.to(controls.target,0.25,{x:newVal,onUpdate:function(){
+                        controls.update();
+                         }});
+    // controls.target.x = newVal
+    //controls.object.position.x = newVal;
+    // controls.update();
   });
 
   $('#panright').on('click', function() {
     var oldValue = controls.target.x
     var newVal = oldValue - 20;
-    controls.target.x = newVal
-    controls.update();
+    TweenMax.to(controls.target,0.25,{x:newVal,onUpdate:function(){
+                        controls.update();
+                         }});
+    // controls.target.x = newVal
+    // controls.object.position.x = newVal;
+    // controls.update();
   });
 
   $('#panup').on('click', function() {
     var oldValue = controls.target.y
     var newVal = oldValue - 20;
-    controls.target.y = newVal
-    controls.update();
+    TweenMax.to(controls.target,0.25,{y:newVal,onUpdate:function(){
+                        controls.update();
+                         }});
+    // controls.target.y = newVal
+    // controls.object.position.y = newVal;
+    // controls.update();
   });
 
   $('#pandown').on('click', function() {
     var oldValue = controls.target.y
     var newVal = oldValue + 20;
-    controls.target.y = newVal
+    TweenMax.to(controls.target,0.25,{y:newVal,onUpdate:function(){
+                        controls.update();
+                         }});
+    // controls.target.y = newVal
+    // controls.object.position.y = newVal;
+    // controls.update();
+  });
+
+  $('#zoomout').on('click', function() {
+    // var oldValue = controls.target.y
+    // var newVal = oldValue + 20;
+    // controls.target.y = newVal
+    TweenMax.to(camera,0.25,{fov:"+=5",onUpdate:function(){
+                        camera.updateProjectionMatrix();
+                         }});
+    controls.update();
+  });
+
+  $('#zoomin').on('click', function() {
+    // var oldValue = controls.target.y
+    // var newVal = oldValue + 20;
+    // controls.target.y = newVal
+    TweenMax.to(camera,0.25,{fov:"-=5",onUpdate:function(){
+                        camera.updateProjectionMatrix();
+                         }});
     controls.update();
   });
 
