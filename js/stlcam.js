@@ -3,6 +3,18 @@ var shapes = null;;
 var group = null;;
 var slicegroup;
 
+function hidestl() {
+    $('#hidestl').addClass('disabled');
+    $('#showstl').removeClass('disabled');
+    scene.remove(stl);
+}
+
+function showstl() {
+    $('#showstl').addClass('disabled');
+    $('#hidestl').removeClass('disabled');
+    scene.add(stl);
+}
+
 
 //start stl parsing functions
 parseStlBinary = function(stl) { //this is from jsstl.  we have a failure on the new DataView
@@ -78,17 +90,6 @@ var group;
 
 var fileObject = new THREE.Group();
 
-function hidestl() {
-    $('#hidestl').addClass('disabled');
-    $('#showstl').removeClass('disabled');
-    scene.remove(stl);
-}
-
-function showstl() {
-    $('#showstl').addClass('disabled');
-    $('#hidestl').removeClass('disabled');
-    scene.add(stl);
-}
 
 function generateSlices() {
     var layerheight = parseFloat($('#layerheight').val());

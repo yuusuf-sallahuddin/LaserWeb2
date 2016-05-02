@@ -32,10 +32,10 @@ drawSvg = function(file) {
         scene.add(fileParentGroup);
 
         // Empty File Prep table
-        $("#layersbody").empty();
+        $("#layers").empty();
 
         viewExtents(fileParentGroup)
-        $('#layers > tbody:last-child').append('<tr><td>SVG</td><td>  <div class="input-group" style="margin-bottom:5px; width: 100%;"><input class="form-control" name=sp0 id=sp0 value=3200><span class="input-group-addon"  style="width: 30px;">mm/m</span><input class="form-control" name=pwr0 id=pwr0 value=100><span class="input-group-addon"  style="width: 30px;">%</span></div></td></tr>');
+        $('#layers').append('<form class="form-horizontal"><div class="form-group"><label class="control-label">SVG</label><div class="input-group"><input class="form-control" name=sp0 id=sp0 value=3200><span class="input-group-addon">mm/m</span></div><div class="form-group"></div><div class="input-group"><input class="form-control" name=pwr0 id=pwr0 value=100><span class="input-group-addon">%</span></div></div></form>');
 
         //scene.add(  this.mySceneGroup)
         // get the new 3d viewer object centered on camera

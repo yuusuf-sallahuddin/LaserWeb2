@@ -131,101 +131,59 @@ $(document).ready(function() {
 
     // Show/Hide Macro Pad
     $('#togglemacro').on('click', function() {
-      if ($( "#togglemacro" ).hasClass( "active" )) {
-        $( "#toggleviewer" ).click();
+      if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
+        $('#macro_container').hide();
+        $('#viewer_container').show();
+        $("#togglemacro").removeClass("btn-primary");
+        $("#togglemacro").addClass("btn-default");
       } else {
         $('#macro_container').show();
         $('#viewer_container').hide();
-        $('#control_container').hide();
-        $('#file_container').hide();
-        $('#settings_container').hide();
-        $("#toggleviewer").removeClass("active");
-        $("#togglemachine").removeClass("active");
-        $("#togglemacro").addClass("active");
-        $("#togglesettings").removeClass("active");
-        $("#togglefile").removeClass("active");
+        $("#togglemacro").addClass("btn-primary");
+        $("#togglemacro").removeClass("btn-default");
       }
     });
 
+
+    // Show/Hide Macro Pad
     $('#toggleviewer').on('click', function() {
       if ($( "#toggleviewer" ).hasClass( "active" )) {
-        //$( "#toggleviewer" ).click();
-          $('#viewer_container').hide();
-          $("#toggleviewer").removeClass("active")
 
       } else {
-        $('#macro_container').hide();
-        $('#viewer_container').show();
-        $('#control_container').hide();
-        $('#file_container').hide();
-        $('#settings_container').hide();
+        $('#camleftcol').hide();
+        $('#settingscol').hide();
         $("#toggleviewer").addClass("active");
-        $("#togglemachine").removeClass("active");
-        $("#togglemacro").removeClass("active");
+        $("#togglefile").removeClass("active");
         $("#togglesettings").removeClass("active");
-        $("#togglefile").removeClass("active");
-
-      }
-    });
-
-    $('#togglemachine').on('click', function() {
-      if ($( "#togglemachine" ).hasClass( "btn-primary" )) {
-        $( "#toggleviewer" ).click();
-      } else {
-        $('#macro_container').hide();
-        $('#viewer_container').hide();
-        $('#control_container').show();
-        $('#file_container').hide();
-        $('#settings_container').hide();
-        $("#toggleviewer").removeClass("active");
-        $("#togglemachine").addClass("active");
-        $("#togglemacro").removeClass("active");
-        $("#togglesettings").removeClass("active");
-        $("#togglefile").removeClass("active");
-      }
-    });
-
-    $('#togglesettings').on('click', function() {
-      if ($( "#togglesettings" ).hasClass( "btn-primary" )) {
-        $( "#toggleviewer" ).click();
-      } else {
-        $('#macro_container').hide();
-        $('#viewer_container').hide();
-        $('#control_container').hide();
-        $('#file_container').hide();
-        $('#settings_container').show();
-        $("#toggleviewer").removeClass("active");
-        $("#togglemachine").removeClass("active");
-        $("#togglemacro").removeClass("active");
-        $("#togglesettings").addClass("active");
-        $("#togglefile").removeClass("active");
       }
     });
 
     $('#togglefile').on('click', function() {
-      if ($( "#togglefile" ).hasClass( "btn-primary" )) {
-        $( "#toggleviewer" ).click();
+      if ($( "#togglefile" ).hasClass( "active" )) {
+
       } else {
-        $('#macro_container').hide();
-        $('#viewer_container').hide();
-        $('#control_container').hide();
-        $('#file_container').show();
-        $('#settings_container').hide();
+        $('#camleftcol').show();
+        $('#settingscol').hide();
         $("#toggleviewer").removeClass("active");
-        $("#togglemachine").removeClass("active");
-        $("#togglemacro").removeClass("active");
-        $("#togglesettings").removeClass("active");
         $("#togglefile").addClass("active");
+        $("#togglesettings").removeClass("active");
+      }
+    });
+
+    $('#togglesettings').on('click', function() {
+      if ($( "#togglesettings" ).hasClass( "active" )) {
+
+      } else {
+        $('#camleftcol').hide();
+        $('#settingscol').show();
+        $("#toggleviewer").removeClass("active");
+        $("#togglefile").removeClass("active");
+        $("#togglesettings").addClass("active");
       }
     });
 
 
-
-
-
-
     // Viewer
-
     var viewer = document.getElementById('renderArea');
 
 
@@ -272,7 +230,7 @@ function readFile(evt) {
             r.readAsText(evt.target.files[0]);
             r.onload = function(e) {
                 dxf = r.result
-                $('#cammodule').show();
+                $('#camleftcol').show();
                 $('#rastermodule').hide();
                 getSettings();
                 drawDXF(dxf);
@@ -293,7 +251,7 @@ function readFile(evt) {
             r.onload = function(event) {
                 svg = r.result
                     // /console.log(svg);
-                $('#cammodule').show();
+                $('#camleftcol').show();
                 $('#rastermodule').hide();
                 getSettings();
                 drawSvg(svg);
@@ -316,7 +274,7 @@ function readFile(evt) {
                 document.getElementById('gcodepreview').value = this.result;
                 openGCodeFromText();
                 printLog('GCODE Opened', successcolor);
-                $('#cammodule').hide();
+                $('#camleftcol').hide();
                 $('#rastermodule').hide();
                 //  putFileObjectAtZero();
                 resetView()
@@ -369,7 +327,7 @@ function readFile(evt) {
             printLog('STL Opened', successcolor);
             //$('#cammodule').hide();
             $('#rastermodule').hide();
-            $('#cammodule').show();
+            $('#camleftcol').show();
             $('#stlopt').show();
             $('#prepopt').hide();
             $('#stlopt').click();

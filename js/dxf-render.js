@@ -21,7 +21,7 @@ function drawDXF(file) {
     cleanupThree();
 
     // Empty File Prep Table
-    $("#layersbody").empty();
+    $("#layers").empty();
     // if (typeof(showDxf) !== 'undefined') {
     //   scene.remove(showDxf);
     // };
@@ -83,7 +83,9 @@ function drawDXF(file) {
     layers = row.unique();
     //console.log(layers);
     for (var c = 0; c < layers.length; c++) {
-        $('#layers > tbody:last-child').append('<tr><td>' + layers[c] + '</td><td>  <div class="input-group" style="margin-bottom:5px; width: 100%;"><input class="form-control" name=sp' + c + ' id=sp' + c + ' value=3200><span class="input-group-addon"  style="width: 30px;">mm/m</span><input class="form-control" name=pwr' + c + ' id=pwr' + c + ' value=100><span class="input-group-addon"  style="width: 30px;">%</span></div></td></tr>');
+        $('#layers').append('<form class="form-horizontal"><div class="form-group"><label class="control-label">'+ layers[c] +'</label><div class="input-group"><input class="form-control" name=sp' + c + ' id=sp' + c + ' value=3200><span class="input-group-addon">mm/m</span></div><div class="form-group"></div><div class="input-group"><input class="form-control" name=pwr' + c + ' id=pwr' + c + ' value=100><span class="input-group-addon">%</span></div></div></form>');
+
+
     }
 
     // document.getElementById('fileInputGcode').value = '';
