@@ -170,20 +170,21 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-
-
             <ul class="nav nav-sidebar">
-              <center>
+
+              <table class="table"><tr><td>
               <a class="user-link" href=""><img id="userpic" class="media-object img-thumbnail user-img" alt="User Picture" src="css/user64.gif" height="64" width="64"></a>
-              <h4 id="fullname">Please Sign In:</h4>
+              </td><td>
+              <h5 id="fullname">Sign In:</h5>
                 <div id="gSignInWrapper">
                   <button class="btn btn-success customGPlusSignIn" id="g-login"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Login<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></button>
                   <button class="btn btn-danger customGPlusSignIn" id="g-logout" onclick="signOut();" style="display:none;"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Logout<i class="fa fa-fw fa-sign-out" aria-hidden="true"></i></button>
+                  <button class="btn btn-success customGPlusSignIn" id="g-refresh" onclick="listFiles();" style="display:none;"><i class="fa fa-fw fa-refresh" aria-hidden="true"></i></button>
                 </div>
-              </center>
-
+            </td></tr></table>
            <div id="fileList"></div>
             </ul>
+
 
 
             <ul class="nav nav-sidebar">
@@ -204,11 +205,15 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 
 
-            <div class="row flex-row">
+            <div class="row flex-row" >
                 <div class="col-xs-8 , " id="renderArea"></div>
                 <div class="col-xs-4">
-
-                    <div class="row">
+                  <ul class="nav nav-tabs nav-justified">
+                    <li id="drotabtn" role="presentation" class="active"><a href="#">DRO</a></li>
+                    <li id="jogtabbtn" role="presentation"><a href="#">Jog</a></li>
+                    <li id="gcodetabbtn" role="presentation"><a href="#">Gcode</a></li>
+                  </ul>
+                    <div class="row" id="drotab">
                         <span class="pull-right">
                         <span class="badge badge-default badge-notify" title="Items in Queue" id="queueCnt" style="margin-right: 5px;">Queued: 0</span>
                         </span>
@@ -219,12 +224,10 @@
                             <div id="mY" class="dro">Y: 0.000</div>
                             <div id="mZ" class="dro">Z: 0.000</div>
                         </div>
-                    </div>
-                    <div class="row">
 
-                        <div class="collapse in" id="consoleBody">
-                            <p class="list-group-item-text">
-                                <!-- Command Console -->
+                      <div class="collapse in" id="consoleBody">
+                          <p class="list-group-item-text">
+                              <!-- Command Console -->
                                 <div id="console"></div>
                                 <div class="input-group">
                                     <span class="input-group-addon" style="width: 60px;"><i class="fa fa-terminal fa-lg"></i></span>
@@ -237,16 +240,21 @@
                         </div>
                         </span>
                     </div>
-                </div>
 
+              <div class="row" id="jogtab" style="display: none;">
+              </div>
 
+              <div class="row" id="gcodetab" style="display: none;">
+                <textarea id="gcodepreview" style="width: 100%; height: 250px;"></textarea>
+                <button class="btn btn-lg btn-default btn-file" title="Export GCODE to a file" onclick="saveFile()"><i class="fa fa-save fa-fw"></i>Save</span>
+              </div>
+
+            </div>
+          </div>
                 <div class="row flex-row">
 
-                        <div class="row" id="wizard">
 
-                        </div>
-
-                        <div class="row" id="macro_container" style="display: none;">
+                        <div class="row  flex-row" id="macro_container" style="display: none;">
                             <div class="bs-callout bs-callout-danger" id="macrostatus">
                                 <h4><i class="fa fa-fw fa-exclamation" aria-hidden="true"></i>No macros created yet</h4> Please click Edit to start creating your own Macro buttons
                                 <ul>
@@ -265,7 +273,7 @@
                                         Configure Labels and G-Code commands for up to 24 buttons:
 
                                 </div>
-                                <div class="table-responsive">
+                                <div class="table-responsive settingstable">
                                     <table class="table" id="macroEdit">
                                         <thead>
                                             <tr>
@@ -300,7 +308,7 @@
                             </div>
                         </div>
 
-                        <div class="row" id="viewer_container" style="display: none;">
+                        <div class="row flex-row" id="viewer_container" style="display: none;">
 
                             <div class="btn-group" role="group" id="transformcontrols">
                                 <button type="button" data-title="Move Object" class="btn btn-lg btn-default" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
@@ -320,14 +328,13 @@
                             </div>
                         </div>
 
-                        <div class="row" id="gcode_container" style="display: none;">
+                        <div class="row  flex-row" id="gcode_container" style="display: none;">
 
-                            <textarea id="gcodepreview" style="width: 60%;"></textarea>
-                            <button class="btn btn-lg btn-default btn-file" title="Export GCODE to a file" onclick="saveFile()"><i class="fa fa-save fa-fw"></i>Save</span>
+
 
                         </div>
 
-                        <div class="row" id="control_container" style="display: none;">
+                        <div class="row flex-row" id="control_container" style="display: none;">
 
                             <div class="bs-callout bs-callout-danger" id="controlstatus">
                                 <h4><i class="fa fa-fw fa-exclamation" aria-hidden="true"></i>Not connected to a machine</h4> Please Connect to a machine first:
@@ -425,7 +432,7 @@
 
                         </div>
 
-                        <div class="row" id="file_container" style="display: none;">
+                        <div class="row flex-row" id="file_container" style="display: none;">
 
                             <div class="bs-callout bs-callout-danger" id="filestatus">
                                 <h4><i class="fa fa-fw fa-exclamation" aria-hidden="true"></i>No File to work with</h4> Please open a file from the "Open" button:
@@ -641,7 +648,7 @@
 
                         </div>
 
-                        <div class="row" id="settings_container" style="display: none;">
+                        <div class="row flex-row" id="settings_container" style="display: none;">
                             <ul class="nav nav-tabs">
                                 <li class="active"><a data-toggle="tab" href="#home">SPJS</a></li>
                                 <li><a data-toggle="tab" href="#menu1">Machine</a></li>

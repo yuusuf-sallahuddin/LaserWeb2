@@ -87,6 +87,35 @@ $(document).ready(function() {
     //   }
     // });
 
+    // Tabs on right side
+    $('#drotabtn').on('click', function() {
+      $('#drotab').show();
+      $('#jogtab').hide();
+      $('#gcodetab').hide();
+      $("#drotabtn").addClass("active");
+      $("#jogtabbtn").removeClass("active");
+      $("#gcodetabbtn").removeClass("active");
+    });
+
+
+    $('#jogtabbtn').on('click', function() {
+      $('#drotab').hide();
+      $('#jogtab').show();
+      $('#gcodetab').hide();
+      $("#drotabtn").removeClass("active");
+      $("#jogtabbtn").addClass("active");
+      $("#gcodetabbtn").removeClass("active");
+    });
+
+
+    $('#gcodetabbtn').on('click', function() {
+      $('#drotab').hide();
+      $('#jogtab').hide();
+      $('#gcodetab').show();
+      $("#drotabtn").removeClass("active");
+      $("#jogtabbtn").removeClass("active");
+      $("#gcodetabbtn").addClass("active");
+    });
     // Show/Hide Macro Pad
     $('#togglemacro').on('click', function() {
       if ($( "#togglemacro" ).hasClass( "active" )) {

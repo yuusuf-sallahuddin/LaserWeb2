@@ -22,6 +22,7 @@ function attachSignin(element) {
         function(googleUser) {
           $('#g-login').hide();
           $('#g-logout').show();
+          $('#g-refresh').show();
           $('#fullname').html( 'Logged in as: <b>' + googleUser.getBasicProfile().getName() + '</b>');
           $("#userpic").attr("src", googleUser.getBasicProfile().getImageUrl());
           gapi.client.load('drive', 'v3', function(){
@@ -42,6 +43,7 @@ function signOut() {
   });
   $('#g-login').show();
   $('#g-logout').hide();
+  $('#g-refresh').hide();
   $('#fullname').html('Please Sign In:');
   $("#userpic").attr("src", 'css/user64.gif');
 }
@@ -50,14 +52,15 @@ function signOut() {
 * Print files.
 */
 function listFiles() {
+ $('#fileList').empty();
  var request = gapi.client.drive.files.list({
      'pageSize': 10,
      'fields': "nextPageToken, files(id, name)"
    });
 
    request.execute(function(resp) {
-     $('#fileList').empty();
-     $('#fileList').append('Files:<p>');
+
+     $('#fileList').append('<B>Google Drive Files:</b><p>');
      var files = resp.files;
      if (files && files.length > 0) {
        for (var i = 0; i < files.length; i++) {
