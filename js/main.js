@@ -25,6 +25,15 @@ $(document).ready(function() {
     grbl = new Grbl();
     //initRaster();
 
+    // Responsive Sidebar width
+    if ( screen.width < 800) {
+      $('#maincolumn').addClass('col-md-10 col-md-offset-3');
+      $('#sidebarcolumn').addClass('col-md-2');
+    } else
+      $('#maincolumn').addClass('col-md-9 col-md-offset-3');
+      $('#sidebarcolumn').addClass('col-md-3');
+
+
     // Tooltips
     $(document).tooltip();
     $(document).click(function() {
