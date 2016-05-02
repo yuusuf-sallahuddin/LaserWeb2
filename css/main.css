@@ -94,6 +94,12 @@
 .ui-slider {
     background: #ccc;
 }
+
+ .ui-slider-handle {
+   -ms-touch-action: none;
+   touch-action: none;
+ }
+
 .settingstable {
     counter-reset: rowNumber;
 }
