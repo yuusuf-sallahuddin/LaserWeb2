@@ -71,42 +71,53 @@ function init3D() {
 
     if (userAgent.match(/iPad/i) || userAgent.match(/iPhone/i) || userAgent.match(/iPod/i)) {
         console.log('Running on iOS');
-        $('#viewermodule').show();
-        $('#mobileRenderArea').append(renderer.domElement);
-        renderer.setClearColor(0xffffff, 1); // Background color of viewer
-        renderer.setSize(1000, 1000);
-        renderer.clear();
-        camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
-        camera.updateProjectionMatrix();
+        // $('#viewermodule').show();
+        // $('#mobileRenderArea').append(renderer.domElement);
+        // renderer.setClearColor(0xffffff, 1); // Background color of viewer
+        // renderer.setSize(1000, 1000);
+        // renderer.clear();
+        // camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+        // camera.updateProjectionMatrix();
 
     } else if (userAgent.match(/Android/i)) {
         console.log('Running on Android');
-        $('#viewermodule').show();
-        $('#mobileRenderArea').append(renderer.domElement);
-        renderer.setClearColor(0xffffff, 1); // Background color of viewer
-        renderer.setSize($('#mobileRenderArea').width(), $('#mobileRenderArea').height());
-        renderer.clear();
-        camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
-        camera.updateProjectionMatrix();
+        // $('#viewermodule').show();
+        // $('#mobileRenderArea').append(renderer.domElement);
+        // renderer.setClearColor(0xffffff, 1); // Background color of viewer
+        // renderer.setSize($('#mobileRenderArea').width(), $('#mobileRenderArea').height());
+        // renderer.clear();
+        // camera.aspect = $('#mobileRenderArea').width() / $('#mobileRenderArea').height();
+        // camera.updateProjectionMatrix();
 
     } else {
         console.log('Running on unknown/Desktop');
-        $('#viewermodule').hide();
-        $('#renderArea').append(renderer.domElement);
-        renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
-        // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
-        renderer.clear();
-
-        sceneWidth = document.getElementById("renderArea").offsetWidth,
-        sceneHeight = document.getElementById("renderArea").offsetHeight;
-        camera.aspect = sceneWidth / sceneHeight;
-        renderer.setSize(sceneWidth, sceneHeight)
-        camera.updateProjectionMatrix();
+        // $('#viewermodule').hide();
+        // $('#renderArea').append(renderer.domElement);
+        // renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
+        // // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+        // renderer.clear();
+        //
+        // sceneWidth = document.getElementById("renderArea").offsetWidth,
+        // sceneHeight = document.getElementById("renderArea").offsetHeight;
+        // camera.aspect = sceneWidth / sceneHeight;
+        // renderer.setSize(sceneWidth, sceneHeight)
+        // camera.updateProjectionMatrix();
         // controls.reset();
         // $('#viewReset').click();
 
     }
 
+    $('#viewermodule').hide();
+    $('#renderArea').append(renderer.domElement);
+    renderer.setClearColor(0xffffff, 1); // Background color of viewer = transparent
+    // renderer.setSize(window.innerWidth - 10, window.innerHeight - 10);
+    renderer.clear();
+
+    sceneWidth = document.getElementById("renderArea").offsetWidth,
+    sceneHeight = document.getElementById("renderArea").offsetHeight;
+    camera.aspect = sceneWidth / sceneHeight;
+    renderer.setSize(sceneWidth, sceneHeight)
+    camera.updateProjectionMatrix();
 
 
     controls = new THREE.OrbitControls(camera, renderer.domElement);

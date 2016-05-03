@@ -70,18 +70,6 @@ body {
   }
 }
 
-
-
-.btn-circle.btn-lg {
-      width: 55px;
-      height: 50px
-      padding: 11px 2px
-      font-size: 18px;
-      line-height: 1.33;
-      border-radius: 25px;
-}
-
-
 #renderArea {
     /*background-color: #ffffff;*/
     /*position: relative;
@@ -110,12 +98,12 @@ body {
     float: left;
     margin-right: 1%;
 }
-#mobileRenderArea {
+/*#mobileRenderArea {
     float: none;
     margin-left: 0px;
     margin-right: 0px;
     margin-top: 0px;
-}
+}*/
 .btn-file {
     position: relative;
     overflow: hidden;
