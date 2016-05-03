@@ -534,7 +534,7 @@ function onMouseClick(e) {
     for (var i = 0; i < intersects.length; i++) {
         var intersection = intersects[i],
             obj = intersection.object;
-        if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh") {
+        if (obj.name && obj.name != "bullseye" && obj.name != "rastermesh" && obj.name != "XY") {
             printLog('Clicked on : ' + obj.name, successcolor)
             obj.material.color.setRGB(Math.random(), Math.random(), Math.random());
         }

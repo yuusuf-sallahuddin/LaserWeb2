@@ -101,30 +101,16 @@ $(document).ready(function() {
     // Tabs on right side
     $('#drotabtn').on('click', function() {
       $('#drotab').show();
-      $('#jogtab').hide();
       $('#gcodetab').hide();
       $("#drotabtn").addClass("active");
-      $("#jogtabbtn").removeClass("active");
-      $("#gcodetabbtn").removeClass("active");
-    });
-
-
-    $('#jogtabbtn').on('click', function() {
-      $('#drotab').hide();
-      $('#jogtab').show();
-      $('#gcodetab').hide();
-      $("#drotabtn").removeClass("active");
-      $("#jogtabbtn").addClass("active");
       $("#gcodetabbtn").removeClass("active");
     });
 
 
     $('#gcodetabbtn').on('click', function() {
       $('#drotab').hide();
-      $('#jogtab').hide();
       $('#gcodetab').show();
       $("#drotabtn").removeClass("active");
-      $("#jogtabbtn").removeClass("active");
       $("#gcodetabbtn").addClass("active");
     });
 
@@ -133,11 +119,13 @@ $(document).ready(function() {
     $('#togglemacro').on('click', function() {
       if ($( "#togglemacro" ).hasClass( "btn-primary" )) {
         $('#macro_container').hide();
+        $('#renderArea').show();
         $('#viewer_container').show();
         $("#togglemacro").removeClass("btn-primary");
         $("#togglemacro").addClass("btn-default");
       } else {
         $('#macro_container').show();
+        $('#renderArea').hide();
         $('#viewer_container').hide();
         $("#togglemacro").addClass("btn-primary");
         $("#togglemacro").removeClass("btn-default");
@@ -150,6 +138,7 @@ $(document).ready(function() {
       if ($( "#toggleviewer" ).hasClass( "active" )) {
 
       } else {
+        $('#hometab').show();
         $('#camleftcol').hide();
         $('#settingscol').hide();
         $("#toggleviewer").addClass("active");
@@ -162,6 +151,7 @@ $(document).ready(function() {
       if ($( "#togglefile" ).hasClass( "active" )) {
 
       } else {
+        $('#hometab').hide();
         $('#camleftcol').show();
         $('#settingscol').hide();
         $("#toggleviewer").removeClass("active");
@@ -174,6 +164,7 @@ $(document).ready(function() {
       if ($( "#togglesettings" ).hasClass( "active" )) {
 
       } else {
+        $('#hometab').hide();
         $('#camleftcol').hide();
         $('#settingscol').show();
         $("#toggleviewer").removeClass("active");
@@ -192,6 +183,7 @@ $(document).ready(function() {
     NProgress.configure({
         showSpinner: false
     });
+
 
 
 });
@@ -230,7 +222,8 @@ function readFile(evt) {
             r.readAsText(evt.target.files[0]);
             r.onload = function(e) {
                 dxf = r.result
-                $('#camleftcol').show();
+                $('#togglefile').click();
+                $('#cammodule').show();
                 $('#rastermodule').hide();
                 getSettings();
                 drawDXF(dxf);
@@ -251,7 +244,8 @@ function readFile(evt) {
             r.onload = function(event) {
                 svg = r.result
                     // /console.log(svg);
-                $('#camleftcol').show();
+                $('#togglefile').click();
+                $('#cammodule').show();
                 $('#rastermodule').hide();
                 getSettings();
                 drawSvg(svg);
@@ -274,7 +268,8 @@ function readFile(evt) {
                 document.getElementById('gcodepreview').value = this.result;
                 openGCodeFromText();
                 printLog('GCODE Opened', successcolor);
-                $('#camleftcol').hide();
+                $('#toggleviewer').click();
+                $('#cammodule').hide();
                 $('#rastermodule').hide();
                 //  putFileObjectAtZero();
                 resetView()
@@ -326,8 +321,9 @@ function readFile(evt) {
             r.readAsArrayBuffer(evt.target.files[0]);
             printLog('STL Opened', successcolor);
             //$('#cammodule').hide();
+            $('#cammodule').show();
             $('#rastermodule').hide();
-            $('#camleftcol').show();
+            $('#togglefile').click();
             $('#stlopt').show();
             $('#prepopt').hide();
             $('#stlopt').click();
@@ -345,7 +341,7 @@ function readFile(evt) {
                 $('#cammodule').hide();
                 $('#rastermodule').show();
                 // putFileObjectAtZero();
-
+                $('#togglefile').click();
                 $('#stlopt').hide();
                 $('#prepopt').hide();
                 $("#transformcontrols").hide();

@@ -96,7 +96,7 @@ function deleteRow(t) {
 
 function readMacros() {
     $("#macro_pad").empty();
-    $('#macro_pad').append('<div class="list-group"><a href="#" class="list-group-item"><h4 class="list-group-item-heading">Macro Buttons</h4><p class="list-group-item-text">Custom preset GCode commands:</p></a></div>');
+    $('#macro_pad').append('<h4 >Macro Buttons</h4>');
     for (i = 1; i < 24; i++) {
         var name = 'macro' + i;
         var val = localStorage.getItem(name);
@@ -119,12 +119,12 @@ function readMacros() {
               }
            });
            $('#colorselector'+i).colorselector("setColor", color);
-              if (i == 0) {
-                  $('#macro_pad').append('<div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';" onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
-              } else if (i == 5 || i == 11 || i == 17) {
-                  $('#macro_pad').append('</div><div class="row"><div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
+              if (i == 1) {
+                  $('#macro_pad').append('<button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="background-color: '+color+';" onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button>');
+              } else if (i == 6 || i == 12 || i == 18) {
+                  $('#macro_pad').append('<button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button>');
               } else {
-                  $('#macro_pad').append('<div class="col-sm-2"><button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="width:100%; height:100%; background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button></div>');
+                  $('#macro_pad').append('<button type="button" class="btn btn-lg btn-default" id="macro' + i + '" style="background-color: '+color+';"  onclick="sendGcode(' + '\'' + gcode + '\'' + ')">' + label + '</button>');
               }
             $('#macro_pad').append('</div>'); // close the last row
         };

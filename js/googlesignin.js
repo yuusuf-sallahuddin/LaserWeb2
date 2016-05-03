@@ -2,7 +2,6 @@ var googleUser = {};
 
 var startApp = function() {
     console.log('Starting GSingIn')
-
     gapi.load('auth2', function(){
       // Retrieve the singleton for the GoogleAuth library and set up the client.
       auth2 = gapi.auth2.init({
@@ -132,5 +131,5 @@ function getFileContent(fileId) {
 		};
 
 $(document).ready(function() {
-  startApp();
+
 });
