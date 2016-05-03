@@ -22,7 +22,7 @@ function attachSignin(element) {
           $('#g-login').hide();
           $('#g-logout').show();
           $('#g-refresh').show();
-          $('#fullname').html( 'Logged in as: <b>' + googleUser.getBasicProfile().getName() + '</b>');
+          $('#fullname').html( 'Logged in as:<br> <b>' + googleUser.getBasicProfile().getName() + '</b>');
           $("#userpic").attr("src", googleUser.getBasicProfile().getImageUrl());
           gapi.client.load('drive', 'v3', function(){
              console.log('Drive Loaded');
