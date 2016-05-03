@@ -131,5 +131,5 @@ function getFileContent(fileId) {
 		};
 
 $(document).ready(function() {
-
+  startApp();
 });
