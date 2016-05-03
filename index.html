@@ -203,7 +203,7 @@
                   <tr>
                     <!-- <td><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></td> -->
                     <td colspan="5">
-                      <div class="btn-group" role="group" aria-label="gengcode">
+                      <div class="btn-group" role="group" aria-label="controljob">
                         <button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button>
                         <button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button>
                         <button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button>
@@ -216,17 +216,17 @@
                   </tr>
                   <tr>
                     <td></td>
-                    <td><button type="button" data-title="Jog Y+" class="btn btn-default" id="yP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y+</strong></span></button></td>
+                    <td><button type="button" data-title="Jog Y+" class="btn btn-default" id="yP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y+</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z+</strong></span></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z+</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></td>
                   </tr>
                   <tr>
-                    <td><button type="button" data-title="Jog X-" class="btn btn-default" id="xM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-left fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X-</strong></span></button></button></td>
-                    <td><button type="button" data-title="Jog Y-" class="btn btn-default" id="yM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y-</strong></span></button></button></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="xP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-right fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X+</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog X-" class="btn btn-default" id="xM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-left fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog Y-" class="btn btn-default" id="yM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="xP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-right fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X+</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                     <td><div style="width: 32px;"></div></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z-</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                   </tr>
                   <tr>
                     <td colspan="5">&nbsp;</td>
@@ -234,14 +234,22 @@
                   <tr>
                     <td colspan=5>
                       <form id="stepsize">
+
+
+                          <!-- <button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button>
+                          <button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button>
+                          <button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button>
+                          <button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><span class="fa-stack fa-1x"><i class="fa fa-bullseye fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">set</strong><strong class="fa-stack-1x icon-bot-text">zero</strong></span></button> -->
+
+
                         <div class="form-group">
-                              <div data-toggle="buttons">
-                                <label class="btn btn-default btn-circle btn-lg active"><input type="radio" name="stp" value="0.1">0.1</label>
-                                <label class="btn btn-default btn-circle btn-lg">       <input type="radio" name="stp" value="1">1</label>
-                                <label class="btn btn-default btn-circle btn-lg">       <input type="radio" name="stp" value="10">10</label>
-                                <label class="btn btn-default btn-circle btn-lg">       <input type="radio" name="stp" value="100">100</label>
-                              </div>
+                          <div data-toggle="buttons">
+                            <label class="btn btn-default active"><input type="radio" name="stp" value="0.1"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">0.1mm</strong></span></label>
+                            <label class="btn btn-default">       <input type="radio" name="stp" value="1"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">1mm</strong></span></label>
+                            <label class="btn btn-default">       <input type="radio" name="stp" value="10"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">10mm</strong></span></label>
+                            <label class="btn btn-default">       <input type="radio" name="stp" value="100"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">100mm</strong></span></label>
                           </div>
+                        </div>
                       </form>
                     </td>
                   </tr>
