@@ -202,28 +202,31 @@
                 <table>
                   <tr>
                     <!-- <td><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></td> -->
-                    <td><button type="button" class="btn btn-lg btn-default" id="homeBtn" onclick="homeMachine();"><i class="fa fa-home"></i></button></td>
-                    <td><button type="button" class="btn btn-lg btn-default" id="playBtn" onclick="playpauseMachine();"><i id="playicon" class="fa fa-play"></i></button></td>
-                    <td><button type="button" class="btn btn-lg btn-default" id="stopBtn" onclick="stopMachine();"><i class="fa fa-stop"></i></button></td>
-                    <td></td>
-                    <td><button type="button" class="btn btn-lg btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><i class="fa fa-bullseye"></i></button></td>
+                    <td colspan="5">
+                      <div class="btn-group" role="group" aria-label="gengcode">
+                        <button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button>
+                        <button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button>
+                        <button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button>
+                        <button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><span class="fa-stack fa-1x"><i class="fa fa-bullseye fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">set</strong><strong class="fa-stack-1x icon-bot-text">zero</strong></span></button>
+                      </div>
+                    </td>
                   </tr>
                   <tr>
                     <td colspan="5">&nbsp;</td>
                   </tr>
                   <tr>
                     <td></td>
-                    <td><button type="button" data-title="Jog Y+" class="btn btn-lg btn-default" id="yP"><i class="fa fa-arrow-up"></i></button></td>
+                    <td><button type="button" data-title="Jog Y+" class="btn btn-default" id="yP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y+</strong></span></button></td>
                     <td></td>
                     <td></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-lg btn-default" id="zP"><i class="fa fa-arrow-up"></i></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-up fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z+</strong></span></button></td>
                   </tr>
                   <tr>
-                    <td><button type="button" data-title="Jog X-" class="btn btn-lg btn-default" id="xM"><i class="fa fa-arrow-left"></i></button></td>
-                    <td><button type="button" data-title="Jog Y-" class="btn btn-lg btn-default" id="yM"><i class="fa fa-arrow-down"></i></button></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-lg btn-default" id="xP"><i class="fa fa-arrow-right"></i></button></td>
+                    <td><button type="button" data-title="Jog X-" class="btn btn-default" id="xM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-left fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X-</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog Y-" class="btn btn-default" id="yM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y-</strong></span></button></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="xP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-right fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X+</strong></span></button></button></td>
                     <td><div style="width: 32px;"></div></td>
-                    <td><button type="button" data-title="Jog X+" class="btn btn-lg btn-default" id="zM"><i class="fa fa-arrow-down"></i></button></td>
+                    <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z-</strong></span></button></button></td>
                   </tr>
                   <tr>
                     <td colspan="5">&nbsp;</td>

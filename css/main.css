@@ -4,6 +4,13 @@ body {
     position: absolute;
 }
 
+.fa-stack{
+    width: 1.28571em;
+}
+
+.icon-bot-text { margin-top: 1.3em; font-size: 11px;}
+.icon-top-text { margin-top: -1.3em; font-size: 11px; }
+
 /*for Desktops*/
 @media all and (min-width : 1025px) {
   #container1 {
