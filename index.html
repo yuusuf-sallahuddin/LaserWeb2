@@ -234,14 +234,6 @@
                   <tr>
                     <td colspan=5>
                       <form id="stepsize">
-
-
-                          <!-- <button type="button" class="btn btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button>
-                          <button type="button" class="btn btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button>
-                          <button type="button" class="btn btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button>
-                          <button type="button" class="btn btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><span class="fa-stack fa-1x"><i class="fa fa-bullseye fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">set</strong><strong class="fa-stack-1x icon-bot-text">zero</strong></span></button> -->
-
-
                         <div class="form-group">
                           <div data-toggle="buttons">
                             <label class="btn btn-default active"><input type="radio" name="stp" value="0.1"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">0.1mm</strong></span></label>
@@ -691,7 +683,7 @@
                     <span class="">Console:</span><span class="pull-right"><span class="badge badge-default badge-notify" title="Items in Queue" id="queueCnt" style="margin-right: 5px;">Queued: 0</span></span>
 
                     <div class="input-group">
-                        <span class="input-group-addon" style="width: 60px;"><i class="fa fa-terminal fa-lg"></i></span>
+                        <span class="input-group-addon"><i class="fa fa-terminal fa-lg"></i></span>
                         <input type="text" autocomplete="on" class="form-control" id="command">
                         <span class="input-group-btn">
                         <button id="sendCommand" class="btn btn-default disabled" disabled="true" type="button"><i class="fa fa-play" style="margin-right: 10px;"></i>Send</button>

@@ -66,7 +66,7 @@ function listFiles() {
          var file = files[i];
          if (file.name.match(/.dxf$/i) || file.name.match(/.svg$/i) ) {
            var idstring = String(file.id)
-           $('#fileList').append("<i class='fa fa-fw fa-file-o' aria-hidden='true'></i><a href='#' onclick='getFileContent(\""+file.id+"\")'>"+file.name+"</a><br/>");
+           $('#fileList').append("<i class='fa fa-fw fa-file-o' aria-hidden='true'></i><a href='#' onclick='getFileContent(\""+file.id+"\",\""+file.name+"\")'>"+file.name+"</a><br/>");
            $('#fileList').scrollTop($("#console")[0].scrollHeight - $("#console").height());
          }
 
@@ -88,7 +88,7 @@ function listFiles() {
 
 
 
-function getFileContent(fileId) {
+function getFileContent(fileId, fileName) {
   console.log('fetching ', fileId)
   gapi.client.request({
   'path': '/drive/v2/files/'+fileId,
@@ -108,9 +108,14 @@ function getFileContent(fileId) {
                   $('#cammodule').show();
                   $('#rastermodule').hide();
                   getSettings();
-                  drawDXF(myXHR.response);
+                  if (fileName.match(/.dxf$/i)) {
+                    drawDXF(myXHR.response);
+                    printLog('Google Drive DXF File Opened', successcolor);
+                  } else if (fileName.match(/.svg$/i)) {
+                    drawSVG(myXHR.response);
+                    printLog('Google Drive SVG File Opened', successcolor);
+                  }
                   currentWorld();
-                  printLog('Google Drive File Opened', successcolor);
                   $('#cammodule').show();
                   putFileObjectAtZero();
                   resetView()

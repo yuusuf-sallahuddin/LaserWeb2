@@ -10,6 +10,7 @@ function saveSettingsLocal() {
     for (i = 0; i < localParams.length; i++) {
         var val = $('#' + localParams[i]).val(); // Read the value from form
         console.log('Saving: ', localParams[i], ' : ', val);
+        printLog('Saving: ' + localParams[i] + ' : ' + val, successcolor);
         localStorage.setItem(localParams[i], val);
     };
 };
