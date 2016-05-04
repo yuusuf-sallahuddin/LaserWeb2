@@ -96,7 +96,7 @@ function drawDXF(file) {
     // $('#cutParams').modal('toggle');
     // document.getElementById('fileName').value = fileName;
     viewExtents(fileParentGroup);
-
+    checkNumPad(); // Make newly added rows also numpad if configured
     // clear SVG Invert + Move values if present
     svgxpos = 0;
     svgypos = 0;

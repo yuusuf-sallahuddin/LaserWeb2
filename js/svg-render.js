@@ -47,6 +47,7 @@ drawSvg = function(file) {
 
         //this.generateGcode();
     }
+    checkNumPad(); // Make newly added rows also numpad if configured
 };
 extractSvgPathsFromSVGFile = function(file) {
 
