@@ -204,7 +204,14 @@ function checkNumPad() {
         $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
         $('.numpad').numpad({
         					decimalSeparator: '.',
+                  gcode: false
         				});
+
+        $('.numpadgcode').numpad({
+                  decimalSeparator: '.',
+                  gcode: true
+                });
+
 
   }
 
