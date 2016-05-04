@@ -186,14 +186,15 @@ $(document).ready(function() {
         showSpinner: false
     });
 
-    useNumPad = $('#useNumPad').val()
-
+checkNumPad();
 
 
 });
 // End of document.ready
 
 function checkNumPad() {
+
+  useNumPad = $('#useNumPad').val()
   if (useNumPad.indexOf('Enable') == 0) {
         $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
         $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
@@ -201,7 +202,10 @@ function checkNumPad() {
         $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
         $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
         $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
-        $('.numpad').numpad();
+        $('.numpad').numpad({
+        					decimalSeparator: '.',
+        				});
+
   }
 
 }
