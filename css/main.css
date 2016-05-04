@@ -14,11 +14,17 @@ body {
 .icon-bot-text { margin-top: 1.3em; font-size: 10px;}
 .icon-top-text { margin-top: -1.3em; font-size: 10px; }
 
+.btn-ctl {
+    padding: 15px 15px;
+    border-radius: 4px;
+}
+
 /*for Desktops*/
 @media all and (min-width : 1100px) {
   #container1 {
       float:left;
       width:100%;
+      min-width: 280px;
       height: 100%;
       padding: 5px;
   }
@@ -31,7 +37,7 @@ body {
   }
   #col2 {
       float:left;
-      width:60%;
+      width: 60%;
       height: calc(100% - 80px);
       padding: 10px;
   }
