@@ -184,6 +184,14 @@ $(document).ready(function() {
         showSpinner: false
     });
 
+    $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
+    $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
+    $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
+    $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
+    $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
+    $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
+
+    $('#inflateVal').numpad();
 
 
 });
