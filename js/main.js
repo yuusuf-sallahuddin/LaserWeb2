@@ -6,6 +6,8 @@ var warncolor = '#ff6600';
 
 var debug = false;
 
+var useNumPad;
+
 // Place all document.ready tasks into functions and ONLY run the functions from doument.ready
 $(document).ready(function() {
 
@@ -184,17 +186,15 @@ $(document).ready(function() {
         showSpinner: false
     });
 
-    useOffset = $('#useOffset').val()
-    if (useOffset.indexOf('Enable') == 0) {
+    useNumPad = $('#useNumPad').val()
+    if (useNumPad.indexOf('Enable') == 0) {
           $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
           $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
           $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
           $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
           $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
           $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
-
           $('.numpad').numpad();
-
     }
 
 
