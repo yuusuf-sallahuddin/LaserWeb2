@@ -25,6 +25,7 @@ $(document).ready(function() {
     rasterInit();
     macrosInit();
     grbl = new Grbl();
+    
     //initRaster();
 
     // Responsive Sidebar width

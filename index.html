@@ -540,7 +540,7 @@
                                     <option>Disable</option>
                                 </select>
                             <!-- </div>
-                            <div class="form-group"> -->
+                            <div class="form-group"> -->-
                                 <label for="imagePosition" class="control-label">Place uploaded image in quadrant</label>
                                 <select class="form-control" id="imagePosition">
                                     <option>BottomLeft</option>
@@ -551,6 +551,12 @@
                                 <select class="form-control" id="useNumPad">
                                     <option>Enable</option>
                                     <option>Disable</option>
+                                </select>
+
+                                <label for="useVideo" class="control-label">Use Video Overlay on Bed</label>
+                                <select class="form-control" id="useVideo">
+                                    <option>Disable</option>
+                                    <option>Enable</option>
                                 </select>
 
 
@@ -731,6 +737,8 @@
 <!-- End of Container Fluid -->
 
 <!-- End Main Body Div -->
+<video id="monitor" autoplay width="160" height="120" style="display: none; visibility: hidden; float:left;"></video>
+<canvas id="videoImage" width="160" height="120" style="display: none; visibility: hidden; float:left;"></canvas>
 </body>
 
 </html>
