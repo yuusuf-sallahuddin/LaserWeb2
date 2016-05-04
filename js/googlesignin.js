@@ -2,17 +2,25 @@ var googleUser = {};
 
 var startApp = function() {
     console.log('Starting GSingIn')
-    gapi.load('auth2', function(){
-      // Retrieve the singleton for the GoogleAuth library and set up the client.
-      auth2 = gapi.auth2.init({
-        client_id: '1086441811451-4nmidqbqq8tve1qqa592uq1hs04kl5sl.apps.googleusercontent.com',
-        cookiepolicy: 'single_host_origin',
-        // Request scopes in addition to 'profile' and 'email'
-        scope: 'https://www.googleapis.com/auth/drive'
-      });
+    if (typeof(gapi) !== "undefined")  {
+      gapi.load('auth2', function(){
+        // Retrieve the singleton for the GoogleAuth library and set up the client.
+        auth2 = gapi.auth2.init({
+          client_id: '1086441811451-4nmidqbqq8tve1qqa592uq1hs04kl5sl.apps.googleusercontent.com',
+          cookiepolicy: 'single_host_origin',
+          // Request scopes in addition to 'profile' and 'email'
+          scope: 'https://www.googleapis.com/auth/drive'
+        });
 
-      attachSignin(document.getElementById('g-login'));
-    });
+        attachSignin(document.getElementById('g-login'));
+        printLog('Enabled Google Drive integration', successcolor);
+
+      });
+    } else {
+      printLog('Could not enable Google Drive Integration: Does this device have working internet access?', warncolor);
+      $('#g-login').addClass('disabled');
+    }
+
 };
 
 function attachSignin(element) {
