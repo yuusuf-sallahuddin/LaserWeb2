@@ -121,27 +121,27 @@
             </button>
             <!-- <a class="navbar-brand" href="#">LaserWeb</a> -->
             <form class="navbar-form navbar-left" role="form">
-                <span class="btn btn-lg btn-default btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .svg, .dxf, or .stl file"><i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf,.stl" /></span>
+                <span class="btn btn-default btn-file" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .svg, .dxf, or .stl file"><i class="fa fa-folder-open fa-fw"></i>Open<input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf,.stl" /></span>
             </form>
 
             <!-- Serial Port Form -->
             <form class="navbar-form navbar-left" role="form">
                 <div class="form-group">
-                    <label for="port"><i class="fa fa-usb fa-lg"></i></label>
-                    <select id="port" class="form-control input-lg" disabled>
+                    <label for="port"><i class="fa fa-usb icon-white"></i></label>
+                    <select id="port" class="form-control" disabled>
                         <option value="no">Select port</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="buffer"><i class="fa fa-link fa-lg"></i></label>
-                    <select id="buffer" class="form-control input-lg" disabled>
+                    <label for="buffer"><i class="fa fa-link icon-white"></i></label>
+                    <select id="buffer" class="form-control" disabled>
                         <option value="no">Select buffer</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="baud"><i class="fa fa-tty fa-lg"></i></label>
+                    <label for="baud"><i class="fa fa-tty icon-white"></i></label>
                     <!--input type="select" class="form-control" id="baud"-->
-                    <select id="baud" class="form-control input-lg" disabled>
+                    <select id="baud" class="form-control" disabled>
                         <option value="230400">230400</option>
                         <option value="115200" selected="selected">115200</option>
                         <option value="57600">57600</option>
@@ -150,13 +150,13 @@
                         <option value="9600">9600</option>
                     </select>
                 </div>
-                <a class="btn btn-lg btn-default disabled" id="connect" href="#">Connect</a>
-                <a class="btn btn-lg btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
+                <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
+                <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
             </form>
 
             <!-- Fullscreen Button -->
             <form class="navbar-form navbar-right" role="form">
-                <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default btn-lg" id="toggleFullScreen" onclick="toggleFullScreen();">
+                <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default" id="toggleFullScreen" onclick="toggleFullScreen();">
                     <i class="glyphicon glyphicon-fullscreen"></i>
                 </a>
             </form>
@@ -187,11 +187,11 @@
                   </td>
               </tr>
           </table>
-          <div id="fileList"></div>
-
+          <div style="border-bottom: dashed 1px #aaa;" id="fileList"></div>
+          <p>
           <!-- Tabs-->
           <ul class="nav nav-tabs nav-justified">
-              <li id="toggleviewer" role="presentation" class="active"><a href="#">Home</a></li>
+              <li id="toggleviewer" role="presentation" class="active"><a href="#">Control</a></li>
               <li id="togglefile" role="presentation"><a href="#">CAM</a></li>
               <li id="togglesettings" role="presentation"><a href="#">Settings</a></li>
           </ul>
@@ -225,7 +225,7 @@
                     <td><button type="button" data-title="Jog X-" class="btn btn-default" id="xM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-left fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                     <td><button type="button" data-title="Jog Y-" class="btn btn-default" id="yM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                     <td><button type="button" data-title="Jog X+" class="btn btn-default" id="xP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-right fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X+</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
-                    <td><div style="width: 32px;"></div></td>
+                    <td><div style="width: 18px;"></div></td>
                     <td><button type="button" data-title="Jog X+" class="btn btn-default" id="zM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                   </tr>
                   <tr>
@@ -578,6 +578,7 @@
 
             <!-- 3D Viewer and DRO -->
             <div id="renderArea"></div>
+            <p>
             <div id="macro_container" style="display: none;">
                 <div class="bs-callout bs-callout-danger" id="macrostatus">
                     <h4><i class="fa fa-fw fa-exclamation" aria-hidden="true"></i>No macros created yet</h4> Please click Edit to start creating your own Macro buttons
@@ -665,20 +666,21 @@
 
         <!-- Right Col -->
         <div id="col3">
+            <p>
             <ul class="nav nav-tabs nav-justified">
                 <li id="drotabtn" role="presentation" class="active"><a href="#">DRO</a></li>
                 <li id="gcodetabbtn" role="presentation"><a href="#">Gcode</a></li>
             </ul>
 
 
-            <div class="row" id="drotab" style="height: 100%;">
-                <div id="mPosition" style=" border: dashed 1px #aaa; padding: 5px;">
+            <div id="drotab" style="height: 100%;">
+                <div id="mPosition" style="padding: 5px;">
                     <div id="mX" class="dro">X: 0.000</div>
                     <div id="mY" class="dro">Y: 0.000</div>
                     <div id="mZ" class="dro">Z: 0.000</div>
                 </div>
 
-                <div style=" border: dashed 1px #aaa; padding: 5px; margin-top: 5px;">
+                <div style=" border-top: dashed 1px #aaa; padding: 5px; margin-top: 5px;">
                     <!-- Command Console -->
                     <span class="">Console:</span><span class="pull-right"><span class="badge badge-default badge-notify" title="Items in Queue" id="queueCnt" style="margin-right: 5px;">Queued: 0</span></span>
 
@@ -694,7 +696,7 @@
 
             </div>
 
-            <div class="row" id="gcodetab" style="display: none;">
+            <div id="gcodetab" style="display: none;">
                 <textarea id="gcodepreview" style="width: 100%; height: 250px;"></textarea>
                 <button class="btn btn-lg btn-default btn-file" title="Export GCODE to a file" onclick="saveFile()"><i class="fa fa-save fa-fw"></i>Save</span>
             </div>
