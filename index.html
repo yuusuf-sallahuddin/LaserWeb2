@@ -295,7 +295,7 @@
                                 <!-- <div class="form-group"> -->
                                     <label for="inflateVal" class="control-label">Scale:</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
+                                        <input type="number" class="form-control  numpad input-sm" value="100" id="scaleFactor" style="text-align:right;">
                                         <span class="input-group-addon">%</span>
                                         <span class="input-group-btn">
                                           <button id="stepscaleup" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-up"></i></button>
@@ -309,9 +309,9 @@
                                 <!-- <div class="form-group"> -->
                                     <label for="inflateVal" class="control-label">Position:</label>
                                     <div class="input-group">
-                                        <input type="number" class="form-control  input-sm" value="0" id="xpos" style="text-align:right;">
+                                        <input type="number" class="form-control  numpad input-sm" value="0" id="xpos" style="text-align:right;">
                                         <span class="input-group-addon">X</span>
-                                        <input type="number" class="form-control  input-sm" value="0" id="ypos" style="text-align:right;">
+                                        <input type="number" class="form-control  numpad input-sm" value="0" id="ypos" style="text-align:right;">
                                         <span class="input-group-addon">Y</span>
                                     </div>
                                 <!-- </div> -->
@@ -355,7 +355,7 @@
                                         <label for="inflateVal" class="control-label">Layer Height:</label>
                                         <div class="btn-group btn-group-justified" role="group" aria-label="stltab">
                                             <div class="input-group">
-                                                <input type="number" step="0.1" class="form-control  input-sm" value="1.5" id="layerheight" style="text-align:right;">
+                                                <input type="number" step="0.1" class="form-control  numpad input-sm" value="1.5" id="layerheight" style="text-align:right;">
                                                 <span class="input-group-addon">mm</span>
                                             </div>
                                         </div>
@@ -485,11 +485,11 @@
                         <form class="form-horizontal">
                             <!-- <div class="form-group"> -->
                                 <label for="laserXMax" class="control-label">X-Length</label>
-                                <input type="text" class="form-control" id="laserXMax" placeholder="600">
+                                <input type="text" class="form-control numpad" id="laserXMax" placeholder="600">
                             <!-- </div>
                             <div class="form-group"> -->
                                 <label for="laserYMax" class="control-label">Y-Length</label>
-                                <input type="text" class="form-control" id="laserYMax" placeholder="400">
+                                <input type="text" class="form-control numpad" id="laserYMax" placeholder="400">
                             <!-- </div> -->
                           </p>
                         </form>
@@ -511,7 +511,7 @@
                             <!-- </div> -->
                             <!-- <div class="form-group"> -->
                                 <label for="laseroff" class="control-label">PWM Max S</label>
-                                <input type="text" class="form-control" id="lasermultiply" placeholder="255"></input>
+                                <input type="text" class="form-control  numpad" id="lasermultiply" placeholder="255"></input>
                             <!-- </div> -->
                             <!-- <div class="form-group"> -->
                                 <label for="homingseq" class="control-label">Homing Sequence</label>
@@ -523,7 +523,7 @@
                             <!-- </div>
                             <div class="form-group"> -->
                                 <label for="endgcode" class="control-label">Travel Moves (mm/min)</label>
-                                <textarea class="form-control" id="rapidspeed" placeholder="2000"></textarea>
+                                <textarea class="form-control numpad" id="rapidspeed" placeholder="2000"></textarea>
                             <!-- </div> -->
                           </p>
                         </form>
@@ -546,6 +546,14 @@
                                     <option>BottomLeft</option>
                                     <option>TopLeft</option>
                                 </select>
+
+                                <label for="useNumPad" class="control-label">Use TouchNumpads</label>
+                                <select class="form-control" id="useNumPad">
+                                    <option>Enable</option>
+                                    <option>Disable</option>
+                                </select>
+
+
                             <!-- </div> -->
                           </p>
                         </form>
@@ -555,7 +563,7 @@
                         Download a backup or restore settings from a backup file:
                         <form class="form-horizontal">
                             <!-- <div class="form-group"> -->
-                                <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
+                                <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="Backup">
                                     <div class="btn-group" role="group">
                                         <button id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()"><i class="fa fa-download fa-fw" aria-hidden="true"></i></i>Backup Settings</button>
                                     </div>
@@ -563,7 +571,7 @@
                                 <p>
                             <!-- </div> -->
                             <!-- <div class="form-group"> -->
-                                <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
+                                <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="Restore">
                                     <div class="btn-group" role="group">
                                         <span id="restore" class="btn btn-lg btn-default btn-file" title="Open a backup settings file"><i class="fa fa-upload  fa-fw" aria-hidden="true"></i>Restore from file<input id="jsonFile" type="file" accept=".json" /></span>
                                     </div>
