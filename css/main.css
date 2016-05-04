@@ -15,7 +15,7 @@ body {
 .icon-top-text { margin-top: -1.3em; font-size: 10px; }
 
 .btn-ctl {
-    padding: 15px 15px;
+    padding: 15px 12px;
     border-radius: 4px;
 }
 
@@ -24,20 +24,22 @@ body {
   #container1 {
       float:left;
       width:100%;
-      min-width: 280px;
       height: 100%;
-      padding: 5px;
+      padding: 0px;
   }
   #col1 {
       border-right: dashed 1px #aaa;
       float:left;
       width:20%;
       height: 100%;
-      padding: 5px;
+      padding: 10px 5px 5px 0px;
+      overflow-y: auto;
+      overflow-x: none;
+      overflow-x: hidden;
   }
   #col2 {
       float:left;
-      width: 60%;
+      width:60%;
       height: calc(100% - 80px);
       padding: 10px;
   }
@@ -62,7 +64,7 @@ body {
       float:left;
       width:26%;
       height: 100%;
-      padding: 5px;
+      padding: 10px 5px 5px 0px;
       overflow-y: auto;
       overflow-x: none;
       overflow-x: hidden;

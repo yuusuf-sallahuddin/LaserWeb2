@@ -126,19 +126,19 @@
 
             <!-- Serial Port Form -->
             <form class="navbar-form navbar-left" role="form">
-                <div class="form-group">
+                <!-- <div class="form-group"> -->
                     <label for="port"><i class="fa fa-usb icon-white"></i></label>
                     <select id="port" class="form-control" disabled>
                         <option value="no">Select port</option>
                     </select>
-                </div>
-                <div class="form-group">
+                <!-- </div>
+                <div class="form-group"> -->
                     <label for="buffer"><i class="fa fa-link icon-white"></i></label>
                     <select id="buffer" class="form-control" disabled>
                         <option value="no">Select buffer</option>
                     </select>
-                </div>
-                <div class="form-group">
+                <!-- </div>
+                <div class="form-group"> -->
                     <label for="baud"><i class="fa fa-tty icon-white"></i></label>
                     <!--input type="select" class="form-control" id="baud"-->
                     <select id="baud" class="form-control" disabled>
@@ -149,7 +149,7 @@
                         <option value="19200">19200</option>
                         <option value="9600">9600</option>
                     </select>
-                </div>
+                <!-- </div> -->
                 <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
                 <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
             </form>
@@ -196,18 +196,18 @@
               <li id="togglesettings" role="presentation"><a href="#">Settings</a></li>
           </ul>
 
-          <div id="hometab" style="width: 90%; margin-left: 10px;">
+          <div id="hometab" style="width: 90%;">
             <p>
               <center>
                 <table>
                   <tr>
                     <!-- <td><button type="button" class="btn btn-default" id="unlockBtn" onclick="unlockMachine();"><i class="fa fa-unlock fa-lg"></i></button></td> -->
                     <td colspan="5">
-                      <div class="btn-group" role="group" aria-label="controljob">
-                        <button type="button" class="btn btn-ctl btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button>
-                        <button type="button" class="btn btn-ctl btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button>
-                        <button type="button" class="btn btn-ctl btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button>
-                        <button type="button" class="btn btn-ctl btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><span class="fa-stack fa-1x"><i class="fa fa-bullseye fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">set</strong><strong class="fa-stack-1x icon-bot-text">zero</strong></span></button>
+                      <div class="btn-group btn-group-justified" role="group" aria-label="controljob">
+                        <div class="btn-group"><button type="button" class="btn btn-ctl btn-default" id="homeBtn" onclick="homeMachine();"><span class="fa-stack fa-1x"><i class="fa fa-home fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">home</strong><strong class="fa-stack-1x icon-bot-text">laser</strong></span></button></div>
+                        <div class="btn-group"><button type="button" class="btn btn-ctl btn-default" id="playBtn" onclick="playpauseMachine();"><span class="fa-stack fa-1x"><i id="playicon" class="fa fa-play fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">run</strong><strong class="fa-stack-1x icon-bot-text">gcode</strong></span></button></div>
+                        <div class="btn-group"><button type="button" class="btn btn-ctl btn-default" id="stopBtn" onclick="stopMachine();"><span class="fa-stack fa-1x"><i class="fa fa-stop fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">abort</strong><strong class="fa-stack-1x icon-bot-text">job</strong></span></button></div>
+                        <div class="btn-group"><button type="button" class="btn btn-ctl btn-default" id="zeroBtn" onclick="sendGcode('G92 X0 Y0 Z0');"><span class="fa-stack fa-1x"><i class="fa fa-bullseye fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">set</strong><strong class="fa-stack-1x icon-bot-text">zero</strong></span></button></div>
                       </div>
                     </td>
                   </tr>
@@ -225,7 +225,7 @@
                     <td><button type="button" data-title="Jog X-" class="btn btn-ctl btn-default" id="xM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-left fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                     <td><button type="button" data-title="Jog Y-" class="btn btn-ctl btn-default" id="yM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Y-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                     <td><button type="button" data-title="Jog X+" class="btn btn-ctl btn-default" id="xP"><span class="fa-stack fa-1x"><i class="fa fa-arrow-right fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">X+</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
-                    <td><div style="width: 18px;"></div></td>
+                    <td><div style="width: 8px;"></div></td>
                     <td><button type="button" data-title="Jog X+" class="btn btn-ctl btn-default" id="zM"><span class="fa-stack fa-1x"><i class="fa fa-arrow-down fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">Z-</strong><strong class="fa-stack-1x stepsizeval icon-bot-text">0.1mm</strong></span></button></button></td>
                   </tr>
                   <tr>
@@ -234,14 +234,14 @@
                   <tr>
                     <td colspan=5>
                       <form id="stepsize">
-                        <div class="form-group">
+                        <!-- <div class="form-group"> -->
                           <div data-toggle="buttons">
                             <label class="btn btn-ctl btn-default active"><input type="radio" name="stp" value="0.1"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">0.1mm</strong></span></label>
                             <label class="btn btn-ctl btn-default">       <input type="radio" name="stp" value="1"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">1mm</strong></span></label>
                             <label class="btn btn-ctl btn-default">       <input type="radio" name="stp" value="10"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">10mm</strong></span></label>
                             <label class="btn btn-ctl btn-default">       <input type="radio" name="stp" value="100"><span class="fa-stack fa-1x"><i class="fa fa-arrows-h fa-stack-1x"></i><strong class="fa-stack-1x icon-top-text">jog by</strong><strong class="fa-stack-1x icon-bot-text">100mm</strong></span></label>
                           </div>
-                        </div>
+                        <!-- </div> -->
                       </form>
                     </td>
                   </tr>
@@ -272,7 +272,7 @@
                     <div class="tab-content">
                         <div class="tab-pane active" id="preptab">
                             <form class="form-horizontal">
-                                <div class="form-group">
+                                <!-- <div class="form-group"> -->
                                     <label for="inflateVal" class="control-label">Tool Offset:</label>
                                     <div class="input-group">
                                         <input type="number" step="0.1" class="form-control  input-sm" value="1" id="inflateVal" style="text-align:right;">
@@ -283,11 +283,11 @@
                                     <button id="removeInflateGrp" class="btn btn-default btn-sm" type="button"><i class="fa fa-times"></i></button>
                                   </span>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </form>
 
                             <form class="form-horizontal">
-                                <div class="form-group">
+                                <!-- <div class="form-group"> -->
                                     <label for="inflateVal" class="control-label">Scale:</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control  input-sm" value="100" id="scaleFactor" style="text-align:right;">
@@ -297,11 +297,11 @@
                                           <button id="stepscaledn" class="btn btn-default btn-sm" type="button"><i class="fa fa-caret-down"></i></button>
                                         </span>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </form>
 
                             <form class="form-horizontal">
-                                <div class="form-group">
+                                <!-- <div class="form-group"> -->
                                     <label for="inflateVal" class="control-label">Position:</label>
                                     <div class="input-group">
                                         <input type="number" class="form-control  input-sm" value="0" id="xpos" style="text-align:right;">
@@ -309,7 +309,7 @@
                                         <input type="number" class="form-control  input-sm" value="0" id="ypos" style="text-align:right;">
                                         <span class="input-group-addon">Y</span>
                                     </div>
-                                </div>
+                                <!-- </div> -->
                             </form>
                         </div>
 
@@ -329,7 +329,7 @@
                             <p>
 
                                 <form class="form-horizontal">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group"> -->
                                         <label for="inflateVal" class="control-label">Original STL:</label>
                                         <div class="btn-group btn-group-justified" role="group" aria-label="stltab">
                                             <div class="btn-group" role="group">
@@ -340,11 +340,11 @@
                                             </div>
                                         </div>
 
-                                    </div>
+                                    <!-- </div> -->
                                 </form>
 
                                 <form class="form-horizontal">
-                                    <div class="form-group">
+                                    <!-- <div class="form-group"> -->
                                         Configure thickness per layer - usually this equates to the thickness of the material you'll be cutting the slices from:
                                         <br>
                                         <label for="inflateVal" class="control-label">Layer Height:</label>
@@ -358,7 +358,7 @@
                                             <button type="button" class="btn btn-default" id="generateslices" onclick="generateSlices();">Slice STL</button>
                                         </div>
                                 </form>
-                                </div>
+                                <!-- </div> -->
                         </div>
                     </div>
                 </div>
@@ -401,23 +401,23 @@
                         </form>
                         <hr>
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="inflateVal" class="control-label">Engrave (G1) Feedrate:</label>
                                 <div class="input-group">
                                     <input type="text input-sm" class="form-control" value="2000" id="feedRate">
                                     <span class="input-group-addon" style="width: 60px;">mm/min</span>
                                 </div>
-                            </div>
+                            <!-- </div> -->
                         </form>
 
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="inflateVal" class="control-label">Rapid (G0) Feedrate:</label>
                                 <div class="input-group">
                                     <input type="text input-sm" class="form-control" value="6000" id="rapidRate">
                                     <span class="input-group-addon" style="width: 60px;">mm/min</span>
                                 </div>
-                            </div>
+                            <!-- </div> -->
                         </form>
 
                         <center>
@@ -466,10 +466,11 @@
                     <div id="home" class="tab-pane fade in active">
                         Serial Port JSON Server runs on host:
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="laserXMax" class="control-label">IP Address</label>
                                 <input type="text" class="form-control" id="spjsip" placeholder="127.0.0.1">
-                            </div>
+                            <!-- </div> -->
+                          </p>
                         </form>
                     </div>
                     <div id="menu1" class="tab-pane fade">
@@ -477,47 +478,49 @@
                         <br>
                         <i>(NB: Page needs a refresh for these settings to take effect!)</i>
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="laserXMax" class="control-label">X-Length</label>
                                 <input type="text" class="form-control" id="laserXMax" placeholder="600">
-                            </div>
-                            <div class="form-group">
+                            <!-- </div>
+                            <div class="form-group"> -->
                                 <label for="laserYMax" class="control-label">Y-Length</label>
                                 <input type="text" class="form-control" id="laserYMax" placeholder="400">
-                            </div>
+                            <!-- </div> -->
+                          </p>
                         </form>
                     </div>
                     <div id="menu2" class="tab-pane fade">
                         Configure pre/post/control GCode commands:
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="startgcode" class="control-label">Start G-Code</label>
                                 <textarea class="form-control" id="startgcode" placeholder="G28\nG90\nM80"></textarea>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div> -->
+                            <!-- <div class="form-group"> -->
                                 <label for="laseron" class="control-label">Laser ON Command</label>
                                 <input type="text" class="form-control" id="laseron" placeholder="M3 / blank for firmwares that support G1"></input>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div> -->
+                            <!-- <div class="form-group"> -->
                                 <label for="laseroff" class="control-label">Laser OFF Command</label>
                                 <input type="text" class="form-control" id="laseroff" placeholder="M5 / blank for firmwares that support G1"></input>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div> -->
+                            <!-- <div class="form-group"> -->
                                 <label for="laseroff" class="control-label">PWM Max S</label>
                                 <input type="text" class="form-control" id="lasermultiply" placeholder="255"></input>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div> -->
+                            <!-- <div class="form-group"> -->
                                 <label for="homingseq" class="control-label">Homing Sequence</label>
                                 <input type="text" class="form-control" id="homingseq" placeholder="G28"></input>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div>
+                            <div class="form-group"> -->
                                 <label for="endgcode" class="control-label">End G-Code</label>
                                 <textarea class="form-control" id="endgcode" placeholder="M81\nG28\n"></textarea>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div>
+                            <div class="form-group"> -->
                                 <label for="endgcode" class="control-label">Travel Moves (mm/min)</label>
                                 <textarea class="form-control" id="rapidspeed" placeholder="2000"></textarea>
-                            </div>
+                            <!-- </div> -->
+                          </p>
                         </form>
                     </div>
 
@@ -525,40 +528,43 @@
                     <div id="menu3" class="tab-pane fade">
                         Configure how the application works, turn on/off features:
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <label for="endgcode" class="control-label">Experimental: Tool Offset </label>
                                 <select class="form-control" id="useOffset">
                                     <option>Enable</option>
                                     <option>Disable</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
+                            <!-- </div>
+                            <div class="form-group"> -->
                                 <label for="imagePosition" class="control-label">Place uploaded image in quadrant</label>
                                 <select class="form-control" id="imagePosition">
                                     <option>BottomLeft</option>
                                     <option>TopLeft</option>
                                 </select>
-                            </div>
+                            <!-- </div> -->
+                          </p>
                         </form>
                     </div>
 
                     <div id="menu4" class="tab-pane fade">
                         Download a backup or restore settings from a backup file:
                         <form class="form-horizontal">
-                            <div class="form-group">
+                            <!-- <div class="form-group"> -->
                                 <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
                                     <div class="btn-group" role="group">
-                                        <button id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()"><i class="fa fa-download fa-fw" aria-hidden="true"></i></i>Backup Settings/Macros</button>
+                                        <button id="backup" class="btn btn-lg btn-default btn-file" title="Take a backup" onclick="backupSettingsLocal()"><i class="fa fa-download fa-fw" aria-hidden="true"></i></i>Backup Settings</button>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
+                                <p>
+                            <!-- </div> -->
+                            <!-- <div class="form-group"> -->
                                 <div class="btn-group input-group  btn-group-justified" role="group" id="jogx" aria-label="X Moves">
                                     <div class="btn-group" role="group">
                                         <span id="restore" class="btn btn-lg btn-default btn-file" title="Open a backup settings file"><i class="fa fa-upload  fa-fw" aria-hidden="true"></i>Restore from file<input id="jsonFile" type="file" accept=".json" /></span>
                                     </div>
                                 </div>
-                            </div>
+                                <p>
+                            <!-- </div> -->
                         </form>
                     </div>
 
