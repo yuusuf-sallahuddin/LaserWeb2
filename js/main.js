@@ -25,7 +25,7 @@ $(document).ready(function() {
     rasterInit();
     macrosInit();
     grbl = new Grbl();
-    
+
     //initRaster();
 
     // Responsive Sidebar width
@@ -200,17 +200,28 @@ function checkNumPad() {
         $.fn.numpad.defaults.gridTpl = '<table class="table modal-content"></table>';
         $.fn.numpad.defaults.backgroundTpl = '<div class="modal-backdrop in"></div>';
         $.fn.numpad.defaults.displayTpl = '<input type="text" class="form-control" />';
-        $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-default"></button>';
-        $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn" style="width: 100%;"></button>';
-        $.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
+        $.fn.numpad.defaults.dblCellTpl = '<td colspan="2"></td>',
+        $.fn.numpad.defaults.buttonNumberTpl =  '<button type="button" class="btn btn-numpad btn-default" style="width: 100%;"></button>';
+        $.fn.numpad.defaults.buttonFunctionTpl = '<button type="button" class="btn  btn-numpad" style="width: 100%;"></button>';
+        //$.fn.numpad.defaults.onKeypadCreate = function(){$(this).find('.done').addClass('btn-primary');};
         $('.numpad').numpad({
         					decimalSeparator: '.',
-                  gcode: false
+                  gcode: false,
+                  textDone: 'OK',
+              		textDelete: 'Del',
+              		textClear: 'Clear',
+              		textCancel: 'Cancel',
+                  headerText: 'Enter Number',
         				});
 
         $('.numpadgcode').numpad({
                   decimalSeparator: '.',
-                  gcode: true
+                  gcode: true,
+                  textDone: 'OK',
+              		textDelete: 'Del',
+              		textClear: 'Clear',
+              		textCancel: 'Cancel',
+                  headerText: 'Enter GCODE',
                 });
 
 

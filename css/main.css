@@ -19,6 +19,53 @@ body {
     border-radius: 4px;
 }
 
+.btn-jog {
+    padding: 15px 11px;
+    border-radius: 4px;
+}
+
+.btn-numpad {
+    padding: 14px 17px;
+    border-radius: 4px;
+}
+
+.numero {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.del  {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.clear {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.neg {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.cancel {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.done {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.sep {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+
+
 /*for Desktops*/
 @media all and (min-width : 1100px) {
   #container1 {
