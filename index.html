@@ -60,9 +60,16 @@
     <script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
     <script type="text/javascript" src="js/dxf-render.js"></script>
 
-    <!-- SVG New Lib -->
+    <!-- SVG Chilipeppr Lib -->
     <script type="text/javascript" src="lib/snap/snap.svg-min.js"></script>
     <script type="text/javascript" src="js/svg-render.js"></script>
+
+    <!-- SVG Lasersaur Library -->
+    <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
+    <script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
+    <script type="text/javascript" src="lib/svgreader/vec2.js"></script>
+    <script type="text/javascript" src="lib/svgreader/svg.js"></script>
+
 
     <!-- Three CAM -->
     <script type="text/javascript" src="js/fileprep.js"></script>
@@ -326,7 +333,23 @@
                                         <button type="button" class="btn btn-default" id="generategcode">Generate G-Code</button>
                                     </div>
                                 </div>
-                                <div id="layers">
+                                <div id="layers"> <!-- DXF -->
+                                </div>
+                                <div id="svgnewway" style="display: none;"> <!-- SVG -->
+                                  <div class="btn btn-warning btn-xs" id="pullcolors">Per stroke (Click to pull from SVG)</div>
+
+                                  <table class="table table-condensed" id="svglinestable">
+                                    <caption>Per-color parameters</caption>
+                                    <thead>
+                                        <tr>
+                                          <th style="text-align: center;">Color</th>
+                                          <th style="text-align: center;">Speed</th>
+                                          <th style="text-align: center;">% Power</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="svglinestbody">
+                                    </tbody>
+                                  </table>
                                 </div>
                         </div>
                         <!-- Tab 3 -->
@@ -739,6 +762,9 @@
 <!-- End Main Body Div -->
 <video id="monitor" autoplay width="160" height="120" style="display: none; visibility: hidden; float:left;"></video>
 <canvas id="videoImage" width="160" height="120" style="display: none; visibility: hidden; float:left;"></canvas>
+<div id="work-area" style="display: none; visibility: hidden; float:left;">
+  <div id="svgpreview"></div>
+</div>
 </body>
 
 </html>

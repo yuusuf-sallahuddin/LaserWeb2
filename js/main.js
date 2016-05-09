@@ -24,6 +24,7 @@ $(document).ready(function() {
     var paperscript = {};
     rasterInit();
     macrosInit();
+    svgInit();
     grbl = new Grbl();
 
     //initRaster();
@@ -263,6 +264,7 @@ function readFile(evt) {
                 dxf = r.result
                 $('#togglefile').click();
                 $('#cammodule').show();
+                // $('#svgnewway').hide();
                 $('#rastermodule').hide();
                 getSettings();
                 drawDXF(dxf);
@@ -282,12 +284,16 @@ function readFile(evt) {
             r.readAsText(evt.target.files[0]);
             r.onload = function(event) {
                 svg = r.result
+                var svgpreview = document.getElementById('svgpreview');
+                svgpreview.innerHTML = r.result;
                     // /console.log(svg);
                 $('#togglefile').click();
                 $('#cammodule').show();
+                // $('#svgnewway').show();
                 $('#rastermodule').hide();
                 getSettings();
-                drawSvg(svg);
+                var svgfile = $('#svgpreview').html();
+                svg2three(svgfile);
                 currentWorld();
                 printLog('SVG Opened', successcolor);
                 $('#cammodule').show();
