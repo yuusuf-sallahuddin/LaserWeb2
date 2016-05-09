@@ -293,6 +293,15 @@ function readFile(evt) {
                 $('#rastermodule').hide();
                 getSettings();
                 var svgfile = $('#svgpreview').html();
+                // var colors = pullcolors(svgfile).unique();
+                // var layers = []
+                // for (i = 0; i < colors.length; i++) {
+                //   // var r = colors[i][0];
+                //   // var g = colors[i][1];
+                //   // var b = colors[i][2];
+                //   //var colorval = RGBToHex(r, g, b)
+                //   layers.push(colors[i]);
+                // };
                 svg2three(svgfile);
                 currentWorld();
                 printLog('SVG Opened', successcolor);
