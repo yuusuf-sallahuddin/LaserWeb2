@@ -1,3 +1,5 @@
+// NOTE:  Unused since 0 May 2016 - replaced with SVGReader
+
 var options = {};
 var shape = null;
 var fileParentGroup;
