@@ -27,6 +27,14 @@ By using this software, the user accepts complete responsibility for each and ev
 2. Install Serial Port JSON Server https://github.com/chilipeppr/serial-port-json-server/releases
 3. Click the Settings tab in LaserWeb2's web interface and configure for your machine, IP of SPJS, GCODE dialect, etc
 4. Connect and PLAY
+ 
+
+
+#Support Instructions:
+* For End User support (Usage, setup etc) please joing [https://plus.google.com/communities/115879488566665599508](https://plus.google.com/communities/115879488566665599508)
+* For Development Support (Bugs, feature requests, API, etc) see 
+[https://github.com/openhardwarecoza/LaserWeb2/issues](https://github.com/openhardwarecoza/LaserWeb2/issues)
+
 
 ## Internal module development
 It would be more maintainable if we could develop more functional modules, that are tested.
