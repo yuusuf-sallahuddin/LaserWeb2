@@ -36,15 +36,15 @@ function k40() {
 
   var psuboxgeo = new THREE.BoxGeometry( 160, 300, 80 );
   var psu = new THREE.Mesh( psuboxgeo, material );
-  psu.position.x = (laserxmax /2 ) + 70 + 80;
+  psu.position.x = (laserxmax /2 ) + 70 + 75;
   psu.position.z = 30;
   scene.add( psu );
   edges = new THREE.EdgesHelper( psu, 0x0000ff );
   scene.add( edges );
 
-  var tubeboxgeo = new THREE.BoxGeometry( 605, 100, 80 );
+  var tubeboxgeo = new THREE.BoxGeometry( 600, 100, 80 );
   var tubebox = new THREE.Mesh( tubeboxgeo, material );
-  tubebox.position.x = 77.5
+  tubebox.position.x = 75
   tubebox.position.y = (laserymax /2 ) + 40 + 50;
   tubebox.position.z = 30;
   scene.add( tubebox );
