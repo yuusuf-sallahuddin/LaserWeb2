@@ -30,7 +30,7 @@ By using this software, the user accepts complete responsibility for each and ev
  
 
 
-#Support Instructions:
+#Support / Community:
 * For End User support (Usage, setup etc) please joing [https://plus.google.com/communities/115879488566665599508](https://plus.google.com/communities/115879488566665599508)
 * For Development Support (Bugs, feature requests, API, etc) see 
 [https://github.com/openhardwarecoza/LaserWeb2/issues](https://github.com/openhardwarecoza/LaserWeb2/issues)
