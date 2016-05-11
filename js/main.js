@@ -18,6 +18,7 @@ $(document).ready(function() {
     getPortList();
     init3D();
     animate();
+    initList();
     filePrepInit();
     initJog();
     errorHandlerJS();

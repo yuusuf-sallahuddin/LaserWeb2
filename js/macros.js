@@ -33,50 +33,10 @@ function macrosInit() {
   });
 
   $('#savemacro').on('click', function() {
-      printLog('Saving Macros', msgcolor);
-      $('#macro_pad').toggle();
-      $('#macro_settings').toggle();
-      $('#savemacro').hide();
-      $('#editmacro').show();
-      // Cleanup
-      for (i = 1; i < 24; i++) {
-          var name = 'macro' + i;
-          localStorage.removeItem(name);
-      };
-      //gets table
-      var oTable = document.getElementById('macroEdit');
-
-      //gets rows of table
-      var rowLength = oTable.rows.length;
-
-      //loops through rows
-      for (i = 1; i < rowLength; i++) {
-          var macro = [];
-          //gets cells of current row
-          var oCells = oTable.rows.item(i).cells;
-
-          //gets amount of cells of current row
-          var cellLength = oCells.length;
-
-          //loops through each cell in current row
-          for (var j = 0; j < 3; j++) {
-
-              // get your cell info here
-
-              var cellVal = oCells.item(j).innerHTML;
-              console.log(cellVal);
-              macro.push(cellVal);
-          };
-
-          var colorVal = $("#colorValue"+i).html();
-          macro.push(colorVal);
-          var name = 'macro' + i;
-          localStorage.setItem(name, macro);
-      };
-
-      // Lets fire off initial Populate
-      readMacros();
+    saveMacros();
   });
+
+
 
 readMacros();
 }
@@ -92,6 +52,52 @@ function deleteRow(t) {
     var row = t.parentNode.parentNode;
     document.getElementById("macroEdit").deleteRow(row.rowIndex);
     console.log(row);
+}
+
+function saveMacros() {
+  printLog('Saving Macros', msgcolor);
+  $('#macro_pad').toggle();
+  $('#macro_settings').toggle();
+  $('#savemacro').hide();
+  $('#editmacro').show();
+  // Cleanup
+  for (i = 1; i < 24; i++) {
+      var name = 'macro' + i;
+      localStorage.removeItem(name);
+  };
+  //gets table
+  var oTable = document.getElementById('macroEdit');
+
+  //gets rows of table
+  var rowLength = oTable.rows.length;
+
+  //loops through rows
+  for (i = 1; i < rowLength; i++) {
+      var macro = [];
+      //gets cells of current row
+      var oCells = oTable.rows.item(i).cells;
+
+      //gets amount of cells of current row
+      var cellLength = oCells.length;
+
+      //loops through each cell in current row
+      for (var j = 0; j < 3; j++) {
+
+          // get your cell info here
+
+          var cellVal = oCells.item(j).innerHTML;
+          console.log(cellVal);
+          macro.push(cellVal);
+      };
+
+      var colorVal = $("#colorValue"+i).html();
+      macro.push(colorVal);
+      var name = 'macro' + i;
+      localStorage.setItem(name, macro);
+  };
+
+  // Lets fire off initial Populate
+  readMacros();
 }
 
 function readMacros() {

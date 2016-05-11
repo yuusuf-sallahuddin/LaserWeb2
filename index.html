@@ -37,7 +37,6 @@
     <script src="lib/jnumpad/jquery.numpad.js"></script>
     <link rel="stylesheet" href="lib/jnumpad/jquery.numpad.css" />
 
-
     <!-- Font -->
     <link rel="stylesheet" href="css/font-awesome.css" />
 
@@ -70,7 +69,6 @@
     <script type="text/javascript" src="lib/svgreader/vec2.js"></script>
     <script type="text/javascript" src="lib/svgreader/svg.js"></script>
 
-
     <!-- Three CAM -->
     <script type="text/javascript" src="js/fileprep.js"></script>
     <script type="text/javascript" src="js/threegcode.js"></script>
@@ -102,7 +100,6 @@
     <!-- Saved/load settings -->
     <script src="js/localstorage.js"></script>
 
-
     <!-- Gcode Viewer -->
     <script src="lib/gcode-viewer/gcode-parser.js"></script>
     <script src="lib/gcode-viewer/ui.js"></script>
@@ -115,6 +112,10 @@
     <script src="js/googlesignin.js"></script>
     <meta name="google-signin-client_id" content="1086441811451-4nmidqbqq8tve1qqa592uq1hs04kl5sl.apps.googleusercontent.com">
     <link rel="stylesheet" href="css/googlesignin.css" />
+
+    <!-- Machine Presets -->
+    <script src="machines/list.js"></script>
+    <script src="machines/k40/k40.js"></script>
 
 </head>
 
@@ -514,6 +515,12 @@
                                 <label for="laserYMax" class="control-label">Y-Length</label>
                                 <input type="text" class="form-control numpad" id="laserYMax" placeholder="400">
                             <!-- </div> -->
+
+                            <label for="useProfile" class="control-label">Use Profile</label>
+                            <select class="form-control" id="useProfile">
+                                <option>none</option>
+                                <option>K40</option>
+                            </select>
                           </p>
                         </form>
                     </div>
