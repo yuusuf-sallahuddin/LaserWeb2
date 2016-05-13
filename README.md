@@ -43,7 +43,9 @@ If you have contributed anything to this project, even a single wiki entry or fi
 
 *@openhardwarecoza: If you would like to help with paying the prototyping costs, you can shoot me a donation on Paypal if you wish: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=45DXEXK9LJSWU or support me on Patreon: https://www.patreon.com/openhardwarecoza - also, I post all personal donations on https://plus.google.com/collection/UtfYZB Alternatively you can support me by buying anything from these stores using my affiliate link: https://www.banggood.com/?p=HO1614632392201406RX
 
-*@funinthefalls: If you like my work on the LaserWeb Wiki or the bug hunting I have been doing, I would gladly accept any donation (monetary or hardware) to help prototype my Laser Safety System: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HMLY2MKN9XV98 (Thank you Peter for letting me post this donation link!)
+
+*[@funinthefalls](https://github.com/funinthefalls): Being an complete nerd, I actually enjoy writing the documentation. I would gladly accept any donation (monetary or hardware) or even just a "Good job" post. https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HMLY2MKN9XV98 
+
 
 *@nathanielstenzel: I have helped some with the raster image support, some code cleanup, etc. Pay Pal seems to have red tape for donation buttons, so just call it a thank you if you send me money to thank me for my work. I would gladly accept hardware like a laser diode with driver board. I could mount that on my little CNC router.
 
