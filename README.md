@@ -45,3 +45,9 @@ It would be more maintainable if we could develop more functional modules, that 
 npm install // installs mocha and chai
 npm test // runs test code on grbl.js
 ```
+
+#Roadmap
+
+As of middle May 2016:
+
+![Roadmap](https://raw.githubusercontent.com/openhardwarecoza/LaserWeb2/gh-pages/Roadmap-%20LaserWeb2.png)
