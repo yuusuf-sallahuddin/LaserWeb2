@@ -5,8 +5,49 @@ Laserweb (https://github.com/openhardwarecoza/LaserWeb) was born out of a need! 
 
 Thus, this here is it's successor: LaserWeb2!
 
-## Sponsors
-Have a look at companies and individuals that support us financially or with parts donations, or if you would like to get involved by sponsoring us in any way, please see the Sponsors Page on the wiki: https://github.com/openhardwarecoza/LaserWeb/wiki/SPONSORS
+Want to get involved? Simple - we have a couple of Contributors on the project, who have devoted time and effort into making LaserWeb better than it was before they joined. Many of these contributors do it for nothing more than the passion of working on an open source project, and some don't even own a laser.
+
+Through the wonder that is the global open source community, however, lack of a laser hasn't stopped them! If you follow our team on Google Plus you'll know that we sometimes go as far as having three or four people in different time zones, collaborating on code, while having someone else in the team test it out on real hardware. It has not been easy, but we won't let that stop us!
+
+##Sponsors
+
+So how can I help?
+
+*Easy! Pick a contributor, and show them you care! *
+
+If you sell laser machines / parts / electronics / anything remotely related - I am happy to say we'll gladly take your bribe in exchange for sticking your logo on this page and linking to your stores! We'll probably even hook up the hardware you donate and figure out how it works and add that info/specifics/settings to this Wiki! If you have any business common sense, you can see that it is a pretty good ROI out of your marketing budget (;
+
+Don't always send it to me (@openhardwarecoza) - please also send donations / hardware to our Contributors !
+Sponsors:
+
+    Robots-everywhere.com
+
+Shop: http://robots-everywhere.com/re_site/purchase/l-cheapo/
+
+-- MK B donated one of their 3.5w MK3 diodes! Arrived today, can't wait to hook it up (7 April 2016)
+
+https://lh3.googleusercontent.com/-ZQ8L6QLhd00/VwZa9BJ25lI/AAAAAAAAPxM/t9fssBndBy4ww8mAxlkdsjx3TbQ1AMJBQ/w1580-h889-no/2016%2B-%2B1
+
+    OpenBuildsPartStore.com
+
+Shop: http://openbuildspartstore.com/
+
+-- Mark, as always is supporting the work I do!
+
+http://cdn1.bigcommerce.com/server2300/itwgldve/product_images/OpenbuildsSTORE_logo_Header_Small1.png
+Paypal Links
+
+If you have contributed anything to this project, even a single wiki entry or fixed one line of code, please add your Paypal link below: We believe in paying it forward!
+
+-paypal
+
+*@openhardwarecoza: If you would like to help with paying the prototyping costs, you can shoot me a donation on Paypal if you wish: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=45DXEXK9LJSWU or support me on Patreon: https://www.patreon.com/openhardwarecoza - also, I post all personal donations on https://plus.google.com/collection/UtfYZB Alternatively you can support me by buying anything from these stores using my affiliate link: https://www.banggood.com/?p=HO1614632392201406RX
+
+*@funinthefalls: If you like my work on the LaserWeb Wiki or the bug hunting I have been doing, I would gladly accept any donation (monetary or hardware) to help prototype my Laser Safety System: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=HMLY2MKN9XV98 (Thank you Peter for letting me post this donation link!)
+
+*@nathanielstenzel: I have helped some with the raster image support, some code cleanup, etc. Pay Pal seems to have red tape for donation buttons, so just call it a thank you if you send me money to thank me for my work. I would gladly accept hardware like a laser diode with driver board. I could mount that on my little CNC router.
+
+*Ariel Yahni@cojarbi: Just a happy tester having fun and learning from this guys. Donation greatly appreciated, i need to get myself a CO2 laser
 
 ## Disclaimer
 By using this software, the user accepts complete responsibility for each and every aspect of safety associated with the use of the Laser machine, Laser system and LaserWeb2 Software.
