@@ -682,6 +682,10 @@
             <!-- 3D Viewer Controls -->
             <div id="viewer_container">
 
+              <div class="btn-group" role="group" id="chatcntr" style="vertical-align: bottom; margin-left: 18px;">
+                  <button type="button" data-title="Chat with Other User" class="btn btn-lg btn-default js-gitter-toggle-chat-button"><i class="fa fa-comments-o fa-fw"></i>Chat</button>
+              </div>
+
                 <div class="btn-group" role="group" id="transformcontrols" style="vertical-align: bottom; margin-left: 18px;">
                     <button type="button" data-title="Move Object" class="btn btn-lg btn-default" id="translateBtn"><i class="fa fa-arrows fa-lg"></i></button>
                     <button type="button" data-title="Resize Object" class="btn btn-lg btn-default" id="resizeBtn"><i class="fa fa-expand fa-lg"></i></button>
@@ -706,10 +710,21 @@
                         <button type="button" data-title="Pan Right" class="btn btn-lg btn-default" id="panright"><i class="fa fa-arrow-right"></i></button>
                     </div>
                 </div>
+
+
+
+
+
             </div>
             <!-- End 3D Viewer Controls -->
 
-
+            <script>
+              ((window.gitter = {}).chat = {}).options = {
+                room: 'openhardwarecoza/LaserWeb2',
+                activationElement: false,
+              };
+            </script>
+            <script src="https://sidecar.gitter.im/dist/sidecar.v1.js" async defer></script>
 
         </div>
         <!-- End of Main Body -->
@@ -761,6 +776,10 @@
 <!-- End of Main Row -->
 </div>
 <!-- End of Container Fluid -->
+
+
+
+
 
 <!-- End Main Body Div -->
 <video id="monitor" autoplay width="160" height="120" style="display: none; visibility: hidden; float:left;"></video>
