@@ -211,6 +211,10 @@ Rasterizer.prototype.rasterRow = function(y) {
     var lastGrey = -1;
     var lastIntensity = -1;
 
+    // Get a row of pixels to work with
+    var ImgData = this.raster.getImageData(0, y, this.raster.width, 1);
+    var pixels = ImgData.data;
+
     // Run the row:
     for (var px = 0; px <= this.raster.width; px++) {
         var x;
@@ -229,9 +233,9 @@ Rasterizer.prototype.rasterRow = function(y) {
         // Keep some stats of how many pixels we've processed
         this.megaPixel++;
 
-        // Determine the grayscale of the pixel(x,y)  we are looping over
-        var color = this.raster.getPixel(x, y);
-        this.grayLevel = color.gray.toFixed(1); // var grayLevel = color.gray.toFixed(2); // two decimal precision is plenty - for testing I will drop it to 1 decimal (10% increments)
+        // The Luma grayscale of the pixel
+        var lumaGray = (pixels[x*4]*0.3 + pixels[x*4+1]*0.59 + pixels[x*4+2]*0.11)/255.0;
+        this.grayLevel = lumaGray.toFixed(1); 
 
         var speed = this.config.feedRate;
         if (lastGrey != this.grayLevel) {
