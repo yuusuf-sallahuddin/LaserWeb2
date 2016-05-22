@@ -87,7 +87,7 @@ function rasterInit() {
             //spotSize = [ui.values[ 0 ]];
             $('#rasterNow').removeClass('disabled');
             setImgDims()
-        }
+        },
         change: function(event, ui) {
             //spotSize = [ui.values[ 0 ]];
             $('#rasterNow').removeClass('disabled');
