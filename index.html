@@ -799,15 +799,66 @@
 <!-- End of Container Fluid -->
 
 
-
-
-
-<!-- End Main Body Div -->
+<!-- Hidden divs, used by components -->
 <video id="monitor" autoplay width="160" height="120" style="display: none; visibility: hidden; float:left;"></video>
 <canvas id="videoImage" width="160" height="120" style="display: none; visibility: hidden; float:left;"></canvas>
 <div id="work-area" style="display: none; visibility: hidden; float:left;">
   <div id="svgpreview"></div>
 </div>
+<!-- End Hidden Divs -->
+
+
+<!-- SVG Size modal -->
+<div id="svgresize" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+        <h4 class="modal-title">SVG: Import DPI</h4>
+      </div>
+      <div class="modal-body">
+        Please specify the DPI this file was saved in to scale it to the correct physical size.
+
+
+        <form class="form-horizontal">
+            <!-- <div class="form-group"> -->
+                <label class="control-label">Preset DPI:</label>
+
+                <div class="btn-group input-group  btn-group-justified">
+                  <span class="input-group-addon"><i class="fa fa-desktop"></i>&nbsp;Preset:</span>
+                  <div class="btn btn-default btn-sm" id="90dpi">90 dpi (Inkscape)</div>
+                  <div class="btn btn-default btn-sm" id="72dpi">72 dpi (Adobe)</div>
+                  <div class="btn btn-default btn-sm" id="customdpi">(Custom)</div>
+                </div>
+                <label class="control-label">Custom:</label>
+                <div class="input-group">
+                  <span class="input-group-addon">Custom: </span>
+                    <input type="number" class="form-control  numpad input-sm" value="300" id="dpiVal" style="text-align:right;">
+                    <span class="input-group-addon">dpi</span>
+                </div>
+
+
+            <!-- </div> -->
+        </form>
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-success" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- End SVG Size Modal -->
+
+<!-- End Main Body Div -->
+
+
+
 </body>
 
 <script>

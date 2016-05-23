@@ -312,6 +312,7 @@ function readFile(evt) {
                 $('#prepopt').show();
                 $('#prepopt').click();
                 attachTransformWidget();
+                $('#svgresize').modal('show');
             };
 
         } else if (f.name.match(/.gcode$/i)) {

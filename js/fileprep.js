@@ -22,6 +22,38 @@ function attachTransformWidget() {
 
 function filePrepInit() {
 
+  $('#90dpi').on('click', function() {
+  	svgscale = ((25.4/90) )
+  	$('#scaleFactor').val(svgscale*100);
+    scaleChange();
+
+  });
+
+  $('#72dpi').on('click', function() {
+  	svgscale = ((25.4/72) )
+  	$('#scaleFactor').val(svgscale*100);
+    scaleChange();
+
+  });
+
+  $('#customdpi').on('click', function() {
+    dpival = $('#dpiVal').val();
+    svgscale = ((25.4/dpival) )
+    $('#scaleFactor').val(svgscale*100);
+    scaleChange();
+
+  });
+
+
+  $("#dpiVal").change(function() {
+    dpival = $('#dpiVal').val();
+    svgscale = ((25.4/dpival) )
+    $('#scaleFactor').val(svgscale*100);
+    scaleChange();
+    
+  });
+
+
   $('#rotLeftBtn').on('click', function() {
     if (fileParentGroup) {
       fileObject.rotateZ(Math.PI / 4);
