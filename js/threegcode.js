@@ -199,11 +199,11 @@ function generateGcode(threeGroup, cutSpeed, laserPwr, rapidSpeed, laseron, lase
                     // move to point
 
                     // if milling, we need to move to clearance height
-                    if (options.mode == "mill") {
-                        if (!isAtClearanceHeight) {
-                            g += "G0 Z" + options.millclearanceheight + "\n";
-                        }
-                    }
+                    // if (options.mode == "mill") {
+                    //     if (!isAtClearanceHeight) {
+                    //         g += "G0 Z" + options.millclearanceheight + "\n";
+                    //     }
+                    // }
 
                     // move to start point
 
@@ -231,13 +231,13 @@ function generateGcode(threeGroup, cutSpeed, laserPwr, rapidSpeed, laseron, lase
 
                     //subj_paths.push(worldPt.x.toFixed(3) +',' + worldPt.y.toFixed(3));
                     // if milling move back to depth cut
-                    if (options.mode == "mill") {
-                        var halfDistance = (options.millclearanceheight - options.milldepthcut) / 2;
-                        g += "G0 Z" + (options.millclearanceheight - halfDistance).toFixed(3) + "\n";
-                        g += "G1 F" + options.millfeedrateplunge +
-                            " Z" + options.milldepthcut + "\n";
-                        isAtClearanceHeight = false;
-                    }
+                    // if (options.mode == "mill") {
+                    //     var halfDistance = (options.millclearanceheight - options.milldepthcut) / 2;
+                    //     g += "G0 Z" + (options.millclearanceheight - halfDistance).toFixed(3) + "\n";
+                    //     g += "G1 F" + options.millfeedrateplunge +
+                    //         " Z" + options.milldepthcut + "\n";
+                    //     isAtClearanceHeight = false;
+                    // }
 
                 } else {
 
@@ -313,9 +313,9 @@ function generateGcode(threeGroup, cutSpeed, laserPwr, rapidSpeed, laseron, lase
                 }
                 //  }
             } else {
-                // milling. move back to clearance height
-                g += "G0 Z" + options.millclearanceheight + "\n";
-                isAtClearanceHeight = true;
+                // // milling. move back to clearance height
+                // g += "G0 Z" + options.millclearanceheight + "\n";
+                // isAtClearanceHeight = true;
             }
         }
     });
