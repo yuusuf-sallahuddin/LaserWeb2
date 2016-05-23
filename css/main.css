@@ -4,6 +4,8 @@ body {
     position: absolute;
 }
 
+button:focus {outline:0 !important;}
+
 .fa-stack{
     width: 1.28571em;
 }
@@ -11,7 +13,7 @@ body {
 .icon-white {
     color: white;
 }
-.icon-bot-text { margin-top: 1.3em; font-size: 10px;}
+.icon-bot-text { margin-top: 1.3em; font-size: 10px; padding-top:}
 .icon-top-text { margin-top: -1.3em; font-size: 10px; }
 
 .btn-ctl {

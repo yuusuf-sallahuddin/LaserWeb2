@@ -22,6 +22,35 @@ function attachTransformWidget() {
 
 function filePrepInit() {
 
+  $('#rotLeftBtn').on('click', function() {
+    if (fileParentGroup) {
+      fileObject.rotateZ(Math.PI / 4);
+      putFileObjectAtZero();
+    }
+  });
+
+  $('#rotRightBtn').on('click', function() {
+    if (fileParentGroup) {
+      fileObject.rotateZ(Math.PI / -4);
+      putFileObjectAtZero();
+    }
+  });
+
+  $('#resetRot').on('click', function() {
+    if (fileParentGroup) {
+      fileObject.rotation.z = 0;
+      putFileObjectAtZero();
+    }
+  });
+
+  $("#rotationval").change(function() {
+      var rotation = $(this).val();
+      console.log('Rotating from ', ((fileObject.rotation.z / Math.PI * 180).toFixed(0) * -1 ), ' to ', rotation);
+      fileObject.rotateZ((rotation * Math.PI/ 180) * -1);
+      putFileObjectAtZero();
+  });
+
+
   $('#translateBtn').on('click', function() {
       if ($("#translateBtn").hasClass("btn-primary")) {
           $("#translateBtn").removeClass("btn-primary")
@@ -70,6 +99,7 @@ function filePrepInit() {
           // $( "#linkAspectBtn" ).addClass( "btn-default" )
           $('#linkAspect').removeClass('fa-link');
           $('#linkAspect').addClass('fa-unlink');
+          $("#linkval").html('Unlinked');
       } else {
           // $( "#linkAspectBtn" ).removeClass( "btn-default" )
           // $( "#linkAspectBtn" ).removeClass( "btn-primary" )
@@ -77,6 +107,7 @@ function filePrepInit() {
           // $( "#linkAspectBtn" ).addClass( "btn-primary" )
           $('#linkAspect').removeClass('fa-unlink');
           $('#linkAspect').addClass('fa-link');
+          $("#linkval").html('Linked');
       }
   });
 
@@ -260,6 +291,8 @@ function currentWorld() {
         $('#ypos').val(parseInt(fileParentGroup.position.y) + (laserymax / 2));
         $('#scaleFactor').val((fileParentGroup.scale.x) * 100);
         fileParentGroup.position.z = 0.001;
+
+        $('#rotationval').val((fileObject.rotation.z / Math.PI * 180).toFixed(0) * -1);
 
         oldscalex = fileParentGroup.scale.x;
         oldyscale = fileParentGroup.scale.y;
