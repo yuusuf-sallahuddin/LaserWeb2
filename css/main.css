@@ -13,7 +13,7 @@ button:focus {outline:0 !important;}
 .icon-white {
     color: white;
 }
-.icon-bot-text { margin-top: 1.3em; font-size: 10px; padding-top:}
+.icon-bot-text { margin-top: 1.3em; font-size: 10px;}
 .icon-top-text { margin-top: -1.3em; font-size: 10px; }
 
 .btn-ctl {

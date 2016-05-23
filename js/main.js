@@ -429,7 +429,7 @@ function readFile(evt) {
     if ($( "#togglefile" ).hasClass( "btn-default" )) {
       $('#togglefile').click();
     }
-    document.getElementById('file').value = '';
+    
 
 };
 
