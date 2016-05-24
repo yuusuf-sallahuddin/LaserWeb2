@@ -1,64 +1,211 @@
 * {
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
-    margin:  0;
-    overflow:  hidden;
-    padding:  0;
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    padding: 0;
     vertical-align: baseline;
 }
 
 body {
+    background-color:  rgba(128,128,128,0.125); /* DEBUG only */
     color: #000000;
-    padding-left:  1vw; /* 1% of the viewport width */
-    padding-right:  1vw; /* 1% of the viewport width */
-    width:  100vw;
+    height: 100vh; /* 100% of the viewport height */
+    max-height: 100vh; /* 100% of the viewport height */
+    max-width: 100vw; /* 100% of the viewport width */
+    min-height: 100vh; /* 100% of the viewport height */
+    min-width: 100vw; /* 100% of the viewport width */
+    overflow: hidden; /* Nothing should be outside of the 100% width/height of the viewport */
+    padding-bottom: 0vh; /* 0% of the viewport height */
+    padding-left: 1vw; /* 1% of the viewport width */
+    padding-right: 1vw; /* 1% of the viewport width */
+    padding-top: 0vh; /* 0% of the viewport height */
+    width: 100vw; /* 100% of the viewport width */
 }
 
 header {
-    background-color:  rgba(0,128,0,0.5);  /* To designate start point of each container visually: DEBUG only */
-    padding:  1vw; /* 1% of the viewport width */
+    background-color: rgba(0,128,0,0.5);  /* To designate start point of each container visually: DEBUG only */
 }
 
 footer {
-    background-color:  rgba(128,0,0,0.5); /* To designate end point of each container visually: DEBUG only */
-    padding:  1vw; /* 1% of the viewport width */
+    background-color: rgba(128,0,0,0.5); /* To designate end point of each container visually: DEBUG only */
+    padding-left: 1vw; /* 1% of the viewport width */
+    padding-right: 1vw; /* 1% of the viewport width */
 }
 
-header section#GoogleSignin {
+body header {
+    height: 20vh;
+    overflow: visible;
+}
+
+body header section#GoogleSignin {
     background-color: rgba(128,128,0,0.5); /* To show the sections inside the header section: DEBUG only */
     float: right;
-    padding:  1vw; /* 1% of the viewport width */
-    width: 25%;
+    width: 20%;
 }
 
+body footer {
+    height: 15vh;
+}
+
+footer div {
+    border-right: 0.5vw solid rgba(255,255,255,0.5);
+    margin-right: 0.5vw;
+    padding-right: 0.5vw;
+}
 nav {
     background-color:  rgba(0,0,128,0.5); /* To show container within another container: DEBUG only */
     float: right;
-    padding:  1vw; /* 1% of the viewport width */
-    width: 75%;
+    width: 80%;
 }
 
 main {
     background-color: rgba(128,128,0,0.5); /* To show the Main section of the page: DEBUG only */
-    padding:  1vw; /* 1% of the viewport width */
+    height: 70vh;
+    padding: 1vw; /* 1% of the viewport width */
 }
 
 main section {
-    float:  left;
-    padding:  1vw; /* 1% of the viewport width */
+    float: left;
+    padding: 1vw; /* 1% of the viewport width */
 }
 
 main section#LeftSidebar {
     background-color: rgba(128,0,128,0.5); /* To show the sections inside the Main section: DEBUG only */
-    width:  20%;
+    height: 100%;
+    width: 20%;
 }
 
 main section#CentrePanel {
     background-color: rgba(0,128,128,0.5); /* To show the sections inside the Main section: DEBUG only */
+    height: 100%;
     width: 60%;
 }
 
 main section#RightSidebar {
     background-color: rgba(128,0,128,0.5); /* To show the sections inside the Main section: DEBUG only */
+    height: 100%;
     width: 20%;
+}
+
+label {
+    display: table-cell;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+}
+
+.user-avatar {
+    height: 5vw;
+    width: 5vw;
+}
+
+.user-img {
+    max-height: 100%;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.margin-left {
+    margin-left: 1vw;
+}
+
+.margin-right {
+    margin-right: 1vw;
+}
+
+.padding-left {
+    padding-left: 1vw;
+}
+
+.padding-right {
+    padding-right: 1vw;
+}
+
+.xM-jog01, .xM-jog1, .xM-jog10, .xM-jog100,
+.xP-jog01, .xP-jog1, .xP-jog10, .xP-jog100,
+.yM-jog01, .yM-jog1, .yM-jog10, .yM-jog100,
+.yP-jog01, .yP-jog1, .yP-jog10, .yP-jog100,
+.zM-jog01, .zM-jog1, .zM-jog10, .zM-jog100,
+.zP-jog01, .zP-jog1, .zP-jog10, .zP-jog100 {
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 4vw;
+    left: 0vw;
+    margin: 0.5vw;
+    padding: 0;
+    position: absolute;
+    top: 0vw;
+    width: 4vw;
+}
+
+.xM-jog01 {background-image: url("../svg/icons/jogX/xMinus 0.1.svg");}
+.xM-jog1 {background-image: url("../svg/icons/jogX/xMinus 1.svg");}
+.xM-jog10 {background-image: url("../svg/icons/jogX/xMinus 10.svg");}
+.xM-jog100 {background-image: url("../svg/icons/jogX/xMinus 100.svg");}
+.xP-jog01 {background-image: url("../svg/icons/jogX/xPlus 0.1.svg");}
+.xP-jog1 {background-image: url("../svg/icons/jogX/xPlus 1.svg");}
+.xP-jog10 {background-image: url("../svg/icons/jogX/xPlus 10.svg");}
+.xP-jog100 {background-image: url("../svg/icons/jogX/xPlus 100.svg");}
+
+.yM-jog01 {background-image: url("../svg/icons/jogY/yMinus 0.1.svg");}
+.yM-jog1 {background-image: url("../svg/icons/jogY/yMinus 1.svg");}
+.yM-jog10 {background-image: url("../svg/icons/jogY/yMinus 10.svg");}
+.yM-jog100 {background-image: url("../svg/icons/jogY/yMinus 100.svg");}
+.yP-jog01 {background-image: url("../svg/icons/jogY/yPlus 0.1.svg");}
+.yP-jog1 {background-image: url("../svg/icons/jogY/yPlus 1.svg");}
+.yP-jog10 {background-image: url("../svg/icons/jogY/yPlus 10.svg");}
+.yP-jog100 {background-image: url("../svg/icons/jogY/yPlus 100.svg");}
+
+.zM-jog01 {background-image: url("../svg/icons/jogZ/zMinus 0.1.svg");}
+.zM-jog1 {background-image: url("../svg/icons/jogZ/zMinus 1.svg");}
+.zM-jog10 {background-image: url("../svg/icons/jogZ/zMinus 10.svg");}
+.zM-jog100 {background-image: url("../svg/icons/jogZ/zMinus 100.svg");}
+.zP-jog01 {background-image: url("../svg/icons/jogZ/zPlus 0.1.svg");}
+.zP-jog1 {background-image: url("../svg/icons/jogZ/zPlus 1.svg");}
+.zP-jog10 {background-image: url("../svg/icons/jogZ/zPlus 10.svg");}
+.zP-jog100 {background-image: url("../svg/icons/jogZ/zPlus 100.svg");}
+
+.jogBy01 {background-image: url("../svg/icons/jogBy/Jog By 0.1.svg");}
+.jogBy1 {background-image: url("../svg/icons/jogBy/Jog By 1.svg");}
+.jogBy10 {background-image: url("../svg/icons/jogBy/Jog By 10.svg");}
+.jogBy100 {background-image: url("../svg/icons/jogBy/Jog By 100.svg");}
+
+.btn-jog {
+    display: inline-block;
+    height: 5vw;
+    width: 5vw;
+}
+
+.jogBy01, .jogBy1, .jogBy10, .jogBy100 {
+    background-color: rgba(255,255,255,1.0);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 80% 80%;
+    position: relative;
+}
+
+.switch-field input {
+  display: none;
+}
+
+.switch-field label {
+  display: inline-block;
+  height: 5vw;
+  width: 5vw;
+}
+
+.switch-field label:hover {
+	cursor: pointer;
+}
+
+.switch-field input:checked + label {
+  background-color: rgba(0,255,0,0.5);
 }

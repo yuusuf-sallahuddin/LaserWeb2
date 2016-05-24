@@ -4,8 +4,117 @@
     <head>
         <meta charset="utf-8" />
         <title>LaserWeb - UI changes</title>
+
+        <meta name="description" content="Free Web Based Lasercutter Control Software for machines running on Grbl, Marlin, Smoothieware etc. Supports PNG/JPG/BMP Raster Engraving,  DXF/SVG Cutting">
+        <meta name="keywords" content="laserweb,gcode,laser,k40,smoothieware,cnc,web based,online,serial port json server,inkscape,illustrator,autocad,dxf,svg,png,bmp,gif,reprap,marlin,grbl,smoothie,smoothieboard,40w laser, chinese,lasercutter,engraver,emblaser,emblaser2,fabcreator">
+        <meta name="google-site-verification" content="Q5N27jmbSMfsf_oC4UmRlNDVXKta7BP4DaDq1h0Ox5Y" />
+        <meta name="author" content="github.com/openhardwarecoza/LaserWeb2/">
+
+        <!--IE Compatibility modes-->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <!--Mobile first-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap and UX -->
+        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap.min.css" id="theme_css" />
+        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap-callouts.css" />
+        <link type="text/css" rel="stylesheet" media="all" href="css/main.css" id="extra_css" />
+        <script src="lib/jquery/jquery.min.js"></script>
+        <script src="lib/jquery/mindmup-editabletable.js"></script>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        <script src="lib/bootstrap/js/bootstrap-filestyle.js"></script>
+        <script src="lib/bootstrap/js/dropdowns-enhancement.js"></script>
+        <link type="text/css" rel="stylesheet" media="all" href="lib/bootstrap/css/bootstrap-colorselector.css" id="extra_css" />
+        <script src="lib/bootstrap/js/bootstrap-colorselector.js"></script>
+        <script src="lib/nprogress/nprogress.js"></script>
+        <link rel="stylesheet" href="lib/nprogress/nprogress.css" />
+        <link rel="stylesheet" href="lib/jquery/jquery-ui.css" />
+        <script src="lib/jquery/jquery-ui.js"></script>
+        <script src="lib/jquery/jquery.ui.touch-punch.min.js"></script>
+
+        <!-- https://github.com/kabachello/jQuery.NumPad -->
+        <script src="lib/jnumpad/jquery.numpad.js"></script>
+        <link rel="stylesheet" href="lib/jnumpad/jquery.numpad.css" />
+
+        <!-- Font -->
+        <link rel="stylesheet" href="css/font-awesome.css" />
+
+        <!-- ThreeJS -->
+        <script src="lib/threejs/three.min.js"></script>
+        <script src="lib/threejs/GridRect.js"></script>
+        <script src="lib/threejs/OrbitControls.js"></script>
+        <script src="lib/threejs/Projector.js"></script>
+        <script src="lib/threejs/CanvasRenderer.js"></script>
+        <script src="lib/threejs/TransformControls.js"></script>
+        <script src="lib/threejs/TweenMax.min.js"></script>
+        <script src="js/viewer.js"></script>
+
+        <!-- Serial Port JSON -->
+        <script src="js/spjs.js"></script>
+
+        <!-- DXF Library -->
+        <script type="text/javascript" src="lib/dxf/dxf-parser.js"></script>
+        <script type="text/javascript" src="lib/dxf/three-dxf.js"></script>
+        <script type="text/javascript" src="js/dxf-render.js"></script>
+
+        <!-- SVG Chilipeppr Lib -->
+        <script type="text/javascript" src="lib/snap/snap.svg-min.js"></script>
+        <script type="text/javascript" src="js/svg-render.js"></script>
+
+        <!-- SVG Lasersaur Library -->
+        <script type="text/javascript" src="lib/svgreader/SVGReader.js"></script>
+        <script type="text/javascript" src="lib/svgreader/svg2three.js"></script>
+        <script type="text/javascript" src="lib/svgreader/vec2.js"></script>
+        <script type="text/javascript" src="lib/svgreader/svg.js"></script>
+
+        <!-- Three CAM -->
+        <script type="text/javascript" src="js/fileprep.js"></script>
+        <script type="text/javascript" src="js/threegcode.js"></script>
+        <script type="text/javascript" src="lib/clipperjs/clipper_unminified.js"></script>
+
+        <!-- Raster CAM -->
+        <script type="text/javascript" src="js/raster.js"></script>
+        <!--<script type="text/paperscript" src="js/laserraster.js" canvas="canvas-1"></script>-->
+        <script type="text/javascript" src="lib/paperjs/paper-full.min.js"></script>
+
+        <!-- STL Cam -->
+        <script type="text/javascript" src="lib/slacer/stl.js"></script>
+        <script type="text/javascript" src="lib/slacer/slicer.js"></script>
+        <script type="text/javascript" src="lib/slacer/mesh.js"></script>
+        <script type="text/javascript" src="js/stlcam.js"></script>
+
+        <!-- Jog Widget -->
+        <script type="text/javascript" src="js/jog.js"></script>
+
+        <!-- Smoothie Ethernet -->
+        <script type="text/javascript" src="js/smoothie.js"></script>
+
+        <!-- Grbl -->
+        <script type="text/javascript" src="js/grbl.js"></script>
+
+        <!-- Macros Panel -->
+        <script src="js/macros.js"></script>
+
+        <!-- Saved/load settings -->
+        <script src="js/localstorage.js"></script>
+
+        <!-- Gcode Viewer -->
+        <script src="lib/gcode-viewer/gcode-parser.js"></script>
+        <script src="lib/gcode-viewer/ui.js"></script>
+
+        <!-- User Interface -->
+        <script src="js/main.js"></script>
+
+        <!--Google Sign-in-->
+        <script src="https://apis.google.com/js/client.js"></script>
+        <script src="js/googlesignin.js"></script>
+        <meta name="google-signin-client_id" content="1086441811451-4nmidqbqq8tve1qqa592uq1hs04kl5sl.apps.googleusercontent.com">
+        <link rel="stylesheet" href="css/googlesignin.css" />
+
         <!-- UI Layout Stylesheet -->
-        <link rel="stylesheet" type="text/css" href="css/UI.css"/>
+        <link rel="stylesheet" type="text/css" href="css/UI.css" />
+
         <!-- Google Web Fonts - Roboto [Normal, Normal Italic, Ultra-Bold] -->
         <link href='https://fonts.googleapis.com/css?family=Roboto:400,400italic,900' rel='stylesheet' type='text/css'>
     </head>
@@ -16,14 +125,65 @@
         <header>
             <!-- Start G+ Signin Panel -->
             <section id="GoogleSignin">
-                Body.Header.Section#GoogleSignin
+                <div class="float-right margin-left padding-right user-avatar">
+                    <a class="user-link" href="">
+                        <img id="userpic" class="media-object img-thumbnail user-img" alt="User Picture" src="css/user64.gif">
+                    </a>
+                </div>
+                <div class="float-right margin-right">
+                <h5 id="fullname">Please Sign In:</h5>
+                    <div id="gSignInWrapper">
+                        <button class="btn btn-success customGPlusSignIn" id="g-login"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Login<i class="fa fa-fw fa-sign-in" aria-hidden="true"></i></button>
+                        <button class="btn btn-danger customGPlusSignIn" id="g-logout" onclick="signOut();" style="display:none;"><i class="fa fa-fw fa-google" aria-hidden="true"></i>Logout</button>
+                        <button class="btn btn-success customGPlusSignIn" id="g-refresh" onclick="listFiles();" style="display:none;"><i class="fa fa-fw fa-refresh" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div id="fileList"></div>
             </section>
             <!-- End G+ Signin Panel-->
 
 
             <!-- Start Top Navigation Bar -->
             <nav>
-                Body.Header.Nav
+                <div>
+                    <form class="navbar-form" role="form">
+                        <span class="btn btn-default btn-file float-left" title="Open a png, .jpg, .jpeg, .bmp, .gcode, .svg, .dxf, or .stl file">
+                            <i class="fa fa-folder-open fa-fw"></i>Open
+                            <input id="file" type="file" accept=".png,.jpg,.jpeg,.bmp,.gcode,.g,.svg,.dxf,.stl" />
+                        </span>
+                        <span>
+                            <label for="port"><i class="fa fa-usb icon-white"></i></label>
+                            <select id="port" class="form-control" disabled>
+                                <option value="no">Select port</option>
+                            </select>
+                        </span>
+                        <span>
+                            <label for="buffer"><i class="fa fa-link icon-white"></i></label>
+                            <select id="buffer" class="form-control" disabled>
+                                <option value="no">Select buffer</option>
+                            </select>
+                        </span>
+                        <span>
+                            <label for="baud"><i class="fa fa-tty icon-white"></i></label>
+                            <select id="baud" class="form-control" disabled>
+                                <option value="250000">250000</option>
+                                <option value="230400">230400</option>
+                                <option value="115200" selected="selected">115200</option>
+                                <option value="57600">57600</option>
+                                <option value="38400">38400</option>
+                                <option value="19200">19200</option>
+                                <option value="9600">9600</option>
+                            </select>
+                        </span>
+                        <span>
+                            <a class="btn btn-default disabled" id="connect" href="#">Connect</a>
+                            <a class="btn btn-default" id="refreshPort" href="#"><i class="fa fa-refresh"></i></a>
+                        </span>
+                        <span class="float-right">
+                            <a data-placement="bottom" data-original-title="Fullscreen" data-toggle="tooltip" class="btn btn-default" id="toggleFullScreen" onclick="toggleFullScreen();"> <i class="glyphicon glyphicon-fullscreen"></i> </a>
+                        </span>
+                    </form>
+                </div>
             </nav>
             <!-- End Top Navigation Bar -->
         </header>
@@ -56,7 +216,42 @@
 
         <!-- Start Body.Footer -->
         <footer>
-            Body.Footer
+
+            <!-- Start the Jog Size Options -->
+            <div class="switch-field float-left">
+                <input type="radio" id="jogBy01" name="jogby" value="0.1" checked/>
+                    <label for="jogBy01" class="jogBy01 btn btn-ctl btn-default"></label>
+                <input type="radio" id="jogBy1" name="jogby" value="1" />
+                    <label for="jogBy1" class="jogBy1 btn btn-ctl btn-default"></label>
+                <input type="radio" id="jogBy10" name="jogby" value="10" />
+                    <label for="jogBy10" class="jogBy10 btn btn-ctl btn-default"></label>
+                <input type="radio" id="jogBy100" name="jogby" value="100" />
+                    <label for="jogBy100" class="jogBy100 btn btn-ctl btn-default"></label>
+            </div>
+            <!-- End the Jog Size Options -->
+
+            <!-- Start the Job Buttons -->
+            <div class="float-left">
+                <button type="button" data-title="Jog X-" class="btn btn-ctl btn-default btn-jog" id="xM">
+                    <span class="xM-jog01"></span>
+                </button>
+                <button type="button" data-title="Jog Y+" class="btn btn-ctl btn-default btn-jog" id="yP">
+                    <span class="yP-jog01"></span>
+                </button>
+                <button type="button" data-title="Jog Y-" class="btn btn-ctl btn-default btn-jog" id="yM">
+                    <span class="yM-jog01"></span>
+                </button>
+                <button type="button" data-title="Jog X+" class="btn btn-ctl btn-default btn-jog" id="xP">
+                    <span class="xP-jog01"></span>
+                </button>
+                <button type="button" data-title="Jog Z+" class="btn btn-ctl btn-default btn-jog" id="zP">
+                    <span class="zP-jog01"></span>
+                </button>
+                <button type="button" data-title="Jog Z-" class="btn btn-ctl btn-default btn-jog" id="zM">
+                    <span class="zM-jog01"></span>
+                </button>
+            </div>
+            <!-- End the Jog Buttons -->
         </footer>
         <!-- End Body.Footer -->
 

@@ -1,7 +1,7 @@
 var googleUser = {};
 
 var startApp = function() {
-    console.log('Starting GSingIn')
+    console.log('Starting GSignIn')
     if (typeof(gapi) !== "undefined")  {
       gapi.load('auth2', function(){
         // Retrieve the singleton for the GoogleAuth library and set up the client.
