@@ -8,7 +8,7 @@ var debug = false;
 
 var useNumPad;
 
-// Place all document.ready tasks into functions and ONLY run the functions from doument.ready
+// Place all document.ready tasks into functions and ONLY run the functions from document.ready
 $(document).ready(function() {
 
     // Intialise
