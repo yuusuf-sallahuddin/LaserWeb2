@@ -1,0 +1,64 @@
+* {
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    margin:  0;
+    overflow:  hidden;
+    padding:  0;
+    vertical-align: baseline;
+}
+
+body {
+    color: #000000;
+    padding-left:  1vw; /* 1% of the viewport width */
+    padding-right:  1vw; /* 1% of the viewport width */
+    width:  100vw;
+}
+
+header {
+    background-color:  rgba(0,128,0,0.5);  /* To designate start point of each container visually: DEBUG only */
+    padding:  1vw; /* 1% of the viewport width */
+}
+
+footer {
+    background-color:  rgba(128,0,0,0.5); /* To designate end point of each container visually: DEBUG only */
+    padding:  1vw; /* 1% of the viewport width */
+}
+
+header section#GoogleSignin {
+    background-color: rgba(128,128,0,0.5); /* To show the sections inside the header section: DEBUG only */
+    float: right;
+    padding:  1vw; /* 1% of the viewport width */
+    width: 25%;
+}
+
+nav {
+    background-color:  rgba(0,0,128,0.5); /* To show container within another container: DEBUG only */
+    float: right;
+    padding:  1vw; /* 1% of the viewport width */
+    width: 75%;
+}
+
+main {
+    background-color: rgba(128,128,0,0.5); /* To show the Main section of the page: DEBUG only */
+    padding:  1vw; /* 1% of the viewport width */
+}
+
+main section {
+    float:  left;
+    padding:  1vw; /* 1% of the viewport width */
+}
+
+main section#LeftSidebar {
+    background-color: rgba(128,0,128,0.5); /* To show the sections inside the Main section: DEBUG only */
+    width:  20%;
+}
+
+main section#CentrePanel {
+    background-color: rgba(0,128,128,0.5); /* To show the sections inside the Main section: DEBUG only */
+    width: 60%;
+}
+
+main section#RightSidebar {
+    background-color: rgba(128,0,128,0.5); /* To show the sections inside the Main section: DEBUG only */
+    width: 20%;
+}
